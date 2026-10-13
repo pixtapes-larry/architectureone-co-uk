@@ -1,0 +1,17 @@
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: var(--color-chip-bg);
+  border: 1px dashed var(--color-line-strong);
+  color: var(--color-muted);
+  font-size: 12.5px;
+  text-align: center;
+  padding: 12px;
+}
+
+.rounded {
+  border-radius: var(--radius-card);
+}
