@@ -207,6 +207,12 @@
   height: 200px;
 }
 
+img.cardImage {
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .cardBody {
   padding: 26px;
 }

@@ -165,9 +165,11 @@ export default function Home() {
               href={`/work/${project.slug}`}
               className={styles.card}
             >
-              <ImagePlaceholder
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 className={styles.cardImage}
-                label={`[${project.address} photo]`}
+                src={project.photoUrl}
+                alt={project.address}
               />
               <div className={styles.cardBody}>
                 <span className={styles.tagNeutral}>

@@ -1,52 +1,202 @@
-// Placeholder project data, shaped to match the Prisma Project model field
-// names exactly, so swapping this for a real `prisma.project.findMany(...)`
-// call later is a one-line change, not a rewrite of every component that
-// consumes it. Delete this file once the real harvested data is imported.
+// Real project data ported from the localtest/ Leaflet prototype (10
+// properties, geocoded via postcodes.io). Shaped to match the Prisma
+// Project model field names, so swapping this for a real
+// `prisma.project.findMany(...)` call later is a one-line change.
+// Delete this file once the real harvested data (tomorrow's visit +
+// ongoing) is imported.
+//
+// localAuthority values below are inferred from the town/outcode, NOT
+// confirmed against real records yet — flag for the harvesting pass.
 
 import { ProjectType, PlanningType } from "@/generated/prisma/enums";
 
-export type FeaturedProjectSummary = {
-  slug: string;
+export type ProjectMapSummary = {
+  slug: string | null; // null for non-featured pins — nothing to link to
+  featured: boolean;
   address: string;
-  postcode: string;
+  place: string;
+  postcode: string; // outcode only for now (e.g. "IP7") — full postcode TBC
   localAuthority: string;
   planningType: PlanningType;
   projectType: ProjectType;
   description: string;
-  photoUrl: string | null; // null renders a styled placeholder block
+  completed: string; // "—" where not yet known
+  photoUrl: string; // always set — "default.jpg" stands in where no real photo exists yet
+  latitude: number;
+  longitude: number;
 };
 
-export const MOCK_FEATURED_PROJECTS: FeaturedProjectSummary[] = [
+export const MOCK_PROJECTS: ProjectMapSummary[] = [
   {
-    slug: "ip7-hadleigh-loft-conversion",
-    address: "Pheasant Barn, Hadleigh",
-    postcode: "IP7 5AP",
+    slug: null,
+    featured: false,
+    address: "99 George Street",
+    place: "Hadleigh, Suffolk",
+    postcode: "IP7",
     localAuthority: "Babergh",
     planningType: PlanningType.PERMITTED_DEVELOPMENT,
-    projectType: ProjectType.LOFT_CONVERSIONS,
+    projectType: ProjectType.SMALL_WRAP_AROUND_EXTENSIONS,
+    description: "Project details to be added.",
+    completed: "—",
+    photoUrl: "/projects/default.jpg",
+    latitude: 52.045584,
+    longitude: 0.959212,
+  },
+  {
+    slug: "co10-groton-black-pheasant-barn",
+    featured: true,
+    address: "Black Pheasant Barn",
+    place: "Castlings Heath, Groton, Suffolk",
+    postcode: "CO10",
+    localAuthority: "Babergh",
+    planningType: PlanningType.PRIOR_APPROVAL,
+    projectType: ProjectType.BARN_CONVERSIONS,
     description:
-      "A hip-to-gable loft conversion adding a main bedroom with en-suite.",
-    photoUrl: null,
+      "LABC award-winning barn conversion to a 4/5 bed family home, using original barn materials in new features.",
+    completed: "Mar 2023",
+    photoUrl: "/projects/p2-pheasant-barn.jpg",
+    latitude: 52.048605,
+    longitude: 0.875409,
   },
   {
-    slug: "ip1-ipswich-new-build",
-    address: "Orchard Plot, Ipswich",
-    postcode: "IP1 4PQ",
-    localAuthority: "Ipswich Borough",
-    planningType: PlanningType.FULL_PLANNING,
-    projectType: ProjectType.NEW_BUILDS,
-    description: "A new-build family home on a self-contained infill plot.",
-    photoUrl: null,
+    slug: null,
+    featured: false,
+    address: "Mill House",
+    place: "Mill Road, Felsted, Essex",
+    postcode: "CM6",
+    localAuthority: "Braintree Borough Council",
+    planningType: PlanningType.PERMITTED_DEVELOPMENT,
+    projectType: ProjectType.SMALL_WRAP_AROUND_EXTENSIONS,
+    description: "Project details to be added.",
+    completed: "—",
+    photoUrl: "/projects/default.jpg",
+    latitude: 51.854423,
+    longitude: 0.428746,
   },
   {
-    slug: "co10-sudbury-extension",
-    address: "Christchurch Lane, Sudbury",
-    postcode: "CO10 1AB",
+    slug: "ip8-hintlesham-tintagel",
+    featured: true,
+    address: "Tintagel",
+    place: "Hintlesham, Suffolk",
+    postcode: "IP8",
     localAuthority: "Babergh",
     planningType: PlanningType.PERMITTED_DEVELOPMENT,
     projectType: ProjectType.SMALL_WRAP_AROUND_EXTENSIONS,
     description:
-      "A wraparound extension opening the kitchen onto the garden.",
-    photoUrl: null,
+      "New front entrance and single-storey rear extension with double roof lanterns and large sliding doors to the garden.",
+    completed: "Aug 2025",
+    photoUrl: "/projects/p11-tintagel.jpg",
+    latitude: 52.058624,
+    longitude: 1.063034,
+  },
+  {
+    slug: "co9-sible-hedingham-harrow-cross",
+    featured: true,
+    address: "Harrow Cross House",
+    place: "Harrow Cross Road, Sible Hedingham, Essex",
+    postcode: "CO9",
+    localAuthority: "Braintree Borough Council",
+    planningType: PlanningType.FULL_PLANNING,
+    projectType: ProjectType.LARGE_TWO_STOREY_EXTENSIONS,
+    description:
+      "Second-storey extension adding two bedrooms, a new side entrance and a cart lodge, with full garden landscaping.",
+    completed: "Aug 2025",
+    photoUrl: "/projects/p12-harrowcross.jpg",
+    latitude: 51.971118,
+    longitude: 0.579913,
+  },
+  {
+    slug: "ip1-ipswich-oaklands",
+    featured: true,
+    address: "Oaklands",
+    place: "Constitution Hill, Ipswich, Suffolk",
+    postcode: "IP1",
+    localAuthority: "Ipswich Borough",
+    planningType: PlanningType.FULL_PLANNING,
+    projectType: ProjectType.LOFT_CONVERSIONS,
+    description:
+      "Central roof lift and full internal reorganisation of a 1960s bungalow, with dormers and ridge glazing to the front elevation.",
+    completed: "Oct 2024",
+    photoUrl: "/projects/p13-oaklands.jpg",
+    latitude: 52.066531,
+    longitude: 1.145561,
+  },
+  {
+    slug: null,
+    featured: false,
+    address: "Hunters, 120 High Street",
+    place: "Hadleigh, Suffolk",
+    postcode: "IP7",
+    localAuthority: "Babergh",
+    planningType: PlanningType.PERMITTED_DEVELOPMENT,
+    projectType: ProjectType.SMALL_WRAP_AROUND_EXTENSIONS,
+    description: "Project details to be added.",
+    completed: "—",
+    photoUrl: "/projects/default.jpg",
+    latitude: 52.046062,
+    longitude: 0.952374,
+  },
+  {
+    slug: "co10-boxford-orchard-house",
+    featured: true,
+    address: "Orchard House",
+    place: "Sand Hill, Boxford, Suffolk",
+    postcode: "CO10",
+    localAuthority: "Babergh",
+    planningType: PlanningType.FULL_PLANNING,
+    projectType: ProjectType.NEW_BUILDS,
+    description:
+      "New-build 3 bed, 3 bath home with double garage, built into the side garden of a larger plot.",
+    completed: "Jul 2022",
+    photoUrl: "/projects/p8-orchard.jpg",
+    latitude: 52.025629,
+    longitude: 0.8694,
+  },
+  {
+    slug: "ip7-bildeston-squirrells-mill",
+    featured: true,
+    address: "2 Squirrells Mill Road",
+    place: "Bildeston, Suffolk",
+    postcode: "IP7",
+    localAuthority: "Babergh",
+    planningType: PlanningType.PERMITTED_DEVELOPMENT,
+    projectType: ProjectType.SMALL_WRAP_AROUND_EXTENSIONS,
+    description:
+      "Single-storey kitchen extension with corner accordion glazing and a 'door and a half' entrance, opening the house to the garden.",
+    completed: "Jul 2021",
+    photoUrl: "/projects/p14-squirrellsmill.jpg",
+    latitude: 52.108343,
+    longitude: 0.90642,
+  },
+  {
+    slug: "cm3-bicknacre-elm-house",
+    featured: true,
+    address: "Elm House",
+    place: "Bicknacre, Essex",
+    postcode: "CM3",
+    localAuthority: "Chelmsford City Council",
+    planningType: PlanningType.PERMITTED_DEVELOPMENT,
+    projectType: ProjectType.LOFT_CONVERSIONS,
+    description:
+      "Structural roof lift to a low attic room, creating additional usable headroom and floor space.",
+    completed: "Aug 2017",
+    photoUrl: "/projects/p10-elmhouse.jpg",
+    latitude: 51.696132,
+    longitude: 0.595031,
   },
 ];
+
+export const MOCK_FEATURED_PROJECTS = MOCK_PROJECTS.filter((p) => p.featured);
+
+// A small postcode-outcode → coordinates table, standing in for real
+// geocoding until addresses are harvested and run through postcodes.io
+// (see the Project Data Schema's geocoding note).
+export const POSTCODE_SEARCH_ANCHORS: Record<string, [number, number]> = {
+  IP7: [52.0456, 0.9592],
+  IP1: [52.0665, 1.1456],
+  IP8: [52.0586, 1.063],
+  CO9: [51.9711, 0.5799],
+  CO10: [52.0256, 0.8694],
+  CM6: [51.8544, 0.4287],
+  CM3: [51.6961, 0.595],
+};
