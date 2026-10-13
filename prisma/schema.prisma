@@ -1,0 +1,142 @@
+// Architecture ONE — project schema
+// Mirrors the Project Data Schema drafted 2026-10-13 (see docs/HANDOFF.md
+// and the Project Data Schema artifact). Keep the two in sync.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum PlanningType {
+  PERMITTED_DEVELOPMENT
+  FULL_PLANNING
+  PRIOR_APPROVAL
+}
+
+// The 10 project types from the site map. "category" is derived from this
+// in application code, not stored separately — see schema doc notes.
+enum ProjectType {
+  SMALL_WRAP_AROUND_EXTENSIONS
+  GARAGE_CONVERSIONS
+  LOFT_CONVERSIONS
+  LARGE_SINGLE_STOREY_EXTENSIONS
+  LARGE_TWO_STOREY_EXTENSIONS
+  OUTBUILDINGS
+  BARN_CONVERSIONS
+  NEW_BUILDS
+  DEVELOPMENT
+  PLANNING_RESOLUTION
+}
+
+// The full Services Delivered checklist — five groups, matches the About
+// page's Services section exactly (kept in sync deliberately).
+enum ServiceDelivered {
+  // Planning & Permissions
+  PRE_APPLICATION_PLANNING_ADVICE
+  DESIGN_ACCESS_STATEMENT
+  LAWFUL_DEVELOPMENT_CERTIFICATE_APPLICATION
+  PLANNING_APPLICATION
+  PRIOR_APPROVAL_APPLICATION
+
+  // Building Control
+  BUILDING_REGULATIONS_DRAWINGS
+  BUILDING_REGULATIONS_APPLICATION
+
+  // Drawings & Technical Information
+  SITE_LOCATION_PLANS
+  ELEVATIONS_FLOOR_PLANS
+  WINDOW_DOOR_SCHEDULES
+  FOUL_WASTE_WASTEWATER_PLANS
+  SURFACE_WATER_DRAINAGE_PLANS
+  ELECTRICAL_LIGHTING_LAYOUTS
+  MATERIALS_SPECIFICATIONS
+  THREE_D_VISUALISATIONS
+
+  // Specialist Reports & Surveys
+  MEASURED_SURVEY
+  STRUCTURAL_SURVEYS_CALCULATIONS
+  TOPOGRAPHICAL_SURVEYS
+  ECOLOGY_SURVEYS
+  FLOOD_RISK_ASSESSMENTS
+  SAP_PART_L_CALCULATIONS
+  BIODIVERSITY_NET_GAIN_REPORT
+  LANDSCAPING_PLANTING_DESIGN
+
+  // Build Stage
+  TENDERING_PROCESS
+  PARTY_WALL_AGREEMENT_COORDINATION
+  QUALITY_CONTROL
+  ON_SITE_SUPPORT
+}
+
+model Project {
+  id Int @id @default(autoincrement())
+
+  // --- Core fields: required on every project (featured or not) ---
+  address         String
+  postcode        String
+  latitude        Float? // populated once geocoding runs, not at entry time
+  longitude       Float?
+  localAuthority  String // free text, not an enum — see schema doc: the
+  // confirmed list (Babergh, Mid Suffolk, etc.) still has
+  // two counties marked "district TBC"
+  planningType    PlanningType
+  projectType     ProjectType
+  instructionDate DateTime
+  description     String       @db.Text // short — the pin-tooltip summary
+  notes           String?      @db.Text
+
+  // --- Featured-only fields ---
+  featured             Boolean @default(false)
+  fullDescription      String? @db.Text // the long-form "brief / outcome" narrative
+  constructionCompany  String?
+  floorplanImage       String?
+  elevationImage       String?
+  year                 Int?
+  status               String?  @default("Completed")
+  slug                 String?  @unique // case-study page URL, e.g. ip7-hadleigh-loft-conversion
+
+  // --- Optional on any project ---
+  otherTags       Json? // e.g. ["Heritage", "Class Q", "Change of Use"]
+  awards          Json? // e.g. [{ "name": "LABC Regional Winner", "year": 2024 }]
+  testimonial     String? @db.Text
+  customerName    String?
+  customerConsent Boolean? @default(false)
+
+  photos   ProjectPhoto[]
+  services ProjectServiceDelivered[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectType])
+  @@index([localAuthority])
+  @@index([featured])
+}
+
+model ProjectPhoto {
+  id        Int     @id @default(autoincrement())
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId Int
+  url       String
+  caption   String?
+  isBefore  Boolean @default(false) // true = "before", false = "after"
+  sortOrder Int     @default(0)
+}
+
+// Explicit join table (not an implicit m-n) so each row can carry its own
+// metadata later if needed, and so a service can't silently vanish from an
+// enum without a migration flagging every project that used it.
+model ProjectServiceDelivered {
+  id        Int              @id @default(autoincrement())
+  project   Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId Int
+  service   ServiceDelivered
+
+  @@unique([projectId, service])
+}
