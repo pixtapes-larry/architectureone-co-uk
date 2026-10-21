@@ -1,0 +1,50 @@
+.strip {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  cursor: grab;
+  margin-bottom: 32px;
+  /* hide the scrollbar — the drag affordance plus visible edge-peek is
+     the signal there's more, not a visible scrollbar track */
+  scrollbar-width: none;
+}
+
+.strip::-webkit-scrollbar {
+  display: none;
+}
+
+.strip:active {
+  cursor: grabbing;
+}
+
+.thumb {
+  flex: 0 0 calc((100% - 3 * 16px) / 4);
+  scroll-snap-align: start;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+.thumbImage {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  border-radius: var(--radius-card);
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .thumb {
+    flex-basis: calc((100% - 2 * 16px) / 2.3);
+  }
+}
+
+@media (max-width: 640px) {
+  .thumb {
+    flex-basis: calc(100% - 32px);
+  }
+}

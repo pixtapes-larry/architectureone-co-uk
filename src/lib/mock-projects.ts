@@ -97,6 +97,21 @@ export const MOCK_PROJECTS: ProjectMapSummary[] = [
     floorplanAfterImage: "/projects/pheasant-barn-floorplan-after.jpg",
     elevationBeforeImage: "/projects/pheasant-barn-elevation-before.jpg",
     elevationAfterImage: "/projects/pheasant-barn-elevation-after.jpg",
+    // Plausible for a Class Q barn conversion, not yet verified against
+    // this specific project's real records — flag for the harvesting pass.
+    services: [
+      ServiceDelivered.PRIOR_APPROVAL_APPLICATION,
+      ServiceDelivered.MEASURED_SURVEY,
+      ServiceDelivered.SITE_LOCATION_PLANS,
+      ServiceDelivered.ELEVATIONS_FLOOR_PLANS,
+      ServiceDelivered.STRUCTURAL_SURVEYS_CALCULATIONS,
+      ServiceDelivered.ECOLOGY_SURVEYS,
+      ServiceDelivered.BUILDING_REGULATIONS_DRAWINGS,
+      ServiceDelivered.BUILDING_REGULATIONS_APPLICATION,
+      ServiceDelivered.TENDERING_PROCESS,
+      ServiceDelivered.QUALITY_CONTROL,
+      ServiceDelivered.ON_SITE_SUPPORT,
+    ],
   },
   {
     slug: null,

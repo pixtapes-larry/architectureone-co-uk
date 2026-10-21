@@ -9,6 +9,9 @@ import {
 } from "@/lib/project-labels";
 import { HOME_HREF, BOOK_CONSULTATION_HREF } from "@/lib/nav";
 import ProjectMiniMapLoader from "./ProjectMiniMapLoader";
+import { LightboxProvider } from "./Lightbox";
+import PhotoGallery from "./PhotoGallery";
+import PlanImage from "./PlanImage";
 import styles from "./FeaturedProjectTemplate.module.css";
 
 function yearFromCompleted(completed: string): string {
@@ -24,7 +27,7 @@ function serviceLabel(service: string) {
     .join(" ");
 }
 
-function BeforeAfterPair({
+function BeforeAfterPlan({
   heading,
   before,
   after,
@@ -34,6 +37,10 @@ function BeforeAfterPair({
   after?: string;
 }) {
   if (!before && !after) return null;
+  const images = [
+    ...(before ? [{ url: before, caption: `${heading} — Before` }] : []),
+    ...(after ? [{ url: after, caption: `${heading} — After` }] : []),
+  ];
   return (
     <>
       <div className={styles.h2}>{heading}</div>
@@ -41,15 +48,13 @@ function BeforeAfterPair({
         {before && (
           <div>
             <div className={styles.imageCaption}>Before</div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className={styles.beforeAfterImage} src={before} alt="" />
+            <PlanImage src={before} images={images} index={0} />
           </div>
         )}
         {after && (
           <div>
             <div className={styles.imageCaption}>After</div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className={styles.beforeAfterImage} src={after} alt="" />
+            <PlanImage src={after} images={images} index={before ? 1 : 0} />
           </div>
         )}
       </div>
@@ -78,7 +83,7 @@ export default function FeaturedProjectTemplate({
   const afterPhotos = project.photos?.filter((p) => !p.isBefore) ?? [];
 
   return (
-    <>
+    <LightboxProvider>
       <div className={styles.page}>
         <div className={styles.crumb}>
           <Link href={HOME_HREF}>Home</Link> /{" "}
@@ -105,43 +110,6 @@ export default function FeaturedProjectTemplate({
           <div className={styles.main}>
             <h1 className={styles.title}>{project.address}</h1>
 
-            {(beforePhotos.length > 0 || afterPhotos.length > 0) && (
-              <>
-                {beforePhotos.length > 0 && (
-                  <>
-                    <div className={styles.h2}>Before</div>
-                    <div className={styles.photoGrid}>
-                      {beforePhotos.map((p, i) => (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          key={i}
-                          className={styles.photoThumb}
-                          src={p.url}
-                          alt={p.caption ?? ""}
-                        />
-                      ))}
-                    </div>
-                  </>
-                )}
-                {afterPhotos.length > 0 && (
-                  <>
-                    <div className={styles.h2}>After</div>
-                    <div className={styles.photoGrid}>
-                      {afterPhotos.map((p, i) => (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          key={i}
-                          className={styles.photoThumb}
-                          src={p.url}
-                          alt={p.caption ?? ""}
-                        />
-                      ))}
-                    </div>
-                  </>
-                )}
-              </>
-            )}
-
             <div className={styles.h2}>About this project</div>
             {project.fullDescription ? (
               project.fullDescription
@@ -161,13 +129,26 @@ export default function FeaturedProjectTemplate({
               </p>
             )}
 
-            <BeforeAfterPair
+            {beforePhotos.length > 0 && (
+              <>
+                <div className={styles.h2}>Before</div>
+                <PhotoGallery images={beforePhotos} />
+              </>
+            )}
+            {afterPhotos.length > 0 && (
+              <>
+                <div className={styles.h2}>After</div>
+                <PhotoGallery images={afterPhotos} />
+              </>
+            )}
+
+            <BeforeAfterPlan
               heading="Floor Plan"
               before={project.floorplanBeforeImage}
               after={project.floorplanAfterImage}
             />
 
-            <BeforeAfterPair
+            <BeforeAfterPlan
               heading="Elevations"
               before={project.elevationBeforeImage}
               after={project.elevationAfterImage}
@@ -249,7 +230,10 @@ export default function FeaturedProjectTemplate({
               </div>
             )}
 
-            <div className={styles.card} style={{ padding: 0, overflow: "hidden" }}>
+            <div
+              className={styles.card}
+              style={{ padding: 0, overflow: "hidden" }}
+            >
               <ProjectMiniMapLoader
                 latitude={project.latitude}
                 longitude={project.longitude}
@@ -296,6 +280,6 @@ export default function FeaturedProjectTemplate({
           </div>
         </section>
       )}
-    </>
+    </LightboxProvider>
   );
 }
