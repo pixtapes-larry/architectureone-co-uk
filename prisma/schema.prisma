@@ -18,8 +18,13 @@ enum PlanningType {
   PRIOR_APPROVAL
 }
 
-// The 10 project types from the site map. "category" is derived from this
-// in application code, not stored separately — see schema doc notes.
+// The original 10 project types from the site map, plus LARGE_OUTBUILDINGS
+// (split out from OUTBUILDINGS so the PD-eligible and full-planning cases
+// get separate category pages) and 3 more surfaced by real archive jobs
+// during harvesting that didn't fit the original 10 (STRUCTURAL_ALTERATIONS,
+// LANDSCAPING_DESIGN, OTHER_PLANNING — see the Project Data Schema doc).
+// "category" is derived from this in application code, not stored
+// separately — see schema doc notes.
 enum ProjectType {
   SMALL_WRAP_AROUND_EXTENSIONS
   GARAGE_CONVERSIONS
@@ -27,10 +32,14 @@ enum ProjectType {
   LARGE_SINGLE_STOREY_EXTENSIONS
   LARGE_TWO_STOREY_EXTENSIONS
   OUTBUILDINGS
+  LARGE_OUTBUILDINGS
   BARN_CONVERSIONS
   NEW_BUILDS
   DEVELOPMENT
   PLANNING_RESOLUTION
+  STRUCTURAL_ALTERATIONS
+  LANDSCAPING_DESIGN
+  OTHER_PLANNING
 }
 
 // The full Services Delivered checklist — five groups, matches the About

@@ -118,9 +118,21 @@ export const permittedDevelopmentConfig: CategoryPageConfig = {
       href: PROJECT_TYPE_ROUTES.LOFT_CONVERSIONS,
       learnLabel: "Explore Loft Conversions →",
     },
+    {
+      title: "Outbuildings",
+      photoLabel: "[Garden room / studio photo]",
+      bullets: [
+        "Garden rooms, garden offices and studios — often built without needing planning permission at all",
+        "Single storey, with height capped at 2.5m within 2m of a boundary, 4m elsewhere",
+        "Kept within 50% of your garden's total coverage, alongside any other outbuildings",
+        "A flexible extra space — a home office, a studio, a gym — without touching the house itself",
+      ],
+      href: PROJECT_TYPE_ROUTES.OUTBUILDINGS,
+      learnLabel: "Explore Outbuildings →",
+    },
   ],
   subTypesFooterNote:
-    "Considering another type of project under Permitted Development? We can help with this too — from porches to outbuildings and beyond.",
+    "Considering another type of project under Permitted Development? We can help with this too — from porches to home gyms and beyond.",
   pricing: {
     kind: "packages",
     tiers: [
@@ -293,24 +305,26 @@ export const newBuildsDevelopmentsConfig: CategoryPageConfig = {
   category: "new-builds-developments",
   crumbLabel: "New Builds & Developments",
   heroTitle: "New Builds & Developments",
-  heroTagline: "From a garden studio to a brand new home.",
+  heroTagline: "From a granny annexe to a brand new home.",
   heroPhotoLabel: "[Hero photo — a finished new build or barn conversion]",
   introHeading: "The widest range of what we do",
   introParagraphs: [
-    "This category covers the broadest spread of any on the site — from a garden room you can have built within weeks, through to converting a redundant barn into a home, right up to a brand new house or a small development of several.",
+    "This category covers the broadest spread of any on the site — from an annexe for an elderly parent or a grown-up child, through to converting a redundant barn into a home, right up to a brand new house or a small development of several.",
     "Architecture ONE can help you realise your vision for a new and enhanced way of living, whatever scale that starts at.",
   ],
   subTypesHeading: "Four ways this typically happens",
   subTypes: [
     {
-      title: "Outbuildings",
-      photoLabel: "[Outbuilding photo]",
-      routeTag: "OFTEN PD",
+      title: "Large Outbuildings",
+      photoLabel: "[Annexe / large outbuilding photo]",
+      routeTag: "FULL PLANNING",
       bullets: [
-        "Garden rooms, studios, garages — often achievable without planning permission at all",
+        "Annexes, granny annexes and garden buildings beyond what Permitted Development allows",
+        "Intended for separate living accommodation, rather than just a home office or studio",
+        "Needs full planning permission once it's a genuine extra home on the plot",
       ],
-      href: PROJECT_TYPE_ROUTES.OUTBUILDINGS,
-      learnLabel: "Explore Outbuildings →",
+      href: PROJECT_TYPE_ROUTES.LARGE_OUTBUILDINGS,
+      learnLabel: "Explore Large Outbuildings →",
     },
     {
       title: "Barn Conversions",
@@ -346,9 +360,9 @@ export const newBuildsDevelopmentsConfig: CategoryPageConfig = {
     lead: "This category genuinely spans every route there is — which route applies depends entirely on what you're starting with.",
     items: [
       {
-        title: "Outbuildings",
+        title: "Large Outbuildings",
         description:
-          "A garden room or studio can often be built under Permitted Development — single storey, height capped at 2.5m within 2m of a boundary, 4m elsewhere, and kept within 50% of your garden's total coverage.",
+          "Once an outbuilding goes beyond Permitted Development limits, or is intended as separate living accommodation — an annexe for a relative, say — it needs full planning permission rather than sitting under the simpler PD route.",
       },
       {
         title: "Barn Conversions",
