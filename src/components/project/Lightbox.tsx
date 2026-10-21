@@ -68,7 +68,14 @@ export function LightboxProvider({ children }: { children: React.ReactNode }) {
             onClick={close}
             aria-label="Close"
           >
-            ✕
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M1.5 1.5l11 11M12.5 1.5l-11 11"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+            </svg>
           </button>
           {images && images.length > 1 && (
             <button
@@ -79,7 +86,15 @@ export function LightboxProvider({ children }: { children: React.ReactNode }) {
               }}
               aria-label="Previous image"
             >
-              ←
+              <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M10 3L5 8l5 5"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </button>
           )}
           <div className={styles.imageWrap} onClick={(e) => e.stopPropagation()}>
@@ -102,7 +117,15 @@ export function LightboxProvider({ children }: { children: React.ReactNode }) {
               }}
               aria-label="Next image"
             >
-              →
+              <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M6 3l5 5-5 5"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </button>
           )}
         </div>

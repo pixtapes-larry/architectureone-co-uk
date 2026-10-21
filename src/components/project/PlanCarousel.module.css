@@ -40,19 +40,20 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  background: rgba(20, 20, 27, 0.55);
-  color: var(--color-white);
-  font-size: 15px;
+  background: var(--color-white);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-float);
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: color 0.15s ease;
 }
 
 .nav:hover {
-  background: rgba(20, 20, 27, 0.75);
+  color: var(--color-coral);
 }
 
 .navPrev {
