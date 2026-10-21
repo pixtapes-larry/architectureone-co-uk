@@ -30,13 +30,16 @@
   border-radius: var(--radius-card);
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .thumb:hover {
   transform: scale(1.05);
   position: relative;
   z-index: 1;
+  box-shadow: var(--shadow-float);
 }
 
 .thumbImage {
