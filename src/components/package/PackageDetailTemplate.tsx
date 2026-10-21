@@ -36,6 +36,18 @@ export default function PackageDetailTemplate({
           </ul>
           <div className={styles.note}>{PD_PACKAGE_NOTE}</div>
 
+          <h2 className={styles.h2}>What you can expect</h2>
+          <div className={styles.expectGrid}>
+            {tier.expectations.map((item) => (
+              <div key={item.label} className={styles.expectItem}>
+                <div className={styles.expectCount}>
+                  {item.count ?? "TBC"}
+                </div>
+                <div className={styles.expectLabel}>{item.label}</div>
+              </div>
+            ))}
+          </div>
+
           <Link href={BOOK_CONSULTATION_HREF} className={styles.btnPrimary}>
             Book a Consultation
           </Link>
