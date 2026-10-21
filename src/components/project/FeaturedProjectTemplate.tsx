@@ -264,7 +264,6 @@ export default function FeaturedProjectTemplate({
                     className={styles.relatedImage}
                     src={p.photoUrl}
                     alt={p.address}
-                    style={{ width: "100%", objectFit: "cover" }}
                   />
                   <div className={styles.relatedMeta}>
                     <div className={styles.relatedTag}>

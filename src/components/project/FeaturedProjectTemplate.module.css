@@ -214,8 +214,8 @@
 
 .relatedGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
 }
 
 .relatedCard {
@@ -228,13 +228,13 @@
 
 .relatedImage {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  height: 120px;
   object-fit: cover;
   display: block;
 }
 
 .relatedMeta {
-  padding: 16px;
+  padding: 14px;
 }
 
 .relatedTag {
@@ -261,13 +261,13 @@
     flex: 1 1 auto;
   }
   .relatedGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 640px) {
-  .photoGrid {
-    grid-template-columns: repeat(2, 1fr);
+  .relatedGrid {
+    grid-template-columns: 1fr;
   }
   .beforeAfterGrid {
     grid-template-columns: 1fr;
