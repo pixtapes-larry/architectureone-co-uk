@@ -10,6 +10,9 @@
   padding: 0;
   border: none;
   background: var(--color-white);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  cursor: pointer;
 }
 
 .image {
@@ -21,6 +24,11 @@
   display: block;
   border-radius: var(--radius-card);
   border: 1px solid var(--color-line);
+  transition: transform 0.2s ease;
+}
+
+.imageButton:hover .image {
+  transform: scale(1.05);
 }
 
 .pill {

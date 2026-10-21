@@ -26,6 +26,7 @@
   background: none;
   border-radius: var(--radius-card);
   overflow: hidden;
+  cursor: pointer;
 }
 
 .thumbImage {
@@ -35,6 +36,11 @@
   display: block;
   border-radius: var(--radius-card);
   pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+.thumb:hover .thumbImage {
+  transform: scale(1.05);
 }
 
 @media (max-width: 900px) {
