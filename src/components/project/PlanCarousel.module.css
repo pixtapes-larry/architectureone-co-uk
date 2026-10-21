@@ -21,7 +21,7 @@
   transform: scale(1.05);
   position: relative;
   z-index: 1;
-  box-shadow: var(--shadow-float);
+  box-shadow: 0 8px 18px rgba(20, 20, 27, 0.18);
 }
 
 .image {
