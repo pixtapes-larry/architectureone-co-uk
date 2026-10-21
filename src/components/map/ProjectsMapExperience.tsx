@@ -17,13 +17,10 @@ import {
   PROJECT_TYPE_LABELS,
   type Category,
 } from "@/lib/project-labels";
+import { JAWG_URL, JAWG_ATTRIBUTION } from "@/lib/map-constants";
 import styles from "./ProjectsMapExperience.module.css";
 
 const HADLEIGH_CENTER: [number, number] = [52.0428, 0.9551];
-const JAWG_URL =
-  "https://tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token=imHq509eqKOC4OKptHA3t3azmq3vWukzpPOmO77Bvjuw6vsfGe4yC9ci8h2G0EYx";
-const JAWG_ATTRIBUTION =
-  '<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>&nbsp;contributors';
 
 function haversineMiles(
   lat1: number,

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import type { ProjectMapSummary } from "@/lib/mock-projects";
 import { MOCK_PROJECTS } from "@/lib/mock-projects";
 import {
@@ -9,11 +8,53 @@ import {
   PLANNING_TYPE_LABELS,
 } from "@/lib/project-labels";
 import { HOME_HREF, BOOK_CONSULTATION_HREF } from "@/lib/nav";
+import ProjectMiniMapLoader from "./ProjectMiniMapLoader";
 import styles from "./FeaturedProjectTemplate.module.css";
 
 function yearFromCompleted(completed: string): string {
   const match = completed.match(/\d{4}/);
   return match ? match[0] : "—";
+}
+
+function serviceLabel(service: string) {
+  return service
+    .toLowerCase()
+    .split("_")
+    .map((w) => w[0].toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
+function BeforeAfterPair({
+  heading,
+  before,
+  after,
+}: {
+  heading: string;
+  before?: string;
+  after?: string;
+}) {
+  if (!before && !after) return null;
+  return (
+    <>
+      <div className={styles.h2}>{heading}</div>
+      <div className={styles.beforeAfterGrid}>
+        {before && (
+          <div>
+            <div className={styles.imageCaption}>Before</div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className={styles.beforeAfterImage} src={before} alt="" />
+          </div>
+        )}
+        {after && (
+          <div>
+            <div className={styles.imageCaption}>After</div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className={styles.beforeAfterImage} src={after} alt="" />
+          </div>
+        )}
+      </div>
+    </>
+  );
 }
 
 export default function FeaturedProjectTemplate({
@@ -32,6 +73,9 @@ export default function FeaturedProjectTemplate({
       p.slug !== project.slug &&
       PROJECT_TYPE_CATEGORY[p.projectType] === category,
   ).slice(0, 3);
+
+  const beforePhotos = project.photos?.filter((p) => p.isBefore) ?? [];
+  const afterPhotos = project.photos?.filter((p) => !p.isBefore) ?? [];
 
   return (
     <>
@@ -61,19 +105,41 @@ export default function FeaturedProjectTemplate({
           <div className={styles.main}>
             <h1 className={styles.title}>{project.address}</h1>
 
-            {project.photos && project.photos.length > 0 && (
-              <div className={styles.photoGrid}>
-                {project.photos.map((src, i) => (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    key={i}
-                    className={styles.photoThumb}
-                    src={src}
-                    alt=""
-                    style={{ width: "100%", objectFit: "cover" }}
-                  />
-                ))}
-              </div>
+            {(beforePhotos.length > 0 || afterPhotos.length > 0) && (
+              <>
+                {beforePhotos.length > 0 && (
+                  <>
+                    <div className={styles.h2}>Before</div>
+                    <div className={styles.photoGrid}>
+                      {beforePhotos.map((p, i) => (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          key={i}
+                          className={styles.photoThumb}
+                          src={p.url}
+                          alt={p.caption ?? ""}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
+                {afterPhotos.length > 0 && (
+                  <>
+                    <div className={styles.h2}>After</div>
+                    <div className={styles.photoGrid}>
+                      {afterPhotos.map((p, i) => (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          key={i}
+                          className={styles.photoThumb}
+                          src={p.url}
+                          alt={p.caption ?? ""}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
+              </>
             )}
 
             <div className={styles.h2}>About this project</div>
@@ -86,6 +152,18 @@ export default function FeaturedProjectTemplate({
                 project&apos;s archive data is confirmed.
               </p>
             )}
+
+            <BeforeAfterPair
+              heading="Floor Plan"
+              before={project.floorplanBeforeImage}
+              after={project.floorplanAfterImage}
+            />
+
+            <BeforeAfterPair
+              heading="Elevations"
+              before={project.elevationBeforeImage}
+              after={project.elevationAfterImage}
+            />
 
             {project.teamNote && (
               <div className={styles.noteCard}>
@@ -123,6 +201,22 @@ export default function FeaturedProjectTemplate({
                 </span>
               </div>
               <div className={styles.detailRow}>
+                <span className={styles.detailLabel}>Builder</span>
+                <span className={styles.detailValue}>
+                  {project.constructionCompany ?? "—"}
+                </span>
+              </div>
+              <div className={styles.detailRow}>
+                <span className={styles.detailLabel}>Awards</span>
+                <span className={styles.detailValue}>
+                  {project.awards && project.awards.length > 0
+                    ? project.awards
+                        .map((a) => `${a.name} (${a.year})`)
+                        .join(", ")
+                    : "—"}
+                </span>
+              </div>
+              <div className={styles.detailRow}>
                 <span className={styles.detailLabel}>Year</span>
                 <span className={styles.detailValue}>
                   {project.year ?? yearFromCompleted(project.completed)}
@@ -139,23 +233,19 @@ export default function FeaturedProjectTemplate({
             {project.services && project.services.length > 0 && (
               <div className={styles.card}>
                 <div className={styles.cardLabel}>Services Delivered</div>
-                {project.services.map((service) => (
-                  <div key={service} className={styles.serviceRow}>
-                    <span className={styles.serviceDot} />
-                    {service
-                      .toLowerCase()
-                      .split("_")
-                      .map((w) => w[0].toUpperCase() + w.slice(1))
-                      .join(" ")}
-                  </div>
-                ))}
+                <ul className={styles.servicesList}>
+                  {project.services.map((service) => (
+                    <li key={service}>{serviceLabel(service)}</li>
+                  ))}
+                </ul>
               </div>
             )}
 
-            <div className={styles.card} style={{ padding: 0 }}>
-              <ImagePlaceholder
-                className={styles.miniMap}
-                label="[Mini map — this project's pin]"
+            <div className={styles.card} style={{ padding: 0, overflow: "hidden" }}>
+              <ProjectMiniMapLoader
+                latitude={project.latitude}
+                longitude={project.longitude}
+                label={project.address}
               />
             </div>
 

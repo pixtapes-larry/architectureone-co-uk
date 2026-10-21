@@ -30,7 +30,16 @@ export type ProjectMapSummary = {
   // Matches the real Project model's Featured-only fields exactly (see
   // prisma/schema.prisma) so a real DB record slots in with no reshaping.
   fullDescription?: string;
-  photos?: string[]; // additional gallery images beyond photoUrl
+  constructionCompany?: string; // "Builder"
+  awards?: { name: string; year: number }[];
+  // additional gallery photos beyond photoUrl — isBefore matches the real
+  // ProjectPhoto.isBefore column, so grouping into Before/After at render
+  // time works the same way a real query result would.
+  photos?: { url: string; isBefore: boolean; caption?: string }[];
+  floorplanBeforeImage?: string;
+  floorplanAfterImage?: string;
+  elevationBeforeImage?: string;
+  elevationAfterImage?: string;
   year?: number;
   status?: string;
   services?: ServiceDelivered[];
@@ -68,6 +77,7 @@ export const MOCK_PROJECTS: ProjectMapSummary[] = [
     photoUrl: "/projects/p2-pheasant-barn.jpg",
     latitude: 52.048605,
     longitude: 0.875409,
+    awards: [{ name: "LABC Regional Winner", year: 2023 }],
   },
   {
     slug: null,

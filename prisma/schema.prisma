@@ -104,8 +104,10 @@ model Project {
   featured             Boolean @default(false)
   fullDescription      String? @db.Text // the long-form "brief / outcome" narrative
   constructionCompany  String?
-  floorplanImage       String?
-  elevationImage       String?
+  floorplanBeforeImage String?
+  floorplanAfterImage  String?
+  elevationBeforeImage String?
+  elevationAfterImage  String?
   year                 Int?
   status               String?  @default("Completed")
   slug                 String?  @unique // case-study page URL, e.g. ip7-hadleigh-loft-conversion
