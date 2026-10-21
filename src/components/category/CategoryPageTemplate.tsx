@@ -2,6 +2,7 @@ import Link from "next/link";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import type { CategoryPageConfig } from "@/lib/category-pages";
 import { HOME_HREF, CONTACT_HREF, BOOK_CONSULTATION_HREF } from "@/lib/nav";
+import { ARCHITECTURE_ONE_PROMISE } from "@/lib/site-content";
 import styles from "./CategoryPageTemplate.module.css";
 
 function Kicker({ n, label }: { n: number; label: string }) {
@@ -224,12 +225,9 @@ export default function CategoryPageTemplate({
                 <div className={styles.trustCard}>
                   <h3>The Architecture ONE Promise</h3>
                   <ul className={styles.trustList}>
-                    <li>Clear, fixed-fee architectural quotations</li>
-                    <li>Drawings ready in 7–10 working days</li>
-                    <li>Personal and local expertise</li>
-                    <li>Honest &amp; transparent interactions</li>
-                    <li>Trusted by our customers [confirm rating]</li>
-                    <li>Protection: professional indemnity [confirm figure]</li>
+                    {ARCHITECTURE_ONE_PROMISE.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
                   </ul>
                 </div>
                 <div className={styles.trustCard}>

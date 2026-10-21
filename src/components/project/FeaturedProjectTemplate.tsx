@@ -6,6 +6,7 @@ import {
   PROJECT_TYPE_ROUTES,
   PROJECT_TYPE_CATEGORY,
   PLANNING_TYPE_LABELS,
+  SERVICE_DELIVERED_LABELS,
 } from "@/lib/project-labels";
 import { HOME_HREF, BOOK_CONSULTATION_HREF } from "@/lib/nav";
 import ProjectMiniMapLoader from "./ProjectMiniMapLoader";
@@ -17,14 +18,6 @@ import styles from "./FeaturedProjectTemplate.module.css";
 function yearFromCompleted(completed: string): string {
   const match = completed.match(/\d{4}/);
   return match ? match[0] : "—";
-}
-
-function serviceLabel(service: string) {
-  return service
-    .toLowerCase()
-    .split("_")
-    .map((w) => w[0].toUpperCase() + w.slice(1))
-    .join(" ");
 }
 
 export default function FeaturedProjectTemplate({
@@ -207,7 +200,7 @@ export default function FeaturedProjectTemplate({
                 <div className={styles.cardLabel}>Services Delivered</div>
                 <ul className={styles.servicesList}>
                   {project.services.map((service) => (
-                    <li key={service}>{serviceLabel(service)}</li>
+                    <li key={service}>{SERVICE_DELIVERED_LABELS[service]}</li>
                   ))}
                 </ul>
               </div>

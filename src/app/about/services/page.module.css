@@ -1,0 +1,116 @@
+.page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 36px 48px 80px;
+}
+
+.crumb {
+  font-size: 13px;
+  color: var(--color-muted);
+  margin-bottom: 24px;
+}
+
+.crumb a:hover {
+  color: var(--color-coral);
+}
+
+.intro {
+  margin-bottom: 48px;
+  max-width: 700px;
+}
+
+.title {
+  font-size: 34px;
+  font-weight: 800;
+  margin: 0 0 14px;
+}
+
+.lead {
+  color: var(--color-muted);
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.groupGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 56px;
+}
+
+.groupCard {
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  padding: 24px;
+}
+
+.groupHeading {
+  font-size: 15px;
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+
+.groupNote {
+  font-size: 11.5px;
+  color: var(--color-muted);
+  margin: 0 0 12px;
+}
+
+.serviceList {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13px;
+  color: var(--color-muted-dark);
+  line-height: 1.8;
+}
+
+/* closing CTA band — full-bleed, matching the rest of the site */
+
+.ctaBand {
+  background: var(--color-ink);
+  color: var(--color-white);
+  text-align: center;
+  padding: 80px 48px;
+}
+
+.ctaBand .h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-white);
+  margin: 0 0 16px;
+}
+
+.ctaLead {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14.5px;
+  max-width: 560px;
+  margin: 0 auto 22px;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 24px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 700;
+  background: var(--color-coral);
+  color: var(--color-white);
+  box-shadow: var(--shadow-primary-btn);
+}
+
+@media (max-width: 900px) {
+  .groupGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .groupGrid {
+    grid-template-columns: 1fr;
+  }
+}
