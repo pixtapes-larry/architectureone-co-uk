@@ -143,9 +143,17 @@ export default function FeaturedProjectTemplate({
             )}
 
             <div className={styles.h2}>About this project</div>
-            <p className={styles.lead}>
-              {project.fullDescription ?? project.description}
-            </p>
+            {project.fullDescription ? (
+              project.fullDescription
+                .split("\n\n")
+                .map((para, i) => (
+                  <p key={i} className={styles.lead}>
+                    {para}
+                  </p>
+                ))
+            ) : (
+              <p className={styles.lead}>{project.description}</p>
+            )}
             {!project.fullDescription && (
               <p className={styles.pendingNote}>
                 Full case study write-up pending — coming once this

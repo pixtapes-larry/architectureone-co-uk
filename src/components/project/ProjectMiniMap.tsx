@@ -31,7 +31,7 @@ export default function ProjectMiniMap({
       // so it reads as a fixed image rather than an interactive map.
       const map = Leaflet.map(mapElRef.current, {
         center: [latitude, longitude],
-        zoom: 14,
+        zoom: 11,
         zoomControl: false,
         attributionControl: false,
         dragging: false,

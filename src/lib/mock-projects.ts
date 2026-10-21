@@ -78,6 +78,25 @@ export const MOCK_PROJECTS: ProjectMapSummary[] = [
     latitude: 52.048605,
     longitude: 0.875409,
     awards: [{ name: "LABC Regional Winner", year: 2023 }],
+    // Flagship demo content — stock photos/drawings standing in so the
+    // Featured Project template can be seen fully populated. Not real
+    // archive material; swap for the real thing once harvested. No new
+    // facts invented beyond what's already in `description` above (the
+    // award, the 4/5 bed brief, retaining original barn materials,
+    // Class Q prior approval). Deliberately no `teamNote` — that field
+    // is reserved for an actually-real quote, never a fabricated one.
+    fullDescription:
+      "The brief was to bring a redundant agricultural barn back into use as a 4/5 bed family home, without losing the character that made the building worth converting in the first place. We worked within Class Q, securing prior approval for the change of use while keeping the works to what the existing structure could genuinely support.\n\nOriginal barn materials — timber framing, cladding, roof structure — were retained and worked into the new design wherever possible, rather than stripped out and replaced. The result reads as a barn that's been lived into, not a new house wearing a barn's shell.\n\nCompleted in March 2023, the project went on to win an LABC Regional Award, recognising both the technical handling of the conversion and the quality of the finished home.",
+    photos: [
+      { url: "/projects/pheasant-barn-before-1.jpg", isBefore: true },
+      { url: "/projects/pheasant-barn-before-2.jpg", isBefore: true },
+      { url: "/projects/pheasant-barn-after-1.jpg", isBefore: false },
+      { url: "/projects/pheasant-barn-after-2.jpg", isBefore: false },
+    ],
+    floorplanBeforeImage: "/projects/pheasant-barn-floorplan-before.jpg",
+    floorplanAfterImage: "/projects/pheasant-barn-floorplan-after.jpg",
+    elevationBeforeImage: "/projects/pheasant-barn-elevation-before.jpg",
+    elevationAfterImage: "/projects/pheasant-barn-elevation-after.jpg",
   },
   {
     slug: null,
