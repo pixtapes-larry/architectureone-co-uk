@@ -163,20 +163,10 @@
   color: var(--color-ink);
 }
 
-.beforeAfterGrid {
+.plansRow {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
-  margin-bottom: 32px;
-}
-
-.imageCaption {
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  margin-bottom: 8px;
+  gap: 32px;
 }
 
 .btnPrimary {
@@ -263,13 +253,13 @@
   .relatedGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .plansRow {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 640px) {
   .relatedGrid {
-    grid-template-columns: 1fr;
-  }
-  .beforeAfterGrid {
     grid-template-columns: 1fr;
   }
 }

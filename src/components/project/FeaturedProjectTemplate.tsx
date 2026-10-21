@@ -11,7 +11,7 @@ import { HOME_HREF, BOOK_CONSULTATION_HREF } from "@/lib/nav";
 import ProjectMiniMapLoader from "./ProjectMiniMapLoader";
 import { LightboxProvider } from "./Lightbox";
 import PhotoGallery from "./PhotoGallery";
-import PlanImage from "./PlanImage";
+import PlanCarousel from "./PlanCarousel";
 import styles from "./FeaturedProjectTemplate.module.css";
 
 function yearFromCompleted(completed: string): string {
@@ -25,41 +25,6 @@ function serviceLabel(service: string) {
     .split("_")
     .map((w) => w[0].toUpperCase() + w.slice(1))
     .join(" ");
-}
-
-function BeforeAfterPlan({
-  heading,
-  before,
-  after,
-}: {
-  heading: string;
-  before?: string;
-  after?: string;
-}) {
-  if (!before && !after) return null;
-  const images = [
-    ...(before ? [{ url: before, caption: `${heading} — Before` }] : []),
-    ...(after ? [{ url: after, caption: `${heading} — After` }] : []),
-  ];
-  return (
-    <>
-      <div className={styles.h2}>{heading}</div>
-      <div className={styles.beforeAfterGrid}>
-        {before && (
-          <div>
-            <div className={styles.imageCaption}>Before</div>
-            <PlanImage src={before} images={images} index={0} />
-          </div>
-        )}
-        {after && (
-          <div>
-            <div className={styles.imageCaption}>After</div>
-            <PlanImage src={after} images={images} index={before ? 1 : 0} />
-          </div>
-        )}
-      </div>
-    </>
-  );
 }
 
 export default function FeaturedProjectTemplate({
@@ -142,17 +107,35 @@ export default function FeaturedProjectTemplate({
               </>
             )}
 
-            <BeforeAfterPlan
-              heading="Floor Plan"
-              before={project.floorplanBeforeImage}
-              after={project.floorplanAfterImage}
-            />
-
-            <BeforeAfterPlan
-              heading="Elevations"
-              before={project.elevationBeforeImage}
-              after={project.elevationAfterImage}
-            />
+            {(project.floorplanBeforeImage ||
+              project.floorplanAfterImage ||
+              project.elevationBeforeImage ||
+              project.elevationAfterImage) && (
+              <div className={styles.plansRow}>
+                {(project.floorplanBeforeImage ||
+                  project.floorplanAfterImage) && (
+                  <div>
+                    <div className={styles.h2}>Floor Plan</div>
+                    <PlanCarousel
+                      heading="Floor Plan"
+                      before={project.floorplanBeforeImage}
+                      after={project.floorplanAfterImage}
+                    />
+                  </div>
+                )}
+                {(project.elevationBeforeImage ||
+                  project.elevationAfterImage) && (
+                  <div>
+                    <div className={styles.h2}>Elevations</div>
+                    <PlanCarousel
+                      heading="Elevations"
+                      before={project.elevationBeforeImage}
+                      after={project.elevationAfterImage}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
 
             {project.teamNote && (
               <div className={styles.noteCard}>
