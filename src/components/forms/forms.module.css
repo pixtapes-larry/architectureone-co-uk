@@ -1,0 +1,80 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.input,
+.select,
+.textarea {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--color-ink);
+  background: var(--color-white);
+  border: 1.5px solid var(--color-line-strong);
+  border-radius: var(--radius-card);
+  padding: 12px 14px;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: 2px solid var(--color-coral);
+  outline-offset: 1px;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.submitBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 700;
+  background: var(--color-coral);
+  color: var(--color-white);
+  border: none;
+  box-shadow: var(--shadow-primary-btn);
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.submitBtn:hover {
+  background: var(--color-coral-dark);
+}
+
+.formNote {
+  font-size: 11.5px;
+  color: var(--color-muted);
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

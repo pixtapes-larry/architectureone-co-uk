@@ -16,3 +16,20 @@ export function pinIcon(featured: boolean) {
     iconAnchor: [size / 2, size],
   });
 }
+
+// The practice's own office pin — a round coral badge carrying the "AO"
+// wordmark, deliberately not the teardrop shape used for project pins,
+// so it reads as "this is us", not "this is one of our projects".
+export function officePinIcon() {
+  const size = 40;
+  return L.divIcon({
+    className: "",
+    html:
+      `<div style="width:${size}px;height:${size}px;border-radius:50%;` +
+      `background:#E63950;border:3px solid #fff;box-shadow:0 3px 10px rgba(20,20,27,.45);` +
+      `display:flex;align-items:center;justify-content:center;` +
+      `font-family:Montserrat,sans-serif;font-weight:800;font-size:12px;letter-spacing:.3px;color:#fff;">AO</div>`,
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
+  });
+}
