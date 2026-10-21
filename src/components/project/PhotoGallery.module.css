@@ -4,10 +4,12 @@
   overflow-x: auto;
   scroll-snap-type: x proximity;
   cursor: grab;
-  margin-bottom: 32px;
-  /* vertical breathing room so a hovered tile's scale-up isn't clipped
-     by the strip's own overflow box */
-  padding: 8px 4px;
+  margin: -22px -4px 10px;
+  /* vertical breathing room so a hovered tile's scale-up + shadow
+     (reaching ~26px below it) isn't clipped by the strip's own
+     overflow box — the negative margin above offsets this padding so
+     the strip doesn't visually shift position */
+  padding: 22px 4px 26px;
   /* hide the scrollbar — the drag affordance plus visible edge-peek is
      the signal there's more, not a visible scrollbar track */
   scrollbar-width: none;
