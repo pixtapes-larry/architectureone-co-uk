@@ -5,6 +5,9 @@
   scroll-snap-type: x proximity;
   cursor: grab;
   margin-bottom: 32px;
+  /* vertical breathing room so a hovered tile's scale-up isn't clipped
+     by the strip's own overflow box */
+  padding: 8px 4px;
   /* hide the scrollbar — the drag affordance plus visible edge-peek is
      the signal there's more, not a visible scrollbar track */
   scrollbar-width: none;
@@ -27,6 +30,13 @@
   border-radius: var(--radius-card);
   overflow: hidden;
   cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.thumb:hover {
+  transform: scale(1.05);
+  position: relative;
+  z-index: 1;
 }
 
 .thumbImage {
@@ -36,11 +46,6 @@
   display: block;
   border-radius: var(--radius-card);
   pointer-events: none;
-  transition: transform 0.2s ease;
-}
-
-.thumb:hover .thumbImage {
-  transform: scale(1.05);
 }
 
 @media (max-width: 900px) {
