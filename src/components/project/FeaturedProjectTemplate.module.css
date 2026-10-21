@@ -1,0 +1,277 @@
+.page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 36px 48px 64px;
+}
+
+.crumb {
+  font-size: 13px;
+  color: var(--color-muted);
+  margin-bottom: 24px;
+}
+
+.crumb a:hover {
+  color: var(--color-coral);
+}
+
+.hero {
+  position: relative;
+  height: 420px;
+  overflow: hidden;
+  border-radius: var(--radius-signature);
+  margin-bottom: 40px;
+}
+
+.heroImage {
+  position: absolute;
+  inset: 0;
+}
+
+.heroTags {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  display: flex;
+  gap: 10px;
+}
+
+.heroTagDark {
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 12.5px;
+  font-weight: 700;
+  background: var(--color-ink);
+  color: var(--color-white);
+}
+
+.heroTagLight {
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 12.5px;
+  font-weight: 600;
+  background: var(--color-white);
+  border: 1px solid var(--color-line-strong);
+  color: var(--color-ink);
+}
+
+.layout {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+  margin-bottom: 64px;
+}
+
+.main {
+  flex: 1 1 640px;
+  min-width: 0;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 24px;
+}
+
+.photoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.photoThumb {
+  height: 100px;
+  border-radius: var(--radius-card);
+}
+
+.h2 {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 0 14px;
+}
+
+.lead {
+  color: var(--color-muted);
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0 0 32px;
+}
+
+.pendingNote {
+  font-size: 12.5px;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+.noteCard {
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-card);
+  padding: 28px;
+}
+
+.noteLabel {
+  font-size: 11.5px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 10px;
+}
+
+.noteText {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.sidebar {
+  width: 340px;
+  flex: 0 0 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  padding: 24px;
+}
+
+.cardLabel {
+  font-size: 11.5px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 14px;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13.5px;
+  padding: 6px 0;
+}
+
+.detailRow + .detailRow {
+  border-top: 1px solid var(--color-line);
+}
+
+.detailLabel {
+  color: var(--color-muted);
+}
+
+.detailValue {
+  font-weight: 600;
+  text-align: right;
+}
+
+.serviceRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  padding: 4px 0;
+}
+
+.serviceDot {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background: var(--color-coral);
+  flex: 0 0 14px;
+}
+
+.miniMap {
+  height: 160px;
+  border-radius: var(--radius-card);
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 24px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 700;
+  background: var(--color-coral);
+  color: var(--color-white);
+  box-shadow: var(--shadow-primary-btn);
+}
+
+.btnPrimary:hover {
+  background: var(--color-coral-dark);
+  color: var(--color-white);
+}
+
+/* related projects — full-bleed band, matching the rest of the site's rhythm */
+
+.relatedBand {
+  background: var(--color-surface-alt);
+  border-top: 1px solid var(--color-line);
+  padding: 56px 48px;
+}
+
+.relatedInner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.relatedCard {
+  display: block;
+  background: var(--color-white);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+.relatedImage {
+  height: 160px;
+}
+
+.relatedMeta {
+  padding: 16px;
+}
+
+.relatedTag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  background: var(--color-chip-bg);
+  color: var(--color-muted-dark);
+  margin-bottom: 8px;
+}
+
+.relatedName {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+  .relatedGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .photoGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

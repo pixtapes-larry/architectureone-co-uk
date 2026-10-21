@@ -8,7 +8,7 @@
 // localAuthority values below are inferred from the town/outcode, NOT
 // confirmed against real records yet — flag for the harvesting pass.
 
-import { ProjectType, PlanningType } from "@/generated/prisma/enums";
+import { ProjectType, PlanningType, ServiceDelivered } from "@/generated/prisma/enums";
 
 export type ProjectMapSummary = {
   slug: string | null; // null for non-featured pins — nothing to link to
@@ -24,6 +24,17 @@ export type ProjectMapSummary = {
   photoUrl: string; // always set — "default.jpg" stands in where no real photo exists yet
   latitude: number;
   longitude: number;
+
+  // --- Case-study fields, Featured only — all optional because none of
+  // these 10 demo properties have real harvested case-study content yet.
+  // Matches the real Project model's Featured-only fields exactly (see
+  // prisma/schema.prisma) so a real DB record slots in with no reshaping.
+  fullDescription?: string;
+  photos?: string[]; // additional gallery images beyond photoUrl
+  year?: number;
+  status?: string;
+  services?: ServiceDelivered[];
+  teamNote?: string; // "A note from the team" — only ever real, never fabricated
 };
 
 export const MOCK_PROJECTS: ProjectMapSummary[] = [
