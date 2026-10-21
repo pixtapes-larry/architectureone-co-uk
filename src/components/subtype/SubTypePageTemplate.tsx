@@ -165,7 +165,7 @@ export default function SubTypePageTemplate({
                       ))}
                     </ul>
                     <Link
-                      href="#"
+                      href={tier.slug ? `/packages/${tier.slug}` : "#"}
                       className={
                         tier.featured ? styles.btnPrimary : styles.btnOutline
                       }

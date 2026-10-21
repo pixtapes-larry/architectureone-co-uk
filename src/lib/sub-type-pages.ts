@@ -6,6 +6,7 @@
 import { ProjectType } from "@/generated/prisma/enums";
 import type { ConsiderationItem, PricingSection } from "./category-pages";
 import { CATEGORY_LABELS, PROJECT_TYPE_CATEGORY } from "./project-labels";
+import { PD_PACKAGE_TIERS, PD_PACKAGE_NOTE } from "./packages";
 
 export type ProcessStep = { title: string; description: string };
 
@@ -58,27 +59,6 @@ export function subTypeCategoryHref(config: SubTypePageConfig) {
       ? "/large-extensions"
       : "/new-builds-developments";
 }
-
-// TODO: package tier scope bullets are placeholders, same caveat as the
-// Permitted Development category page — not yet locked with Luke.
-const PD_PACKAGE_TIERS = [
-  {
-    name: "Starter",
-    price: "£1,199",
-    bullets: ["Scope to be confirmed", "Scope to be confirmed", "Scope to be confirmed"],
-  },
-  {
-    name: "Standard",
-    price: "£1,799",
-    featured: true,
-    bullets: ["Scope to be confirmed", "Scope to be confirmed", "Scope to be confirmed"],
-  },
-  {
-    name: "Extended",
-    price: "£2,499",
-    bullets: ["Scope to be confirmed", "Scope to be confirmed", "Scope to be confirmed"],
-  },
-];
 
 export const outbuildingsConfig: SubTypePageConfig = {
   projectType: ProjectType.OUTBUILDINGS,
@@ -138,7 +118,7 @@ export const outbuildingsConfig: SubTypePageConfig = {
   pricing: {
     kind: "packages",
     tiers: PD_PACKAGE_TIERS,
-    note: "All exclude planning/structural/other third-party fees. Working guide prices only — not yet locked.",
+    note: PD_PACKAGE_NOTE,
   },
   ctaQuestion: "Think your project could work this way?",
 };
@@ -263,7 +243,7 @@ export const smallWrapAroundExtensionsConfig: SubTypePageConfig = {
   pricing: {
     kind: "packages",
     tiers: PD_PACKAGE_TIERS,
-    note: "All exclude planning/structural/other third-party fees. Working guide prices only — not yet locked.",
+    note: PD_PACKAGE_NOTE,
   },
   ctaQuestion: "Think your project could work this way?",
 };
@@ -325,7 +305,7 @@ export const garageConversionsConfig: SubTypePageConfig = {
   pricing: {
     kind: "packages",
     tiers: PD_PACKAGE_TIERS,
-    note: "All exclude planning/structural/other third-party fees. Working guide prices only — not yet locked.",
+    note: PD_PACKAGE_NOTE,
   },
   ctaQuestion: "Think your project could work this way?",
 };
@@ -418,7 +398,7 @@ export const loftConversionsConfig: SubTypePageConfig = {
   pricing: {
     kind: "packages",
     tiers: PD_PACKAGE_TIERS,
-    note: "All exclude planning/structural/other third-party fees. Working guide prices only — not yet locked.",
+    note: PD_PACKAGE_NOTE,
   },
   ctaQuestion: "Think your project could work this way?",
 };

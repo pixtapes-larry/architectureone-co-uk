@@ -5,6 +5,7 @@
 
 import { PROJECT_TYPE_ROUTES, type Category } from "./project-labels";
 import { ABOUT_SERVICES_HREF } from "./nav";
+import { PD_PACKAGE_TIERS, PD_PACKAGE_NOTE } from "./packages";
 
 export type SubTypeCard = {
   title: string;
@@ -21,6 +22,7 @@ export type PricingSection =
   | {
       kind: "packages";
       tiers: {
+        slug?: string; // links "Learn more" to /packages/[slug] when set
         name: string;
         price: string;
         featured?: boolean;
@@ -135,25 +137,8 @@ export const permittedDevelopmentConfig: CategoryPageConfig = {
     "Considering another type of project under Permitted Development? We can help with this too — from porches to home gyms and beyond.",
   pricing: {
     kind: "packages",
-    tiers: [
-      {
-        name: "Starter",
-        price: "£1,199",
-        bullets: ["Scope to be confirmed", "Scope to be confirmed", "Scope to be confirmed"],
-      },
-      {
-        name: "Standard",
-        price: "£1,799",
-        featured: true,
-        bullets: ["Scope to be confirmed", "Scope to be confirmed", "Scope to be confirmed"],
-      },
-      {
-        name: "Extended",
-        price: "£2,499",
-        bullets: ["Scope to be confirmed", "Scope to be confirmed", "Scope to be confirmed"],
-      },
-    ],
-    note: "All exclude planning/structural/other third-party fees (see below). Working guide prices only — not yet locked.",
+    tiers: PD_PACKAGE_TIERS,
+    note: PD_PACKAGE_NOTE,
   },
   fees: {
     heading: "Potential Professional Fees",
