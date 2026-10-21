@@ -96,6 +96,25 @@ export default function SubTypePageTemplate({
       </section>
 
       <div className={`${styles.page} ${styles.pageNoTop}`}>
+        {config.typesSection && (
+          <section className={styles.section}>
+            <h2 className={styles.h2}>{config.typesSection.heading}</h2>
+            <p className={styles.lead}>{config.typesSection.lead}</p>
+            <div className={styles.cardGrid} style={{ ["--cols" as string]: 4 }}>
+              {config.typesSection.items.map((item) => (
+                <div key={item.title} className={styles.card}>
+                  <ImagePlaceholder
+                    className={styles.cardImage}
+                    label={item.photoLabel}
+                  />
+                  <div className={styles.cardTitle}>{item.title}</div>
+                  <div className={styles.cardDesc}>{item.description}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         <section className={styles.section}>
           <h2 className={styles.h2}>{config.planningHeading}</h2>
           <div className={styles.cardGrid}>

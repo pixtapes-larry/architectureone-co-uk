@@ -206,7 +206,7 @@
 
 .cardGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
   gap: 20px;
 }
 
@@ -215,6 +215,12 @@
   border: 1px solid var(--color-line);
   border-radius: var(--radius-card);
   padding: 20px;
+}
+
+.cardImage {
+  height: 100px;
+  border-radius: var(--radius-card);
+  margin-bottom: 10px;
 }
 
 .cardTitle {
