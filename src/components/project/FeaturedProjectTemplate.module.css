@@ -155,6 +155,10 @@
   text-align: right;
 }
 
+.detailValue a:hover {
+  color: var(--color-coral);
+}
+
 .servicesList {
   margin: 0;
   padding-left: 18px;

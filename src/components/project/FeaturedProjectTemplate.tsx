@@ -9,6 +9,7 @@ import {
   SERVICE_DELIVERED_LABELS,
 } from "@/lib/project-labels";
 import { HOME_HREF, BOOK_CONSULTATION_HREF } from "@/lib/nav";
+import { localAuthoritySlug } from "@/lib/local-authorities";
 import ProjectMiniMapLoader from "./ProjectMiniMapLoader";
 import { LightboxProvider } from "./Lightbox";
 import PhotoGallery from "./PhotoGallery";
@@ -156,7 +157,11 @@ export default function FeaturedProjectTemplate({
               <div className={styles.detailRow}>
                 <span className={styles.detailLabel}>Local Authority</span>
                 <span className={styles.detailValue}>
-                  {project.localAuthority}
+                  <Link
+                    href={`/local-authority/${localAuthoritySlug(project.localAuthority)}`}
+                  >
+                    {project.localAuthority}
+                  </Link>
                 </span>
               </div>
               <div className={styles.detailRow}>
