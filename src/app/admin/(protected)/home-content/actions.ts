@@ -29,9 +29,6 @@ export async function saveHomeContentAction(formData: FormData) {
     heroPhotoLabel: str(formData, "heroPhotoLabel"),
 
     statsFoundedYear: num(formData, "statsFoundedYear"),
-    statsRating: Number(str(formData, "statsRating") || "0"),
-    statsReviewCount: num(formData, "statsReviewCount"),
-    statsAwardsWon: num(formData, "statsAwardsWon"),
 
     audienceHeading: str(formData, "audienceHeading"),
     audienceLead: str(formData, "audienceLead"),

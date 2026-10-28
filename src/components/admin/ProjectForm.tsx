@@ -33,12 +33,6 @@ export default function ProjectForm({
     saveProjectAction,
     initialState,
   );
-  const [awards, setAwards] = useState<{ name: string; year: string }[]>(
-    (project?.awards as { name: string; year: number }[] | null)?.map((a) => ({
-      name: a.name,
-      year: String(a.year),
-    })) ?? [],
-  );
   const [selectedServices, setSelectedServices] = useState<Set<number>>(
     new Set(project?.services.map((s) => s.serviceId) ?? []),
   );
@@ -422,40 +416,14 @@ export default function ProjectForm({
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Awards</h2>
-        {awards.map((award, i) => (
-          <div key={i} className={styles.awardsRow}>
-            <input
-              name="award_name"
-              defaultValue={award.name}
-              placeholder="Award name"
-              className={formStyles.input}
-            />
-            <input
-              name="award_year"
-              defaultValue={award.year}
-              placeholder="Year"
-              type="number"
-              className={formStyles.input}
-            />
-            <button
-              type="button"
-              className={styles.removeBtn}
-              aria-label="Remove award"
-              onClick={() =>
-                setAwards((prev) => prev.filter((_, idx) => idx !== i))
-              }
-            >
-              ×
-            </button>
-          </div>
-        ))}
-        <button
-          type="button"
-          className={styles.smallBtn}
-          onClick={() => setAwards((prev) => [...prev, { name: "", year: "" }])}
-        >
-          + Add award
-        </button>
+        <p style={{ fontSize: 13, color: "var(--color-muted)" }}>
+          Awards are managed on their own page now, not here — add or edit
+          one under{" "}
+          <a href="/admin/awards" style={{ color: "var(--color-coral)" }}>
+            Content Library → Awards
+          </a>{" "}
+          and attach it to this project there.
+        </p>
       </section>
 
       <section className={styles.section}>

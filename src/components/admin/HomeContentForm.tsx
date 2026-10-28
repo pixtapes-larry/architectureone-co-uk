@@ -48,27 +48,13 @@ export default function HomeContentForm({ content }: { content: HomeContentRecor
         <p style={{ fontSize: 13, color: "var(--color-muted)", marginBottom: 12 }}>
           The hero&apos;s featured-quote bubble is edited on the Testimonials
           page, not here — it shows the first testimonial marked
-          &quot;Featured&quot;.
+          &quot;Featured&quot;. The rating, review count and awards-won
+          numbers shown next to it are computed live from Testimonials and
+          Awards too — add or edit those directly to change these numbers.
         </p>
-        <div className={formStyles.row}>
-          <div className={formStyles.field}>
-            <label className={formStyles.label} htmlFor="statsFoundedYear">Founded year</label>
-            <input id="statsFoundedYear" name="statsFoundedYear" type="number" required defaultValue={content.statsFoundedYear} className={formStyles.input} />
-          </div>
-          <div className={formStyles.field}>
-            <label className={formStyles.label} htmlFor="statsRating">Rating (e.g. 4.9)</label>
-            <input id="statsRating" name="statsRating" type="number" step="0.1" required defaultValue={content.statsRating} className={formStyles.input} />
-          </div>
-        </div>
-        <div className={formStyles.row}>
-          <div className={formStyles.field}>
-            <label className={formStyles.label} htmlFor="statsReviewCount">Review count</label>
-            <input id="statsReviewCount" name="statsReviewCount" type="number" required defaultValue={content.statsReviewCount} className={formStyles.input} />
-          </div>
-          <div className={formStyles.field}>
-            <label className={formStyles.label} htmlFor="statsAwardsWon">Awards won</label>
-            <input id="statsAwardsWon" name="statsAwardsWon" type="number" required defaultValue={content.statsAwardsWon} className={formStyles.input} />
-          </div>
+        <div className={formStyles.field}>
+          <label className={formStyles.label} htmlFor="statsFoundedYear">Founded year</label>
+          <input id="statsFoundedYear" name="statsFoundedYear" type="number" required defaultValue={content.statsFoundedYear} className={formStyles.input} style={{ maxWidth: 160 }} />
         </div>
       </section>
 

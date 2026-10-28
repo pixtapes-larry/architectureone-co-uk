@@ -226,9 +226,11 @@ model HomePageContent {
   heroPhotoLabel    String
 
   statsFoundedYear Int
-  statsRating      Float
-  statsReviewCount Int
-  statsAwardsWon   Int
+
+  // statsRating/statsReviewCount (from Testimonial averages) and
+  // statsAwardsWon (from Award count) are computed live at render time,
+  // not stored here — see src/lib/testimonials.ts getReviewStats() and
+  // src/lib/awards.ts getAwardCount().
 
   // The home page's single featured-quote bubble now pulls from the first
   // featured Testimonial (by sortOrder) instead of a static field here.
@@ -340,6 +342,32 @@ model Testimonial {
 // pages show truncated quotes that link here (to that specific
 // testimonial's own #anchor) for the full text.
 model TestimonialsPageContent {
+  id Int @id @default(1)
+
+  heading         String
+  introParagraphs Json // string[]
+
+  metaTitle       String?
+  metaDescription String?
+}
+
+// A real award win — its own content type, optionally linked to the
+// project it was won for. Replaces the old free-text Project.awards Json
+// field. Feeds the Home hero's "X awards won" stat (a live count) and has
+// its own public page (AwardsPageContent) listing every one.
+model Award {
+  id        Int     @id @default(autoincrement())
+  name      String // e.g. "LABC Regional Winner"
+  year      Int
+  sortOrder Int     @default(0)
+
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  projectId Int?
+}
+
+// Single shared row — the /awards page's own intro copy, above the full
+// list of Award rows.
+model AwardsPageContent {
   id Int @id @default(1)
 
   heading         String
@@ -522,7 +550,6 @@ model Project {
 
   // --- Optional on any project ---
   otherTags       Json? // e.g. ["Heritage", "Class Q", "Change of Use"]
-  awards          Json? // e.g. [{ "name": "LABC Regional Winner", "year": 2024 }]
   testimonial     String? @db.Text
   customerName    String?
   customerConsent Boolean? @default(false)
@@ -530,6 +557,7 @@ model Project {
   photos       ProjectPhoto[]
   services     ProjectServiceDelivered[]
   testimonials Testimonial[]
+  awards       Award[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

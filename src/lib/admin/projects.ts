@@ -75,7 +75,6 @@ export type ProjectAdminInput = {
   status?: string;
   slug?: string;
   otherTags?: string[];
-  awards?: { name: string; year: number }[];
   testimonial?: string;
   customerName?: string;
   customerConsent?: boolean;

@@ -4,13 +4,14 @@
 import { prisma } from "../prisma";
 
 export async function getAdminNavCounts(): Promise<Record<string, number>> {
-  const [projects, packages, teamMembers, testimonials, services, localAuthorities] =
+  const [projects, packages, teamMembers, testimonials, services, awards, localAuthorities] =
     await Promise.all([
       prisma.project.count(),
       prisma.package.count(),
       prisma.teamMember.count(),
       prisma.testimonial.count(),
       prisma.service.count(),
+      prisma.award.count(),
       prisma.project.findMany({ distinct: ["localAuthority"], select: { localAuthority: true } }),
     ]);
 
@@ -20,6 +21,7 @@ export async function getAdminNavCounts(): Promise<Record<string, number>> {
     "/admin/team-members": teamMembers,
     "/admin/testimonials": testimonials,
     "/admin/services": services,
+    "/admin/awards": awards,
     "/admin/local-authorities": localAuthorities.length,
   };
 }

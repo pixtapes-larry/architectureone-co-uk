@@ -1,0 +1,88 @@
+.page {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 36px 48px 80px;
+}
+
+.crumb {
+  font-size: 13px;
+  color: var(--color-muted);
+  margin-bottom: 24px;
+}
+
+.crumb a:hover {
+  color: var(--color-coral);
+}
+
+.intro {
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: 34px;
+  font-weight: 800;
+  margin: 0 0 16px;
+}
+
+.lead {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-muted-dark);
+  max-width: 640px;
+  margin: 0 0 12px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  padding: 18px 24px;
+}
+
+.year {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--color-coral);
+  flex: 0 0 auto;
+}
+
+.name {
+  font-size: 15px;
+  font-weight: 700;
+  flex: 1 1 auto;
+}
+
+.projectLink {
+  font-size: 13px;
+  color: var(--color-muted);
+  text-decoration: underline;
+  flex: 0 0 auto;
+}
+
+.projectLink:hover {
+  color: var(--color-coral);
+}
+
+.projectLabel {
+  font-size: 13px;
+  color: var(--color-muted);
+  flex: 0 0 auto;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 24px 20px 60px;
+  }
+  .card {
+    flex-wrap: wrap;
+  }
+}

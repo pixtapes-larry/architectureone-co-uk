@@ -17,6 +17,14 @@ export async function getFeaturedTestimonial() {
   });
 }
 
+// Powers the Home hero's "★ 4.9 (28 reviews)" line — computed live from
+// every Testimonial's star rating rather than hand-entered, so it can
+// never drift out of sync with what's actually on the Testimonials page.
+export async function getReviewStats(): Promise<{ average: number; count: number }> {
+  const result = await prisma.testimonial.aggregate({ _avg: { stars: true }, _count: true });
+  return { average: result._avg.stars ?? 0, count: result._count };
+}
+
 // Used by a project's case-study page to link its "note from the team"
 // quote through to that same testimonial's full entry on /testimonials —
 // only possible when that quote also exists as a Testimonial row attached

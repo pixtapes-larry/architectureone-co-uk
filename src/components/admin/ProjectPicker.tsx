@@ -12,9 +12,11 @@ function labelFor(p: ProjectOption) {
 export default function ProjectPicker({
   projects,
   defaultProject,
+  label = "Attached project (optional — which job this is for)",
 }: {
   projects: ProjectOption[];
   defaultProject: ProjectOption | null;
+  label?: string;
 }) {
   const [text, setText] = useState(defaultProject ? labelFor(defaultProject) : "");
   const [projectId, setProjectId] = useState<number | null>(defaultProject?.id ?? null);
@@ -28,8 +30,7 @@ export default function ProjectPicker({
   return (
     <div className={formStyles.field}>
       <label className={formStyles.label} htmlFor="projectPicker">
-        Attached project (optional — which job this review was actually
-        about)
+        {label}
       </label>
       <input
         id="projectPicker"

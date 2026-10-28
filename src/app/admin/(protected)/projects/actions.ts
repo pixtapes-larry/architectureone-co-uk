@@ -40,12 +40,6 @@ function parseCoreFields(formData: FormData): CoreFields {
   const yearRaw = str(formData, "year");
   const otherTagsRaw = str(formData, "otherTags");
 
-  const awardNames = formData.getAll("award_name").map(String);
-  const awardYears = formData.getAll("award_year").map(String);
-  const awards = awardNames
-    .map((name, i) => ({ name: name.trim(), year: Number(awardYears[i]) }))
-    .filter((a) => a.name.length > 0 && !Number.isNaN(a.year));
-
   return {
     address: str(formData, "address"),
     place: str(formData, "place"),
@@ -65,7 +59,6 @@ function parseCoreFields(formData: FormData): CoreFields {
     otherTags: otherTagsRaw
       ? otherTagsRaw.split(",").map((t) => t.trim()).filter(Boolean)
       : undefined,
-    awards: awards.length > 0 ? awards : undefined,
     testimonial: optionalStr(formData, "testimonial"),
     customerName: optionalStr(formData, "customerName"),
     customerConsent: formData.get("customerConsent") === "on",

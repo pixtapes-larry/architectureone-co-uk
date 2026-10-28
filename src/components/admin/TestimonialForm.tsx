@@ -69,7 +69,11 @@ export default function TestimonialForm({
             <input id="sourceUrl" name="sourceUrl" type="url" defaultValue={testimonial?.sourceUrl ?? ""} className={formStyles.input} />
           </div>
         </div>
-        <ProjectPicker projects={projects} defaultProject={defaultProject} />
+        <ProjectPicker
+          projects={projects}
+          defaultProject={defaultProject}
+          label="Attached project (optional — which job this review was actually about)"
+        />
       </section>
 
       {state.error && <p className={styles.error}>{state.error}</p>}

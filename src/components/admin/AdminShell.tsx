@@ -50,6 +50,7 @@ const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
       },
       { label: "Projects map", href: "/admin/projects-map-content" },
       { label: "Testimonials", href: "/admin/testimonials-page-content" },
+      { label: "Awards", href: "/admin/awards-page-content" },
       { label: "Book a consultation", href: "/admin/book-consultation-content" },
       { label: "Contact", href: "/admin/settings" }, // copy lives in Settings
       { label: "Privacy", href: "/admin/privacy-content" },
@@ -65,6 +66,7 @@ const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
       { label: "Services", href: "/admin/services" },
       { label: "Team members", href: "/admin/team-members" },
       { label: "Testimonials", href: "/admin/testimonials" },
+      { label: "Awards", href: "/admin/awards" },
       { label: "Local authorities", href: "/admin/local-authorities" },
     ],
   },

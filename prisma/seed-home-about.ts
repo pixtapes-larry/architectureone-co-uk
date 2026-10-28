@@ -19,9 +19,8 @@ async function main() {
       heroPhotoLabel: "[Hero photo — a recent project, full-bleed]",
 
       statsFoundedYear: 2015,
-      statsRating: 4.9,
-      statsReviewCount: 28,
-      statsAwardsWon: 3,
+      // statsRating/statsReviewCount/statsAwardsWon existed at the time this
+      // ran but were later removed in favour of live computed values.
 
       audienceHeading: "Which project sounds like yours?",
       audienceLead: "Whatever stage your project is at, there's a clear path forward.",

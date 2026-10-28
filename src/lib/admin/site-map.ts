@@ -61,6 +61,20 @@ export async function getSiteMapTree(): Promise<SiteMapNode[]> {
           kind: "page",
           note: "Linked from: Home, and project pages with an attached testimonial",
         },
+        {
+          label: "Awards",
+          href: "/admin/awards-page-content",
+          kind: "page",
+          note: "Home hero's live award count is linked from here",
+          children: [
+            {
+              label: `Awards list (${counts["/admin/awards"]})`,
+              href: "/admin/awards",
+              kind: "list",
+              note: "Each one can link to a project",
+            },
+          ],
+        },
         { label: "Book a consultation", href: "/admin/book-consultation-content", kind: "page" },
         { label: "Contact", href: "/admin/settings", kind: "page", note: "Copy lives in Settings" },
         { label: "Privacy", href: "/admin/privacy-content", kind: "page" },

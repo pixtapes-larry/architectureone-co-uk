@@ -5,7 +5,8 @@ import { getFeaturedProjects } from "@/lib/projects";
 import { PROJECT_TYPE_LABELS } from "@/lib/project-labels";
 import { getHomePageContent } from "@/lib/home-content";
 import { getHomeCategoryTeasers } from "@/lib/category-pages";
-import { getFeaturedTestimonial } from "@/lib/testimonials";
+import { getFeaturedTestimonial, getReviewStats } from "@/lib/testimonials";
+import { getAwardCount } from "@/lib/awards";
 import { getProjectCount, withProjectCount } from "@/lib/project-count";
 import { EXPLORE_PROJECTS_HREF, ABOUT_HREF, BOOK_CONSULTATION_HREF, TESTIMONIALS_HREF } from "@/lib/nav";
 import styles from "./page.module.css";
@@ -29,13 +30,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const [content, featuredProjects, categoryTeasers, testimonial, projectCount] =
+  const [content, featuredProjects, categoryTeasers, testimonial, projectCount, reviewStats, awardCount] =
     await Promise.all([
       getHomePageContent(),
       getFeaturedProjects(),
       getHomeCategoryTeasers(),
       getFeaturedTestimonial(),
       getProjectCount(),
+      getReviewStats(),
+      getAwardCount(),
     ]);
 
   return (
@@ -63,8 +66,9 @@ export default async function Home() {
             </Link>
           </div>
           <div className={styles.heroStats}>
-            Est. {content.statsFoundedYear} &nbsp;·&nbsp; ★ {content.statsRating.toFixed(1)} (
-            {content.statsReviewCount} reviews) &nbsp;·&nbsp; {content.statsAwardsWon} awards won
+            Est. {content.statsFoundedYear} &nbsp;·&nbsp; ★ {reviewStats.average.toFixed(1)} (
+            {reviewStats.count} review{reviewStats.count === 1 ? "" : "s"}) &nbsp;·&nbsp; {awardCount}{" "}
+            award{awardCount === 1 ? "" : "s"} won
           </div>
         </div>
         {testimonial && (

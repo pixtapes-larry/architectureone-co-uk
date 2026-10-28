@@ -12,9 +12,9 @@ export type HomePageContentAdminInput = {
   heroPhotoLabel: string;
 
   statsFoundedYear: number;
-  statsRating: number;
-  statsReviewCount: number;
-  statsAwardsWon: number;
+  // statsRating/statsReviewCount/statsAwardsWon are computed live — see
+  // src/lib/testimonials.ts getReviewStats() and src/lib/awards.ts
+  // getAwardCount() — not stored on this model.
 
   audienceHeading: string;
   audienceLead: string;

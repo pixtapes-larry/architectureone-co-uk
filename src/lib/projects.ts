@@ -9,15 +9,18 @@ import type { ProjectModel } from "@/generated/prisma/models/Project";
 import type { ProjectPhotoModel } from "@/generated/prisma/models/ProjectPhoto";
 import type { ProjectServiceDeliveredModel } from "@/generated/prisma/models/ProjectServiceDelivered";
 import type { ServiceModel } from "@/generated/prisma/models/Service";
+import type { AwardModel } from "@/generated/prisma/models/Award";
 
 type ProjectWithRelations = ProjectModel & {
   photos: ProjectPhotoModel[];
   services: (ProjectServiceDeliveredModel & { service: ServiceModel })[];
+  awards: AwardModel[];
 };
 
 const WITH_RELATIONS = {
   photos: { orderBy: { sortOrder: "asc" as const } },
   services: { include: { service: true } },
+  awards: { orderBy: [{ sortOrder: "asc" as const }, { year: "desc" as const }] },
 };
 
 function formatInstructionDate(date: Date): string {
@@ -47,7 +50,7 @@ function toSummary(p: ProjectWithRelations): ProjectMapSummary {
 
     fullDescription: p.fullDescription ?? undefined,
     constructionCompany: p.constructionCompany ?? undefined,
-    awards: (p.awards as { name: string; year: number }[] | null) ?? undefined,
+    awards: p.awards.length > 0 ? p.awards.map((a) => ({ name: a.name, year: a.year })) : undefined,
     photos: p.photos.map((photo) => ({
       url: photo.url,
       isBefore: photo.isBefore,
