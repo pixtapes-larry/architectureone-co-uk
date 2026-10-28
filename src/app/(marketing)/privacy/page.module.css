@@ -1,0 +1,45 @@
+.page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 36px 48px 80px;
+}
+
+.crumb {
+  font-size: 13px;
+  color: var(--color-muted);
+  margin-bottom: 24px;
+}
+
+.crumb a:hover {
+  color: var(--color-coral);
+}
+
+.title {
+  font-size: 34px;
+  font-weight: 800;
+  margin: 0 0 20px;
+}
+
+.draftNote {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--color-muted);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  padding: 16px 20px;
+  margin-bottom: 28px;
+}
+
+.body p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-muted-dark);
+  margin: 0 0 18px;
+}
+
+.lastUpdated {
+  font-size: 12px;
+  color: var(--color-muted);
+  margin-top: 32px;
+}

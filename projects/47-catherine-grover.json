@@ -1,0 +1,29 @@
+﻿{
+    "folder":  "47 Catherine Grover",
+    "address":  "66 Devonshire Road, Ipswich, IP3 8AU",
+    "postcode":  "IP3 8AU",
+    "localAuthority":  "Ipswich Borough Council",
+    "planningType":  "TBC",
+    "projectType":  "SMALL_WRAP_AROUND_EXTENSIONS",
+    "instructionDate":  "2019-02-19",
+    "description":  "Structural design for a steel beam supporting a kitchen extension at a home on Devonshire Road, Ipswich.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\47 Catherine Grover",
+    "note":  "Structural liaison work only (steel beam design for a kitchen extension) - not a full AO architectural design/planning job, confirmed by the user. No planning decision notice exists for this reason.",
+    "caseStudy":  [
+                      {
+                          "text":  "Ms Grover needed structural design support for a kitchen extension at 66 Devonshire Road, Ipswich.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "Structural design for a steel beam supporting the kitchen extension was carried out.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "This was structural liaison work only - no planning decision notice exists, as architectural design and planning were handled separately.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "planImages":  [
+                       "images/47-catherine-grover/plan-structural.jpg"
+                   ]
+}

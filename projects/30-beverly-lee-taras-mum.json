@@ -1,0 +1,35 @@
+﻿{
+    "folder":  "30 Beverly lee Tara\u0027s Mum",
+    "address":  "7 Tylewood, Hadleigh, Essex, SS7 2QH",
+    "postcode":  "SS7 2QH",
+    "localAuthority":  "Castle Point Borough Council",
+    "planningType":  "PERMITTED_DEVELOPMENT",
+    "projectType":  "SMALL_WRAP_AROUND_EXTENSIONS",
+    "instructionDate":  "2018-11-26",
+    "description":  "A single-storey flat-roof rear extension to a detached bungalow in Hadleigh, Essex, confirmed as lawful permitted development.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\30 Beverly lee Tara\u0027s Mum",
+    "caseStudy":  [
+                      {
+                          "text":  "The client wanted a single-storey rear extension to their detached bungalow at 7 Tylewood, Hadleigh.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "Architecture ONE designed a flat-roof rear extension, confirmed as falling under permitted development rather than needing a full planning application.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "Castle Point Borough Council confirmed the scheme as lawful permitted development in November 2018. Before photos show the bungalow prior to the extension; after photos are not yet available.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "note":  "Site address confirmed directly by the user, not found in the original archive documents.",
+    "photos":  [
+                   "images/30-beverly-lee-taras-mum/photos/before-12.jpg",
+                   "images/30-beverly-lee-taras-mum/photos/before-13.jpg",
+                   "images/30-beverly-lee-taras-mum/photos/before-14.jpg"
+               ],
+    "planImages":  [
+                       "images/30-beverly-lee-taras-mum/elevations-proposed.jpg",
+                       "images/30-beverly-lee-taras-mum/site-plan.jpg"
+                   ]
+}

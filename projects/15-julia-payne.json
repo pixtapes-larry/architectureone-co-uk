@@ -1,0 +1,48 @@
+﻿{
+    "folder":  "15 Julia Payne",
+    "address":  "The Gables, Banters Lane, Great Leighs, Chelmsford, CM3 1NT",
+    "postcode":  "CM3 1NT",
+    "localAuthority":  "Chelmsford City Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "SMALL_WRAP_AROUND_EXTENSIONS",
+    "instructionDate":  "2018-09-20",
+    "description":  "Structural engineering and building control drawings supporting construction of the already-approved single-storey side and rear extension at The Gables, Great Leighs.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Having secured planning permission for a single-storey side and rear extension at The Gables, Banters Lane, Great Leighs, the Paynes needed the scheme carried through to a buildable set of drawings."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "Architecture ONE developed the approved planning drawings into full structural engineering and building control information, ready for the builder to price and construct from."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Chelmsford City Council had granted full planning permission for the extension in August 2018 (application ref. 18/01184/FUL); this later phase of work carried that approved scheme through to construction-ready drawings."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\15 Julia Payne",
+    "note":  "Same property as \u002709 Julia Payne\u0027; this folder covers the later structural/building-control phase.",
+    "planImages":  [
+                       "images/15-julia-payne/plan-proposed.jpg",
+                       "images/15-julia-payne/elevations-proposed.jpg",
+                       "images/15-julia-payne/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/15-julia-payne/photos/mAY 2018 042.JPG",
+                   "images/15-julia-payne/photos/mAY 2018 043.JPG",
+                   "images/15-julia-payne/photos/mAY 2018 044.JPG",
+                   "images/15-julia-payne/photos/mAY 2018 045.JPG",
+                   "images/15-julia-payne/photos/mAY 2018 046.JPG",
+                   "images/15-julia-payne/photos/mAY 2018 047.JPG",
+                   "images/15-julia-payne/photos/mAY 2018 048.JPG",
+                   "images/15-julia-payne/photos/mAY 2018 049.JPG",
+                   "images/15-julia-payne/photos/mAY 2018 050.JPG",
+                   "images/15-julia-payne/photos/mAY 2018 051.JPG",
+                   "images/15-julia-payne/photos/mAY 2018 052.JPG",
+                   "images/15-julia-payne/photos/mAY 2018 053.JPG",
+                   "images/15-julia-payne/photos/mAY 2018 054.JPG",
+                   "images/15-julia-payne/photos/mAY 2018 055.JPG",
+                   "images/15-julia-payne/photos/mAY 2018 056.JPG"
+               ]
+}

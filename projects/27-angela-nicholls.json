@@ -1,0 +1,25 @@
+﻿{
+    "folder":  "27 Angela Nicholls",
+    "address":  "4 Manor Farm Grove, Hintlesham, Ipswich, Suffolk, IP8 3QP",
+    "postcode":  "IP8 3QP",
+    "localAuthority":  "Babergh / Mid Suffolk District Councils (Building Notice route)",
+    "planningType":  "PERMITTED_DEVELOPMENT",
+    "projectType":  "SMALL_WRAP_AROUND_EXTENSIONS",
+    "instructionDate":  "2018-09-05",
+    "description":  "Removal of a supporting wall with a new steel beam installed, as a small structural alteration to a home in Hintlesham.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\27 Angela Nicholls",
+    "caseStudy":  [
+                      {
+                          "text":  "Mrs Nicholls needed a structural alteration at 4 Manor Farm Grove, Hintlesham.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "The work removed a supporting wall and installed a new steel beam.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "The alteration was carried out via the Building Notice route rather than a full planning application.",
+                          "heading":  "The Outcome"
+                      }
+                  ]
+}

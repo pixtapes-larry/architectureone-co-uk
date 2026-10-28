@@ -12,6 +12,367 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Internal admin users only — a handful of practice staff, no public
+// self-registration. Passwords are bcrypt hashes, never plain text.
+model AdminUser {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  name         String
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+// The site header's main nav (previously the hardcoded NAV_LINKS array in
+// src/lib/nav.ts) — admin-editable order, visibility, and labels/hrefs.
+// One level of nesting only (parentId), which is all the real header uses
+// today (the "Services" link under "About").
+model NavItem {
+  id        Int       @id @default(autoincrement())
+  label     String
+  href      String
+  visible   Boolean   @default(true)
+  sortOrder Int       @default(0)
+  parent    NavItem?  @relation("NavItemChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  parentId  Int?
+  children  NavItem[] @relation("NavItemChildren")
+}
+
+// The 3 category pages (Permitted Development, Large Extensions, New
+// Builds & Developments) — previously hardcoded objects in
+// src/lib/category-pages.ts. "kind" fields are discriminated-union tags
+// read back into the same TS shape the template already expects:
+//   planningRouteKind: null | "text" | "grid"
+//   pricingKind: "packages" | "quote"
+//   closingKind: "trust-and-services" | "more-than-drawings"
+model CategoryPage {
+  id       Int    @id @default(autoincrement())
+  category String @unique // e.g. "permitted-development"
+
+  crumbLabel         String
+  heroTitle          String
+  heroTagline        String @db.Text
+  heroPhotoLabel     String
+  introHeading       String
+  introParagraphs    Json // string[]
+  subTypesHeading    String
+  subTypesFooterNote String @db.Text
+
+  planningRouteKind       String?
+  planningRouteParagraphs Json? // string[] — when kind = "text"
+  planningRouteLead       String? @db.Text // when kind = "grid"
+  planningRouteItems      Json? // { title, description }[] — when kind = "grid"
+
+  pricingKind      String // "packages" | "quote"
+  pricingQuoteLead String? @db.Text // when kind = "quote"
+
+  feesHeading String?
+  feesIntro   String? @db.Text
+  feesRows    Json? // { label, amount }[]
+  feesNote    String? @db.Text
+
+  considerationsHeading String
+  considerations        Json // { title, description }[]
+
+  closingKind  String // "trust-and-services" | "more-than-drawings"
+  closingItems Json? // { label, href, description }[] — when kind = "more-than-drawings"
+
+  // Content for this category's teaser card on the home page's "Which
+  // project sounds like yours?" section — kept here rather than a
+  // separate model since each card already maps 1:1 to one CategoryPage.
+  homeTeaserTitle      String? // distinct from heroTitle — e.g. "Loft Conversions & Large Extensions" vs. "Large Extensions"
+  homeTeaserTag        String?
+  homeTeaserBlurb      String?
+  homeTeaserLinkLabel  String?
+  homeTeaserPhotoLabel String?
+
+  subTypeCards CategorySubTypeCard[]
+}
+
+// The teaser cards within a category page (e.g. "Garage Conversions" on
+// the Permitted Development page). href and the "Explore X →" label are
+// derived from projectType + title in code, not stored — every existing
+// card follows that exact pattern.
+model CategorySubTypeCard {
+  id             Int          @id @default(autoincrement())
+  categoryPage   CategoryPage @relation(fields: [categoryPageId], references: [id], onDelete: Cascade)
+  categoryPageId Int
+  projectType    ProjectType
+  title          String
+  photoLabel     String
+  routeTag       String? // e.g. "CLASS Q" — New Builds page only
+  bullets        Json // string[]
+  sortOrder      Int    @default(0)
+}
+
+// The 10 project-type ("sub-type") pages one level below a category page
+// — previously hardcoded objects in src/lib/sub-type-pages.ts.
+model SubTypePage {
+  id          Int         @id @default(autoincrement())
+  projectType ProjectType @unique
+
+  heroTitle       String
+  heroTagline     String @db.Text
+  heroPhotoLabel  String
+  aboutParagraphs Json // string[]
+
+  // The optional sub-variety breakdown between Examples and the planning
+  // cards — only Loft Conversions uses this today.
+  typesSectionHeading String?
+  typesSectionLead    String? @db.Text
+
+  planningHeading String
+  planningCards   Json // { title, description }[]
+  steps           Json // { title, description }[]
+
+  pricingKind      String // "packages" | "quote"
+  pricingQuoteLead String? @db.Text // when kind = "quote"
+
+  ctaQuestion String
+
+  typesSectionItems SubTypePageTypeItem[]
+}
+
+model SubTypePageTypeItem {
+  id            Int         @id @default(autoincrement())
+  subTypePage   SubTypePage @relation(fields: [subTypePageId], references: [id], onDelete: Cascade)
+  subTypePageId Int
+  title         String
+  photoLabel    String
+  description   String @db.Text
+  sortOrder     Int    @default(0)
+}
+
+// Single shared row — site-wide copy that was previously hardcoded in
+// src/lib/site-content.ts (contact email, office details, the "Promise"
+// bullets). Admin-editable so these unconfirmed placeholders can be fixed
+// without a code change.
+model SiteSettings {
+  id              Int    @id @default(1)
+  contactEmail    String
+  officeLine1     String
+  officePlace     String
+  officePostcode  String
+  officePhone     String
+  officeLatitude  Float
+  officeLongitude Float
+  promiseBullets  Json // string[]
+
+  // Contact page copy — the rest of that page's content (email/office/
+  // phone) already comes from the fields above.
+  contactHeading              String @default("Contact Us")
+  contactLead                 String @default("") @db.Text
+  contactSidebarHeading       String @default("Get in touch")
+  contactEmailUnconfirmedNote String @default("") @db.Text
+
+  // Linked from the About page's reviews section — "See all reviews on
+  // Google". Left null until the real Business Profile URL is confirmed.
+  googleReviewsUrl String?
+}
+
+// Single shared row — the /projects map page's search-card copy,
+// previously hardcoded in ProjectsMapExperience.tsx.
+model ProjectsMapContent {
+  id Int @id @default(1)
+
+  // Can use the literal token "{projectCount}" — see src/lib/project-count.ts.
+  searchHeading String
+  searchLead    String @db.Text
+  startingNote  String @db.Text
+}
+
+// Single shared row — the Privacy page's copy. Placeholder/draft text,
+// not legal advice — flagged on-page as such until a solicitor reviews it
+// before launch.
+model PrivacyPageContent {
+  id Int @id @default(1)
+
+  heading         String
+  intro           String @db.Text
+  bodyParagraphs  Json // string[]
+  lastUpdatedNote String
+}
+
+// Single shared row — the home page's copy, previously hardcoded in
+// src/app/(marketing)/page.tsx. The 3 "which project sounds like yours?"
+// teaser cards live on CategoryPage instead (homeTeaser* fields), since
+// each one already maps 1:1 to a real category page.
+model HomePageContent {
+  id Int @id @default(1)
+
+  heroPill          String
+  // The live project count can be embedded with the literal token
+  // "{projectCount}" — swapped for the real, current count at render time
+  // (see src/lib/project-count.ts), e.g. "{projectCount}+ projects".
+  heroHeadingAccent String
+  heroHeadingRest   String // e.g. "delivered across the East of England"
+  heroLead          String @db.Text
+  heroPhotoLabel    String
+
+  statsFoundedYear Int
+  statsRating      Float
+  statsReviewCount Int
+  statsAwardsWon   Int
+
+  // The home page's single featured-quote bubble now pulls from the first
+  // featured Testimonial (by sortOrder) instead of a static field here.
+
+  audienceHeading String
+  audienceLead    String @db.Text
+
+  mapTeaserPillText String // can use "{projectCount}" — see heroHeadingAccent
+  mapTeaserTitle    String
+  mapTeaserLead     String @db.Text
+
+  guideCoverText String
+  guideTag       String
+  guideHeading   String
+  guideLead      String @db.Text
+  guideButtonLabel String
+
+  featuredHeading String
+  featuredLead    String @db.Text // can use "{projectCount}" — see heroHeadingAccent
+
+  awardsLabel String
+  awardNames  Json // string[]
+
+  teamTeaserHeading     String
+  teamTeaserLead        String @db.Text
+  teamTeaserButtonLabel String
+
+  finalCtaHeading String
+  finalCtaLead    String @db.Text
+}
+
+// Single shared row — the About page's copy, previously hardcoded in
+// src/app/(marketing)/about/page.tsx. Team members live in their own
+// model (TeamMember) since that's a genuine ordered list, not a singleton.
+model AboutPageContent {
+  id Int @id @default(1)
+
+  // Can use the literal token "{projectCount}" — swapped for the real,
+  // current count at render time (see src/lib/project-count.ts).
+  heroTagline    String @db.Text
+  heroPhotoLabel String
+
+  storyParagraphs Json // string[] — paragraphs can use "{projectCount}" too
+
+  servicesTeaserLead String @db.Text
+
+  reviewsHeading String
+  reviewsLead    String @db.Text
+  // Shown instead of the real testimonials list only when none exist yet.
+  reviewsPlaceholderNote String @db.Text
+
+  finalCtaHeading String
+  finalCtaLead    String @db.Text
+}
+
+// A client testimonial/review. Admin picks which ones are "featured" (the
+// home page shows the first featured one, by sortOrder, in its quote
+// bubble); the About page lists all of them, newest-editable-first.
+model Testimonial {
+  id         Int     @id @default(autoincrement())
+  quote      String  @db.Text
+  authorName String?
+  stars      Int     @default(5)
+  featured   Boolean @default(false)
+  sortOrder  Int     @default(0)
+
+  // Where this was copied from, e.g. "Google" or "Facebook" — shown as a
+  // small "via Google" label. sourceUrl links to that specific review
+  // when the platform supports a stable per-review permalink (Google
+  // does, via its review "Share" button); optional since not every
+  // platform/source has one.
+  source    String?
+  sourceUrl String?
+
+  // Optional link to the specific project this review was actually about
+  // (common for Google/Facebook reviews, which arrive with no project
+  // context of their own) — lets the admin list show "which job was this"
+  // and the About page could in future link through to that case study.
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  projectId Int?
+}
+
+// The team roster shown on the About page. The first member (lowest
+// sortOrder) renders as the large "lead bio" with its own bigger photo;
+// the rest render in the grid of smaller cards — so adding a 4th member
+// later just works, no template change needed.
+model TeamMember {
+  id         Int    @id @default(autoincrement())
+  name       String
+  role       String
+  bio        String @db.Text
+  photoLabel String
+  sortOrder  Int    @default(0)
+}
+
+// Optional custom intro copy for a Local Authority Showcase page, keyed by
+// the same free-text `localAuthority` string used on Project. Not every
+// authority needs one — the page falls back to the computed project-count
+// line when no blurb is set.
+model LocalAuthorityInfo {
+  id             Int     @id @default(autoincrement())
+  localAuthority String  @unique
+  blurb          String? @db.Text
+}
+
+// The 3 fixed-price Permitted Development packages (Starter/Standard/
+// Extended) shown on the PD category page, its sub-type pages, and each
+// package's own detail page. Previously a hardcoded array in src/lib/packages.ts.
+model Package {
+  id           Int     @id @default(autoincrement())
+  slug         String  @unique
+  name         String
+  price        String // formatted display string, e.g. "£1,199"
+  featured     Boolean @default(false)
+  sortOrder    Int     @default(0)
+  expectations Json // { label: string; count: number | null }[]
+
+  // "What's included" — a package picks from the shared Service catalog
+  // rather than free-text bullets, optionally adding its own constraining
+  // line (e.g. "up to 2 rounds of amendments").
+  services PackageService[]
+}
+
+// The shared Service catalog — single source of truth for: (1) a Project's
+// "Services Delivered" checklist, (2) what a Package includes, and (3) the
+// public /about/services page. Replaces the old ServiceDelivered enum so
+// descriptions and groupings are admin-editable instead of hardcoded.
+model Service {
+  id          Int     @id @default(autoincrement())
+  slug        String  @unique
+  title       String
+  description String  @db.Text
+  group       String // e.g. "Planning & Permissions"
+  groupNote   String? // shown once per group, e.g. "Coordinated via trusted partners"
+  sortOrder   Int     @default(0)
+
+  projects ProjectServiceDelivered[]
+  packages PackageService[]
+}
+
+// Join table for which services a package includes, each optionally
+// constrained with its own note.
+model PackageService {
+  id             Int     @id @default(autoincrement())
+  package        Package @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  packageId      Int
+  service        Service @relation(fields: [serviceId], references: [id])
+  serviceId      Int
+  constraintNote String?
+  sortOrder      Int     @default(0)
+
+  @@unique([packageId, serviceId])
+}
+
+// Single shared row — the note shown under every package's pricing
+// ("All exclude planning/structural/other third-party fees…").
+model PackageSettings {
+  id   Int    @id @default(1)
+  note String @db.Text
+}
+
 enum PlanningType {
   PERMITTED_DEVELOPMENT
   FULL_PLANNING
@@ -42,52 +403,14 @@ enum ProjectType {
   OTHER_PLANNING
 }
 
-// The full Services Delivered checklist — five groups, matches the About
-// page's Services section exactly (kept in sync deliberately).
-enum ServiceDelivered {
-  // Planning & Permissions
-  PRE_APPLICATION_PLANNING_ADVICE
-  DESIGN_ACCESS_STATEMENT
-  LAWFUL_DEVELOPMENT_CERTIFICATE_APPLICATION
-  PLANNING_APPLICATION
-  PRIOR_APPROVAL_APPLICATION
-
-  // Building Control
-  BUILDING_REGULATIONS_DRAWINGS
-  BUILDING_REGULATIONS_APPLICATION
-
-  // Drawings & Technical Information
-  SITE_LOCATION_PLANS
-  ELEVATIONS_FLOOR_PLANS
-  WINDOW_DOOR_SCHEDULES
-  FOUL_WASTE_WASTEWATER_PLANS
-  SURFACE_WATER_DRAINAGE_PLANS
-  ELECTRICAL_LIGHTING_LAYOUTS
-  MATERIALS_SPECIFICATIONS
-  THREE_D_VISUALISATIONS
-
-  // Specialist Reports & Surveys
-  MEASURED_SURVEY
-  STRUCTURAL_SURVEYS_CALCULATIONS
-  TOPOGRAPHICAL_SURVEYS
-  ECOLOGY_SURVEYS
-  FLOOD_RISK_ASSESSMENTS
-  SAP_PART_L_CALCULATIONS
-  BIODIVERSITY_NET_GAIN_REPORT
-  LANDSCAPING_PLANTING_DESIGN
-
-  // Build Stage
-  TENDERING_PROCESS
-  PARTY_WALL_AGREEMENT_COORDINATION
-  QUALITY_CONTROL
-  ON_SITE_SUPPORT
-}
-
 model Project {
   id Int @id @default(autoincrement())
 
   // --- Core fields: required on every project (featured or not) ---
   address         String
+  place           String // human-friendly "Town, County" — distinct from
+  // localAuthority (the formal planning-authority name), used in map
+  // popups, breadcrumbs and card subtitles
   postcode        String
   latitude        Float? // populated once geocoding runs, not at entry time
   longitude       Float?
@@ -99,6 +422,9 @@ model Project {
   instructionDate DateTime
   description     String       @db.Text // short — the pin-tooltip summary
   notes           String?      @db.Text
+  coverPhotoUrl   String // map pin / card thumbnail — independent of the
+  // full before/after gallery in `photos`, so every project (featured or
+  // not) always has one image to show without needing gallery entries
 
   // --- Featured-only fields ---
   featured             Boolean @default(false)
@@ -119,8 +445,9 @@ model Project {
   customerName    String?
   customerConsent Boolean? @default(false)
 
-  photos   ProjectPhoto[]
-  services ProjectServiceDelivered[]
+  photos       ProjectPhoto[]
+  services     ProjectServiceDelivered[]
+  testimonials Testimonial[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -144,10 +471,11 @@ model ProjectPhoto {
 // metadata later if needed, and so a service can't silently vanish from an
 // enum without a migration flagging every project that used it.
 model ProjectServiceDelivered {
-  id        Int              @id @default(autoincrement())
-  project   Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  id        Int     @id @default(autoincrement())
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId Int
-  service   ServiceDelivered
+  service   Service @relation(fields: [serviceId], references: [id])
+  serviceId Int
 
-  @@unique([projectId, service])
+  @@unique([projectId, serviceId])
 }

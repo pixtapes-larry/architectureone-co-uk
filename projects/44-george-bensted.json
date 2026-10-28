@@ -1,0 +1,37 @@
+﻿{
+    "folder":  "44 George Bensted",
+    "address":  "1 Browning Close, Lexden, Colchester, CO3 4JJ",
+    "postcode":  "CO3 4JJ",
+    "localAuthority":  "Colchester Borough Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LOFT_CONVERSIONS",
+    "instructionDate":  "2019-02-27",
+    "description":  "A rear single-storey extension combined with a hip-to-gable loft conversion, significantly extending a home in Colchester.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mr Benstead asked Architecture ONE to extend his home at 1 Browning Close, Lexden, Colchester, combining extra ground-floor space with a loft conversion."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The design adds a rear single-storey extension together with a hip-to-gable loft conversion, opening up usable roof space above the existing house."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Colchester Borough Council granted full planning permission for the scheme in June 2019 (application ref. 190539)."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\44 George Bensted",
+    "planImages":  [
+                       "images/44-george-bensted/plan-proposed.jpg",
+                       "images/44-george-bensted/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/44-george-bensted/photos/bedroom-vaulted-ceiling.jpg",
+                   "images/44-george-bensted/photos/loft timbers.jpg",
+                   "images/44-george-bensted/photos/PHOTO-2019-04-21-11-15-14.jpg",
+                   "images/44-george-bensted/photos/PHOTO-2019-04-21-11-15-44.jpg",
+                   "images/44-george-bensted/photos/PHOTO-2019-04-21-11-16-14.jpg",
+                   "images/44-george-bensted/photos/PHOTO-2019-04-21-11-16-21.jpg"
+               ]
+}

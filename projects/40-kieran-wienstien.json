@@ -1,0 +1,40 @@
+﻿{
+    "folder":  "40 Kieran Wienstien",
+    "address":  "120 Watchouse Road, Galleywood, Chelmsford, CM2 8NQ",
+    "postcode":  "CM2 8NQ",
+    "localAuthority":  "Chelmsford City Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "SMALL_WRAP_AROUND_EXTENSIONS",
+    "instructionDate":  "2019-02-08",
+    "description":  "A single-storey rear extension with a pitched roof, adding extra space to a home in Galleywood, Chelmsford.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mr Wienstien asked Architecture ONE to add extra living space to his home at 120 Watchouse Road, Galleywood, with a single-storey rear extension."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The design adds a single-storey rear extension with a pitched roof, with external materials matched to the existing house."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Chelmsford City Council granted full planning permission for the extension in March 2019 (application ref. 19/00219/FUL)."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\40 Kieran Wienstien",
+    "planImages":  [
+                       "images/40-kieran-wienstien/plan-proposed.jpg",
+                       "images/40-kieran-wienstien/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/40-kieran-wienstien/photos/IMG_7560.JPG",
+                   "images/40-kieran-wienstien/photos/IMG_7561.JPG",
+                   "images/40-kieran-wienstien/photos/IMG_7562.JPG",
+                   "images/40-kieran-wienstien/photos/IMG_7563.JPG",
+                   "images/40-kieran-wienstien/photos/IMG_7564.JPG",
+                   "images/40-kieran-wienstien/photos/IMG_7565.JPG",
+                   "images/40-kieran-wienstien/photos/IMG_7566.JPG",
+                   "images/40-kieran-wienstien/photos/IMG_7567.JPG",
+                   "images/40-kieran-wienstien/photos/IMG_7568.JPG"
+               ]
+}

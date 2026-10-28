@@ -1,11 +1,5 @@
-// Shared nav structure — single source of truth so every page's header
-// stays in sync. Route paths here are the real App Router paths.
-
-export const NAV_LINKS = [
-  { label: "Permitted Development", href: "/permitted-development" },
-  { label: "Large Extensions", href: "/large-extensions" },
-  { label: "New Builds & Developments", href: "/new-builds-developments" },
-] as const;
+// Shared route constants used site-wide. The header's main nav structure
+// itself (order, visibility, labels) is DB-backed — see lib/nav-items.ts.
 
 export const EXPLORE_PROJECTS_HREF = "/projects";
 export const ABOUT_HREF = "/about";

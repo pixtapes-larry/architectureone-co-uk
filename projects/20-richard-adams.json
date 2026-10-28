@@ -1,0 +1,29 @@
+﻿{
+    "folder":  "20 Richard Adams",
+    "address":  "13 Langdale Gardens, Chelmsford, Essex, CM2 9QH",
+    "postcode":  "CM2 9QH",
+    "localAuthority":  "Chelmsford City Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LOFT_CONVERSIONS",
+    "instructionDate":  "2018",
+    "description":  "A hip-to-gable loft conversion with a full-width rear dormer, plus a porch and single-storey extension, for a home in Chelmsford.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\20 Richard Adams",
+    "caseStudy":  [
+                      {
+                          "text":  "Mr Adams wanted more bedroom space at 13 Langdale Gardens, Chelmsford.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "The design combines a hip-to-gable loft conversion with a full-width rear dormer, plus a porch and single-storey extension.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "Chelmsford City Council granted full planning permission for the scheme.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "planImages":  [
+                       "images/20-richard-adams/plan-proposed.jpg",
+                       "images/20-richard-adams/site-plan.jpg"
+                   ]
+}

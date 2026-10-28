@@ -1,0 +1,44 @@
+﻿{
+    "folder":  "52 Marcus Gallagher",
+    "address":  "95 Clopton Gardens, Hadleigh, Ipswich, Suffolk, IP7 5JQ",
+    "postcode":  "IP7 5JQ",
+    "localAuthority":  "Babergh District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LARGE_TWO_STOREY_EXTENSIONS",
+    "instructionDate":  "2019-04-04",
+    "description":  "A two-storey rear extension with a single-storey lean-to, significantly enlarging a home in Hadleigh.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mr Gallagher asked Architecture ONE to significantly enlarge his home at 95 Clopton Gardens, Hadleigh, with a two-storey rear extension."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The design combines a two-storey rear extension with a single-storey lean-to, and the project included a highways construction management plan to manage the build\u0027s impact on the local road network."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Babergh District Council granted full planning permission for the scheme in June 2019 (application ref. DC/19/01660)."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\52 Marcus Gallagher",
+    "planImages":  [
+                       "images/52-marcus-gallagher/plan-proposed.jpg",
+                       "images/52-marcus-gallagher/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/52-marcus-gallagher/photos/101177343_10223169726291913_2602823427748265984_n.jpg",
+                   "images/52-marcus-gallagher/photos/IMG_8240.JPG",
+                   "images/52-marcus-gallagher/photos/IMG_8241.JPG",
+                   "images/52-marcus-gallagher/photos/IMG_8242.JPG",
+                   "images/52-marcus-gallagher/photos/IMG_8243.JPG",
+                   "images/52-marcus-gallagher/photos/IMG_8244.JPG",
+                   "images/52-marcus-gallagher/photos/IMG_8245.JPG",
+                   "images/52-marcus-gallagher/photos/IMG_8246.JPG",
+                   "images/52-marcus-gallagher/photos/IMG_8247.JPG",
+                   "images/52-marcus-gallagher/photos/IMG_8248.JPG",
+                   "images/52-marcus-gallagher/photos/IMG_8249.JPG",
+                   "images/52-marcus-gallagher/photos/WhatsApp Image 2020-05-27 at 16.56.05.jpeg",
+                   "images/52-marcus-gallagher/photos/WhatsApp Image 2020-05-27 at 16.56.06.jpeg"
+               ]
+}

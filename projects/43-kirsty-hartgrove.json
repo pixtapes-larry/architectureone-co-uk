@@ -1,0 +1,29 @@
+﻿{
+    "folder":  "43 kirsty Hartgrove",
+    "address":  "15 Ramsey Road, Hadleigh, Ipswich, Suffolk, IP7 6AN",
+    "postcode":  "IP7 6AN",
+    "localAuthority":  "Babergh District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "NEW_BUILDS",
+    "instructionDate":  "2019-02-06",
+    "description":  "Outline planning secured for a new single dwelling on a plot in Hadleigh, Suffolk.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\43 kirsty Hartgrove",
+    "caseStudy":  [
+                      {
+                          "text":  "The client wanted to bring forward a new dwelling on a plot in Hadleigh, Suffolk.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "Architecture ONE prepared an outline planning application for a new single dwelling on the plot.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "Babergh District Council granted outline planning permission for the scheme in early 2019.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "planImages":  [
+                       "images/43-kirsty-hartgrove/plan-proposed.jpg",
+                       "images/43-kirsty-hartgrove/site-plan.jpg"
+                   ]
+}

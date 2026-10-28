@@ -1,0 +1,48 @@
+﻿{
+    "folder":  "22 Nicola Galer",
+    "address":  "123 Powers Hall End, Witham, Essex, CM8 1LS",
+    "postcode":  "CM8 1LS",
+    "localAuthority":  "Braintree District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LARGE_TWO_STOREY_EXTENSIONS",
+    "instructionDate":  "2019-05-28",
+    "description":  "A two-storey side extension adding extra bedroom and living space in Witham.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mrs Galer asked Architecture ONE for a two-storey side extension at 123 Powers Hall End, Witham, to add extra bedroom and living space to the family home."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The design adds a two-storey side extension, with the external materials and finishes matched to the existing house to keep the enlarged home in keeping with the street."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Braintree District Council granted planning permission for the extension in October 2019 (application ref. 19/00948/HH)."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\22 Nicola Galer",
+    "planImages":  [
+                       "images/22-nicola-galer/plan-proposed.jpg",
+                       "images/22-nicola-galer/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/22-nicola-galer/photos/IMG_7994.JPG",
+                   "images/22-nicola-galer/photos/IMG_7995.JPG",
+                   "images/22-nicola-galer/photos/IMG_7996.JPG",
+                   "images/22-nicola-galer/photos/IMG_7997.JPG",
+                   "images/22-nicola-galer/photos/IMG_7998.JPG",
+                   "images/22-nicola-galer/photos/IMG_7999.JPG",
+                   "images/22-nicola-galer/photos/IMG_8001.JPG",
+                   "images/22-nicola-galer/photos/IMG_8002.JPG",
+                   "images/22-nicola-galer/photos/IMG_8003.JPG",
+                   "images/22-nicola-galer/photos/IMG_8004.JPG",
+                   "images/22-nicola-galer/photos/IMG_8005.JPG",
+                   "images/22-nicola-galer/photos/IMG_8006.JPG",
+                   "images/22-nicola-galer/photos/IMG_8007.JPG",
+                   "images/22-nicola-galer/photos/IMG_8008.JPG",
+                   "images/22-nicola-galer/photos/IMG_8009.JPG",
+                   "images/22-nicola-galer/photos/IMG_8010.JPG",
+                   "images/22-nicola-galer/photos/IMG_8011.JPG"
+               ]
+}

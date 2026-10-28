@@ -1,0 +1,34 @@
+﻿{
+    "folder":  "33 Hannah Lees",
+    "address":  "Spindle Hill, Hadleigh Road, Higham, Colchester, CO7 6LD",
+    "postcode":  "CO7 6LD",
+    "localAuthority":  "Babergh District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "OUTBUILDINGS",
+    "instructionDate":  "2018-10-04",
+    "description":  "A new pool house and associated garden works, creating a stylish leisure space for a home near Colchester.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "The owners of Spindle Hill, Hadleigh Road, Higham, asked Architecture ONE to design a new pool house for the garden, in a setting within the Dedham Vale Area of Outstanding Natural Beauty."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "Architecture ONE designed a standalone pool house building, with elevations and a block plan prepared to suit the AONB landscape setting."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Babergh District Council granted full planning permission for the pool house in December 2018 (application ref. DC/18/04864)."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\33 Hannah Lees",
+    "note":  "Address refined to include \u0027Hadleigh Road\u0027, as shown on the planning decision notice.",
+    "planImages":  [
+                       "images/33-hannah-lees/elevations-proposed.jpg",
+                       "images/33-hannah-lees/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/33-hannah-lees/photos/44357_IPS150029_IMG_01_0000_max_656x437.jpg",
+                   "images/33-hannah-lees/photos/rear.jpg"
+               ]
+}

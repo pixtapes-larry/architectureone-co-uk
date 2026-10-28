@@ -1,0 +1,59 @@
+﻿{
+    "folder":  "18 Matthew Hooper",
+    "address":  "37 Kent Gardens, Braintree, Essex, CM7 9NE",
+    "postcode":  "CM7 9NE",
+    "localAuthority":  "Braintree District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LARGE_TWO_STOREY_EXTENSIONS",
+    "instructionDate":  "2018",
+    "description":  "A two-storey extension to the rear and side, adding substantial extra living space to a home in Braintree.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mr Hooper asked Architecture ONE to add significant extra space to his home at 37 Kent Gardens, Braintree, with a two-storey extension to the rear and side."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The design wraps a two-storey extension around the rear and side of the property. Because the new build ran close to the boundary, the project also went through the Party Wall process with the neighbouring property, documented on site alongside the main works."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Braintree District Council granted full planning permission for the scheme in August 2018 (application ref. 18/01191/FUL)."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\18 Matthew Hooper",
+    "planImages":  [
+                       "images/18-matthew-hooper/plan-proposed.jpg",
+                       "images/18-matthew-hooper/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/18-matthew-hooper/photos/IMG_5917.JPG",
+                   "images/18-matthew-hooper/photos/IMG_5918.JPG",
+                   "images/18-matthew-hooper/photos/IMG_5919.JPG",
+                   "images/18-matthew-hooper/photos/IMG_5920.JPG",
+                   "images/18-matthew-hooper/photos/IMG_5921.JPG",
+                   "images/18-matthew-hooper/photos/IMG_5922.JPG",
+                   "images/18-matthew-hooper/photos/IMG_5923.JPG",
+                   "images/18-matthew-hooper/photos/IMG_5924.JPG",
+                   "images/18-matthew-hooper/photos/IMG_5925.JPG",
+                   "images/18-matthew-hooper/photos/IMG_5926.JPG",
+                   "images/18-matthew-hooper/photos/IMG_5927.JPG",
+                   "images/18-matthew-hooper/photos/IMG_5928.JPG",
+                   "images/18-matthew-hooper/photos/IMG_8663.JPG",
+                   "images/18-matthew-hooper/photos/IMG_8664.JPG",
+                   "images/18-matthew-hooper/photos/IMG_8665.JPG",
+                   "images/18-matthew-hooper/photos/IMG_8666.JPG",
+                   "images/18-matthew-hooper/photos/IMG_8667.JPG",
+                   "images/18-matthew-hooper/photos/IMG_8668.JPG",
+                   "images/18-matthew-hooper/photos/IMG_8669.JPG",
+                   "images/18-matthew-hooper/photos/IMG_8670.JPG",
+                   "images/18-matthew-hooper/photos/IMG_8671.JPG",
+                   "images/18-matthew-hooper/photos/IMG_8672.JPG",
+                   "images/18-matthew-hooper/photos/IMG_8673.JPG",
+                   "images/18-matthew-hooper/photos/IMG_8674.JPG",
+                   "images/18-matthew-hooper/photos/IMG_8675.JPG",
+                   "images/18-matthew-hooper/photos/IMG_8676.JPG",
+                   "images/18-matthew-hooper/photos/IMG_8677.JPG",
+                   "images/18-matthew-hooper/photos/IMG_8678.JPG"
+               ]
+}

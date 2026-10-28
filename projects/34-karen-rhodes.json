@@ -1,0 +1,35 @@
+﻿{
+    "folder":  "34 Karen Rhodes",
+    "address":  "1 Webbs Cottages, School Lane, Coddenham, Ipswich, IP6 9PT",
+    "postcode":  "IP6 9PT",
+    "localAuthority":  "Babergh District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LARGE_SINGLE_STOREY_EXTENSIONS",
+    "instructionDate":  "2018",
+    "description":  "A single-storey extension with a roof lantern, opening up bright new living space for a home in Coddenham near Ipswich.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\34 Karen Rhodes",
+    "note":  "Address inferred from structural/CAD file names; the Building Control letter text could not be extracted (likely a scanned document with no text layer).",
+    "photos":  [
+                   "images/34-karen-rhodes/photos/supplied-21.jpg",
+                   "images/34-karen-rhodes/photos/supplied-22.jpg",
+                   "images/34-karen-rhodes/photos/supplied-23.jpg"
+               ],
+    "caseStudy":  [
+                      {
+                          "text":  "The client wanted more bright living space at 1 Webbs Cottages, School Lane, Coddenham.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "The design added a single-storey extension with a roof lantern.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "Babergh District Council granted full planning permission for the scheme.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "planImages":  [
+                       "images/34-karen-rhodes/plan-proposed.jpg",
+                       "images/34-karen-rhodes/site-plan.jpg"
+                   ]
+}

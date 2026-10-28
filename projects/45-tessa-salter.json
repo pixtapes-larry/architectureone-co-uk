@@ -1,0 +1,54 @@
+﻿{
+    "folder":  "45 Tessa SALTER",
+    "address":  "The Haven, Stoke Road, Layham, Ipswich, Suffolk, IP7 5RB",
+    "postcode":  "IP7 5RB",
+    "localAuthority":  "Babergh District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LARGE_TWO_STOREY_EXTENSIONS",
+    "instructionDate":  "2019-03-20",
+    "description":  "A single-storey front extension with bi-folding doors and rooflights was granted first, followed by a larger two-storey front and side extension with a side porch, enlarging a home near Ipswich.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mr Salter asked Architecture ONE to remodel and extend The Haven, Stoke Road, Layham, starting with a single-storey front extension and later developing a larger two-storey scheme."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The first scheme added a single-storey front extension with bi-folding doors and rooflights, porch alterations and new rear doors. A second, larger application followed for two-storey front and side extensions with a new side porch, together with new doors, rooflights and a window across several elevations."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Babergh District Council granted the first scheme in May 2019 (application ref. DC/19/01396) and the enlarged two-storey scheme in September 2019 (application ref. DC/19/03610)."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\45 Tessa SALTER",
+    "note":  "projectType corrected from SMALL_WRAP_AROUND_EXTENSIONS: a second, larger planning permission (DC/19/03610, granted September 2019) approved two-storey front and side extensions at this property, superseding the scale of the first single-storey scheme.",
+    "planImages":  [
+                       "images/45-tessa-salter/plan-proposed.jpg",
+                       "images/45-tessa-salter/elevations-proposed.jpg",
+                       "images/45-tessa-salter/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/45-tessa-salter/photos/IMG_7942.JPG",
+                   "images/45-tessa-salter/photos/IMG_7943.JPG",
+                   "images/45-tessa-salter/photos/IMG_7948.JPG",
+                   "images/45-tessa-salter/photos/IMG_7949.JPG",
+                   "images/45-tessa-salter/photos/IMG_7950.JPG",
+                   "images/45-tessa-salter/photos/IMG_7951.JPG",
+                   "images/45-tessa-salter/photos/IMG_7954.JPG",
+                   "images/45-tessa-salter/photos/IMG_7955.JPG",
+                   "images/45-tessa-salter/photos/IMG_7956.JPG",
+                   "images/45-tessa-salter/photos/IMG_7957.JPG",
+                   "images/45-tessa-salter/photos/IMG_7958.JPG",
+                   "images/45-tessa-salter/photos/IMG_7959.JPG",
+                   "images/45-tessa-salter/photos/IMG_7960.JPG",
+                   "images/45-tessa-salter/photos/IMG_7961.JPG",
+                   "images/45-tessa-salter/photos/IMG_7962.JPG",
+                   "images/45-tessa-salter/photos/IMG_7963.JPG",
+                   "images/45-tessa-salter/photos/IMG_7964.JPG",
+                   "images/45-tessa-salter/photos/IMG_7965.JPG",
+                   "images/45-tessa-salter/photos/IMG_7966.JPG",
+                   "images/45-tessa-salter/photos/IMG_7967.JPG",
+                   "images/45-tessa-salter/photos/IMG_7968.JPG"
+               ]
+}

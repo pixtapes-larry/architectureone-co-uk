@@ -1,0 +1,29 @@
+﻿{
+    "folder":  "19 Darren Gregory",
+    "address":  "28 Bourne Road, Colchester, CO2 7LQ",
+    "postcode":  "CO2 7LQ",
+    "localAuthority":  "Colchester Borough Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "SMALL_WRAP_AROUND_EXTENSIONS",
+    "instructionDate":  "2018",
+    "description":  "A side extension filling in an existing courtyard in Colchester; the client also explored, but didn\u0027t pursue, a speculative new-build plot nearby.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\19 Darren Gregory",
+    "caseStudy":  [
+                      {
+                          "text":  "Mr Gregory wanted to extend his home at 28 Bourne Road, Colchester, filling in an existing courtyard.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "The design added a side extension over the courtyard space.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "Colchester Borough Council granted full planning permission for the scheme. The client also explored, but didn\u0027t pursue, a speculative new-build plot nearby.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "planImages":  [
+                       "images/19-darren-gregory/plan-proposed.jpg",
+                       "images/19-darren-gregory/site-plan.jpg"
+                   ]
+}

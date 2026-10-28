@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import type { ProjectMapSummary } from "@/lib/mock-projects";
 
 // Leaflet touches `window` at import time, so this must never run during SSR.
 const ProjectsMapExperience = dynamic(
@@ -21,6 +22,23 @@ const ProjectsMapExperience = dynamic(
   },
 );
 
-export default function MapLoader() {
-  return <ProjectsMapExperience />;
+export default function MapLoader({
+  projects,
+  searchHeading,
+  searchLead,
+  startingNote,
+}: {
+  projects: ProjectMapSummary[];
+  searchHeading: string;
+  searchLead: string;
+  startingNote: string;
+}) {
+  return (
+    <ProjectsMapExperience
+      projects={projects}
+      searchHeading={searchHeading}
+      searchLead={searchLead}
+      startingNote={startingNote}
+    />
+  );
 }

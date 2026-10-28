@@ -1,0 +1,36 @@
+﻿{
+    "folder":  "23 Allan Mitchell",
+    "address":  "Pen Y Lan, Fox Street, Ardleigh, Colchester, CO7 7PN",
+    "postcode":  "CO7 7PN",
+    "localAuthority":  "Tendring District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "OUTBUILDINGS",
+    "instructionDate":  "2018-09-17",
+    "description":  "An extension to an existing garage building in the rear garden of a property near Colchester.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mr Mitchell wanted to extend the existing garage building in the rear garden at Pen Y Lan, Fox Street, Ardleigh, near Colchester."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "Architecture ONE designed an extension to the existing garage building, prepared to the Local Planning Authority\u0027s site location, block plan and elevation requirements."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Tendring District Council granted full planning permission for the garage extension in November 2018 (application ref. 18/01546/FUL)."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\23 Allan Mitchell",
+    "planImages":  [
+                       "images/23-allan-mitchell/plan-proposed.jpg",
+                       "images/23-allan-mitchell/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/23-allan-mitchell/photos/IMG_6475.JPG",
+                   "images/23-allan-mitchell/photos/IMG_6476.JPG",
+                   "images/23-allan-mitchell/photos/IMG_6477.JPG",
+                   "images/23-allan-mitchell/photos/IMG_6478.JPG",
+                   "images/23-allan-mitchell/photos/IMG_6479.JPG"
+               ]
+}

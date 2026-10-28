@@ -1,33 +1,40 @@
 // Local Authority Showcase — one page per planning authority, built from
-// real project records (currently the 10 mock entries; a one-line swap to
-// a real `prisma.project.groupBy` once harvested data exists). No
-// relationship copy is invented per authority beyond what's already
-// established site-wide (Home's "named relationships" line) — everything
-// shown here is a genuine count derived from the project data itself.
+// real project records in the DB. No relationship copy is invented per
+// authority beyond what's already established site-wide (Home's "named
+// relationships" line) — everything shown here is a genuine count derived
+// from the project data itself.
 
-import { MOCK_PROJECTS, type ProjectMapSummary } from "./mock-projects";
+import { prisma } from "./prisma";
+import type { ProjectMapSummary } from "./mock-projects";
+import { getProjectsByLocalAuthority } from "./projects";
 import { PROJECT_TYPE_LABELS } from "./project-labels";
 
-export function localAuthoritySlug(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/&/g, "and")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+// Convenience re-export for server-side callers already importing from
+// this file. This module itself imports Prisma, so a CLIENT component
+// must import localAuthoritySlug/localAuthorityBoundarySlug directly from
+// local-authority-slug.ts instead — re-exporting here doesn't avoid that
+// module's code (and its Prisma import) being pulled into a client bundle.
+export { localAuthoritySlug, localAuthorityBoundarySlug } from "./local-authority-slug";
+import { localAuthoritySlug } from "./local-authority-slug";
+
+export async function allLocalAuthorityNames(): Promise<string[]> {
+  const rows = await prisma.project.findMany({
+    distinct: ["localAuthority"],
+    select: { localAuthority: true },
+  });
+  return rows.map((r) => r.localAuthority);
 }
 
-export function allLocalAuthorityNames(): string[] {
-  return Array.from(new Set(MOCK_PROJECTS.map((p) => p.localAuthority)));
+export async function allLocalAuthoritySlugs(): Promise<string[]> {
+  const names = await allLocalAuthorityNames();
+  return names.map(localAuthoritySlug);
 }
 
-export function allLocalAuthoritySlugs(): string[] {
-  return allLocalAuthorityNames().map(localAuthoritySlug);
-}
-
-export function findLocalAuthorityBySlug(slug: string): string | undefined {
-  return allLocalAuthorityNames().find(
-    (name) => localAuthoritySlug(name) === slug,
-  );
+export async function findLocalAuthorityBySlug(
+  slug: string,
+): Promise<string | undefined> {
+  const names = await allLocalAuthorityNames();
+  return names.find((name) => localAuthoritySlug(name) === slug);
 }
 
 export type LocalAuthorityStats = {
@@ -37,10 +44,16 @@ export type LocalAuthorityStats = {
   byCategory: { label: string; count: number }[];
   projects: ProjectMapSummary[];
   featuredProjects: ProjectMapSummary[];
+  blurb?: string;
 };
 
-export function localAuthorityStats(name: string): LocalAuthorityStats {
-  const projects = MOCK_PROJECTS.filter((p) => p.localAuthority === name);
+export async function localAuthorityStats(
+  name: string,
+): Promise<LocalAuthorityStats> {
+  const [projects, info] = await Promise.all([
+    getProjectsByLocalAuthority(name),
+    prisma.localAuthorityInfo.findUnique({ where: { localAuthority: name } }),
+  ]);
   const featuredProjects = projects.filter((p) => p.featured);
 
   const counts = new Map<string, number>();
@@ -56,5 +69,6 @@ export function localAuthorityStats(name: string): LocalAuthorityStats {
     byCategory: Array.from(counts, ([label, count]) => ({ label, count })),
     projects,
     featuredProjects,
+    blurb: info?.blurb ?? undefined,
   };
 }

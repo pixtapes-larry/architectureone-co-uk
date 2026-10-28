@@ -1,0 +1,72 @@
+﻿{
+    "folder":  "49 Tom Munson",
+    "address":  "5 Cottesford Close, Hadleigh, Ipswich, Suffolk, IP7 5JA",
+    "postcode":  "IP7 5JA",
+    "localAuthority":  "Babergh District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LARGE_TWO_STOREY_EXTENSIONS",
+    "instructionDate":  "2019-03-07",
+    "description":  "A single and two-storey extension replacing an old garage and conservatory, substantially enlarging a home in Hadleigh.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mr Munson asked Architecture ONE to substantially enlarge his home at 5 Cottesford Close, Hadleigh, clearing away an old garage and conservatory to make way for more living space."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The design combines a single-storey rear extension with a two-storey side extension, following demolition of the existing garage and rear conservatory; a condition restricts new first-floor openings on the side elevation to protect neighbouring privacy."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Babergh District Council granted full planning permission for the scheme in April 2019 (application ref. DC/19/01124). Building control photos through the build show insulation, fire-boarding and joist-hanger details signed off at each stage, and later photos show the finished rooms in everyday use."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\49 Tom Munson",
+    "planImages":  [
+                       "images/49-tom-munson/plan-proposed.jpg",
+                       "images/49-tom-munson/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/49-tom-munson/photos/IMG_8080.JPG",
+                   "images/49-tom-munson/photos/IMG_8081.JPG",
+                   "images/49-tom-munson/photos/IMG_8082.JPG",
+                   "images/49-tom-munson/photos/IMG_8083.JPG",
+                   "images/49-tom-munson/photos/IMG_8084.JPG",
+                   "images/49-tom-munson/photos/IMG_8085.JPG",
+                   "images/49-tom-munson/photos/IMG_8086.JPG",
+                   "images/49-tom-munson/photos/IMG_8087.JPG",
+                   "images/49-tom-munson/photos/building-control/100mm Insulation Btween joists 50mm over joist face.jpg",
+                   "images/49-tom-munson/photos/building-control/Fireboard pink plasterboard all steel.jpg",
+                   "images/49-tom-munson/photos/building-control/IMG_20191125_121218.jpg",
+                   "images/49-tom-munson/photos/building-control/IMG_20191125_121225.jpg",
+                   "images/49-tom-munson/photos/building-control/IMG_20191125_121229.jpg",
+                   "images/49-tom-munson/photos/building-control/IMG_4006.jpg",
+                   "images/49-tom-munson/photos/building-control/IMG_4007.jpg",
+                   "images/49-tom-munson/photos/building-control/IMG_4008.jpg",
+                   "images/49-tom-munson/photos/building-control/IMG_4021.jpg",
+                   "images/49-tom-munson/photos/building-control/IMG_4022.jpg",
+                   "images/49-tom-munson/photos/building-control/IMG_4023.jpg",
+                   "images/49-tom-munson/photos/building-control/IMG_4074.jpg",
+                   "images/49-tom-munson/photos/building-control/IMG_4075.jpg",
+                   "images/49-tom-munson/photos/building-control/IMG_4076.jpg",
+                   "images/49-tom-munson/photos/building-control/IMG_4077.jpg",
+                   "images/49-tom-munson/photos/building-control/IMG_4227.JPG",
+                   "images/49-tom-munson/photos/building-control/IMG_4228.JPG",
+                   "images/49-tom-munson/photos/building-control/IMG_4229.JPG",
+                   "images/49-tom-munson/photos/building-control/IMG_4257.jpg",
+                   "images/49-tom-munson/photos/building-control/IMG_4258.jpg",
+                   "images/49-tom-munson/photos/building-control/IMG_4259.jpg",
+                   "images/49-tom-munson/photos/building-control/IMG_4260.jpg",
+                   "images/49-tom-munson/photos/building-control/Joist hanger on all these connections to wall plate.jpg",
+                   "images/49-tom-munson/photos-after/Cottisford Close Hadleigh.png",
+                   "images/49-tom-munson/photos-after/Cottisford Clsoe Hadleigh Rear.png",
+                   "images/49-tom-munson/photos-after/Existing.jpg",
+                   "images/49-tom-munson/photos-after/FLOOR INSULATION.jpeg",
+                   "images/49-tom-munson/photos-after/front.png",
+                   "images/49-tom-munson/photos-after/image FLOOR INSULATION.jpeg",
+                   "images/49-tom-munson/photos-after/image0.jpeg",
+                   "images/49-tom-munson/photos-after/image1.jpeg",
+                   "images/49-tom-munson/photos-after/internal kitchen.png",
+                   "images/49-tom-munson/photos-after/kitchen lean to  1.png"
+               ]
+}

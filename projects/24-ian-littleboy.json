@@ -1,0 +1,59 @@
+﻿{
+    "folder":  "24 Ian LittleBoy",
+    "address":  "7 Princes Gardens, Somersham, Ipswich, Suffolk, IP8 4PF",
+    "postcode":  "IP8 4PF",
+    "localAuthority":  "Mid Suffolk District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "SMALL_WRAP_AROUND_EXTENSIONS",
+    "instructionDate":  "2018-09-04",
+    "description":  "A single-storey rear extension replacing an old conservatory, with porch alterations, refreshing a home in Somersham.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mr and Mrs Littleboy asked Architecture ONE to replace the old conservatory at 7 Princes Gardens, Somersham, with a proper single-storey rear extension, along with alterations to the front porch."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The design demolishes the existing conservatory and replaces it with a single-storey rear extension, together with alterations and an extension to the front porch. Because the new wall sat on the boundary, the project also went through the Party Wall process with the neighbouring property."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Mid Suffolk District Council granted full planning permission for the scheme in October 2018 (application ref. DC/18/03972)."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\24 Ian LittleBoy",
+    "planImages":  [
+                       "images/24-ian-littleboy/plan-proposed.jpg",
+                       "images/24-ian-littleboy/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/24-ian-littleboy/photos/front picture.jpg",
+                   "images/24-ian-littleboy/photos/IMG_6659.JPG",
+                   "images/24-ian-littleboy/photos/IMG_6660.JPG",
+                   "images/24-ian-littleboy/photos/IMG_6661.JPG",
+                   "images/24-ian-littleboy/photos/IMG_6663.JPG",
+                   "images/24-ian-littleboy/photos/IMG_6664.JPG",
+                   "images/24-ian-littleboy/photos/IMG_6665.JPG",
+                   "images/24-ian-littleboy/photos/IMG_6666.JPG",
+                   "images/24-ian-littleboy/photos/IMG_6668.JPG",
+                   "images/24-ian-littleboy/photos/IMG_6669.JPG",
+                   "images/24-ian-littleboy/photos/IMG_7652.JPG",
+                   "images/24-ian-littleboy/photos/IMG_7653.JPG",
+                   "images/24-ian-littleboy/photos/IMG_7654.JPG",
+                   "images/24-ian-littleboy/photos/IMG_7655.JPG",
+                   "images/24-ian-littleboy/photos/IMG_7660.JPG",
+                   "images/24-ian-littleboy/photos/IMG_7662.JPG",
+                   "images/24-ian-littleboy/photos/IMG_7665.JPG",
+                   "images/24-ian-littleboy/photos/IMG_7667.JPG",
+                   "images/24-ian-littleboy/photos/IMG_7670.JPG",
+                   "images/24-ian-littleboy/photos-after/IMG_20190917_092156.jpg",
+                   "images/24-ian-littleboy/photos-after/IMG_20190917_092233.jpg",
+                   "images/24-ian-littleboy/photos-after/IMG_20190917_092309 (1).jpg",
+                   "images/24-ian-littleboy/photos-after/IMG_20190917_113042.jpg",
+                   "images/24-ian-littleboy/photos-after/IMG_20190917_113534.jpg",
+                   "images/24-ian-littleboy/photos-after/interior 2.jpg",
+                   "images/24-ian-littleboy/photos-after/interior.jpg",
+                   "images/24-ian-littleboy/photos-after/Princes gardens.jpg",
+                   "images/24-ian-littleboy/photos-after/rear better.jpg"
+               ]
+}

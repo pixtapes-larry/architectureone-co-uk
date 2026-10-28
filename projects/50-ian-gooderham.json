@@ -1,0 +1,29 @@
+﻿{
+    "folder":  "50 Ian Gooderham",
+    "address":  "21 Cardiff Avenue, Ipswich, Suffolk, IP2 8QH",
+    "postcode":  "IP2 8QH",
+    "localAuthority":  "Ipswich Borough Council",
+    "planningType":  "PERMITTED_DEVELOPMENT",
+    "projectType":  "SMALL_WRAP_AROUND_EXTENSIONS",
+    "instructionDate":  "2019-03-08",
+    "description":  "Structural design for a flat-roof kitchen extension at a home on Cardiff Avenue, Ipswich.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\50 Ian Gooderham",
+    "note":  "Structural liaison work (steel beam design for a flat-roof kitchen extension) alongside the build; confirmed by the user as Permitted Development rather than requiring a full planning application.",
+    "caseStudy":  [
+                      {
+                          "text":  "Mr Gooderham needed structural design support for a flat-roof kitchen extension at 21 Cardiff Avenue, Ipswich.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "Structural design for the flat-roof kitchen extension was carried out.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "The works proceeded as Permitted Development, with Architecture ONE providing structural liaison rather than a full planning application.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "planImages":  [
+                       "images/50-ian-gooderham/plan-proposed.jpg"
+                   ]
+}

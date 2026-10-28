@@ -1,0 +1,138 @@
+.shell {
+  min-height: 100vh;
+  display: flex;
+  background: var(--color-surface-alt);
+}
+
+.sidebar {
+  width: 240px;
+  flex: 0 0 240px;
+  background: var(--color-white);
+  border-right: 1px solid var(--color-line);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-signature);
+  background: var(--color-coral);
+  color: var(--color-white);
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.navLink {
+  padding: 10px 12px;
+  border-radius: var(--radius-card);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-muted-dark);
+}
+
+.navLink:hover {
+  background: var(--color-chip-bg);
+  color: var(--color-ink);
+}
+
+.navLinkActive {
+  background: var(--color-chip-bg);
+  color: var(--color-coral);
+}
+
+.footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.userName {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.userEmail {
+  font-size: 12px;
+  color: var(--color-muted);
+  margin: -6px 0 2px;
+}
+
+.logoutBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 12.5px;
+  font-weight: 700;
+  background: var(--color-white);
+  border: 1px solid var(--color-line-strong);
+  color: var(--color-ink);
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.logoutBtn:hover {
+  border-color: var(--color-coral);
+  color: var(--color-coral);
+}
+
+.main {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 36px 48px;
+}
+
+@media (max-width: 768px) {
+  .shell {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    flex: 0 0 auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+  }
+  .nav {
+    display: none;
+  }
+  .footer {
+    margin-top: 0;
+    flex-direction: row;
+    align-items: center;
+  }
+  .userEmail {
+    display: none;
+  }
+  .main {
+    padding: 24px 20px;
+  }
+}

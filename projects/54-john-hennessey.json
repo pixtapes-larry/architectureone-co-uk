@@ -1,0 +1,30 @@
+﻿{
+    "folder":  "54 John Hennessey",
+    "address":  "The Old Orchard, Bury Road, Thorpe Morieux, Suffolk, IP30 0NT",
+    "postcode":  "IP30 0NT",
+    "localAuthority":  "Babergh / Mid Suffolk District Councils",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LARGE_TWO_STOREY_EXTENSIONS",
+    "instructionDate":  "2019-04-03",
+    "description":  "A two-storey side extension to a property near Bury St Edmunds, supported by structural steel design work.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\54 John Hennessey",
+    "note":  "Only the Building Regulations notice was found, not a separate planning decision notice, for this scale of extension.",
+    "caseStudy":  [
+                      {
+                          "text":  "The client wanted to extend their property near Bury St Edmunds.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "The design added a two-storey side extension, supported by structural steel design work.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "Only the Building Regulations notice was found for this scale of extension, not a separate planning decision notice.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "planImages":  [
+                       "images/54-john-hennessey/elevation-proposed.jpg",
+                       "images/54-john-hennessey/plan-proposed.jpg"
+                   ]
+}

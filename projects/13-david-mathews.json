@@ -1,0 +1,30 @@
+﻿{
+    "folder":  "13 David Mathews",
+    "address":  "Chelmsford, Essex, CM1 3BT (street address not confirmed)",
+    "postcode":  "CM1 3BT",
+    "localAuthority":  "Chelmsford City Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LOFT_CONVERSIONS",
+    "instructionDate":  "2018-04-17",
+    "description":  "A rear kitchen and boot-room extension combined with a loft conversion, quoted for a home in Chelmsford.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\13 David Mathews",
+    "caseStudy":  [
+                      {
+                          "text":  "Mr Mathews was quoted for extra space at his home in Chelmsford.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "The scheme combines a rear kitchen and boot-room extension with a loft conversion.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "Chelmsford City Council granted full planning permission for the scheme; the exact decision date beyond the April 2018 quote is not confirmed in the surviving paperwork.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "planImages":  [
+                       "images/13-david-mathews/elevations-proposed.jpg",
+                       "images/13-david-mathews/plans-proposed.jpg",
+                       "images/13-david-mathews/site-plan.jpg"
+                   ]
+}

@@ -1,0 +1,48 @@
+﻿{
+    "folder":  "31 Shaun Orpen",
+    "address":  "3 Wheelwrights Close, Stutton, Ipswich, Suffolk, IP9 2SF",
+    "postcode":  "IP9 2SF",
+    "localAuthority":  "Babergh District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LOFT_CONVERSIONS",
+    "instructionDate":  "2020-02-17",
+    "description":  "Raising the roof pitch over the garage to create additional living accommodation for a home in Stutton.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mr Orpen asked Architecture ONE to turn the roof space over his garage at 3 Wheelwrights Close, Stutton, into proper additional living accommodation."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The design raises the pitch of the roof over the garage, with new external facing and roofing materials matched to the existing house to keep the change in keeping with the property."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Babergh District Council granted full planning permission for the scheme in April 2020 (application ref. DC/20/00684)."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\31 Shaun Orpen",
+    "planImages":  [
+                       "images/31-shaun-orpen/plan-proposed.jpg",
+                       "images/31-shaun-orpen/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/31-shaun-orpen/photos/IMG_6852.JPG",
+                   "images/31-shaun-orpen/photos/IMG_6853.JPG",
+                   "images/31-shaun-orpen/photos/IMG_6854.JPG",
+                   "images/31-shaun-orpen/photos/IMG_6855.JPG",
+                   "images/31-shaun-orpen/photos/IMG_6856.JPG",
+                   "images/31-shaun-orpen/photos/IMG_6857.JPG",
+                   "images/31-shaun-orpen/photos/IMG_6858.JPG",
+                   "images/31-shaun-orpen/photos/IMG_6859.JPG",
+                   "images/31-shaun-orpen/photos/IMG_6860.JPG",
+                   "images/31-shaun-orpen/photos/IMG_6861.JPG",
+                   "images/31-shaun-orpen/photos/IMG_6862.JPG",
+                   "images/31-shaun-orpen/photos/IMG_6863.JPG",
+                   "images/31-shaun-orpen/photos/IMG_6864.JPG",
+                   "images/31-shaun-orpen/photos/IMG_6865.JPG",
+                   "images/31-shaun-orpen/photos/IMG_6866.JPG",
+                   "images/31-shaun-orpen/photos/IMG_6867.JPG",
+                   "images/31-shaun-orpen/photos/IMG_6868.JPG"
+               ]
+}

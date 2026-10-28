@@ -1,0 +1,40 @@
+﻿{
+    "folder":  "01 Abigail Dittrich",
+    "address":  "17 Perry Road, Tiptree, Colchester, CO5 0UA",
+    "postcode":  "CO5 0UA",
+    "localAuthority":  "Colchester Borough Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LARGE_TWO_STOREY_EXTENSIONS",
+    "instructionDate":  "2018",
+    "description":  "A two-storey extension to the side and rear, plus a smart new entrance porch, giving a semi-detached home in Tiptree significantly more space to live in.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mrs Dittrich came to Architecture ONE wanting to extend her semi-detached home at 17 Perry Road in Tiptree — adding meaningful extra living space without disrupting the character of the street."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The design added a two-storey extension to both the side and rear of the house, along with a new covered entrance porch at the front. Care was taken over neighbouring privacy too, with obscured glazing specified for a first-floor bathroom window facing the boundary."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Colchester Borough Council granted full planning permission for the scheme in June 2018 (application ref. 180883). RCA Structures carried out the structural design for the new steelwork and foundations, and a further non-material amendment was approved in 2021 to refine details of the build."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\01 Abigail Dittrich",
+    "planImages":  [
+                       "images/01-abigail-dittrich/plan-proposed.jpg"
+                   ],
+    "photos":  [
+                   "images/01-abigail-dittrich/photos/2015-2018 April I phone 7968.JPG",
+                   "images/01-abigail-dittrich/photos/2015-2018 April I phone 7969.JPG",
+                   "images/01-abigail-dittrich/photos/2015-2018 April I phone 7970.JPG",
+                   "images/01-abigail-dittrich/photos/2015-2018 April I phone 7971.JPG",
+                   "images/01-abigail-dittrich/photos/2015-2018 April I phone 7972.JPG",
+                   "images/01-abigail-dittrich/photos/2015-2018 April I phone 7973.JPG",
+                   "images/01-abigail-dittrich/photos/2015-2018 April I phone 7974.JPG",
+                   "images/01-abigail-dittrich/photos/2015-2018 April I phone 7975.JPG",
+                   "images/01-abigail-dittrich/photos/2015-2018 April I phone 7976.JPG",
+                   "images/01-abigail-dittrich/photos/2015-2018 April I phone 7977.JPG"
+               ]
+}

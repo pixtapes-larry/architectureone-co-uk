@@ -1,0 +1,38 @@
+﻿{
+    "folder":  "12 Alistair Heath Robinson",
+    "address":  "Grace Cottage, 7 Sulleys Hill, Raydon, Ipswich, Suffolk, IP7 5QQ",
+    "postcode":  "IP7 5QQ",
+    "localAuthority":  "Babergh District Council",
+    "planningType":  "PERMITTED_DEVELOPMENT",
+    "projectType":  "SMALL_WRAP_AROUND_EXTENSIONS",
+    "instructionDate":  "2018",
+    "description":  "A single-storey rear extension together with a loft conversion using an inverted dormer, adding living and bedroom space near Ipswich.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\12 Alistair Heath Robinson",
+    "caseStudy":  [
+                      {
+                          "text":  "The client wanted more space at Grace Cottage, 7 Sulleys Hill, Raydon, near Ipswich.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "The design combines a single-storey rear extension with a loft conversion using an inverted dormer, adding both living and bedroom space.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "The scheme was carried out as permitted development, confirmed by Babergh District Council rather than needing a full planning application.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "photos":  [
+                   "images/12-alistair-heath-robinson/photos/before-39.jpg",
+                   "images/12-alistair-heath-robinson/photos/before-40.jpg",
+                   "images/12-alistair-heath-robinson/photos/before-41.jpg",
+                   "images/12-alistair-heath-robinson/photos/before-42.jpg",
+                   "images/12-alistair-heath-robinson/photos/before-43.jpg",
+                   "images/12-alistair-heath-robinson/photos/before-44.jpg"
+               ],
+    "planImages":  [
+                       "images/12-alistair-heath-robinson/elevations-proposed.jpg",
+                       "images/12-alistair-heath-robinson/plans-proposed.jpg",
+                       "images/12-alistair-heath-robinson/site-plan.jpg"
+                   ]
+}

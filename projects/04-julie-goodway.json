@@ -1,0 +1,52 @@
+﻿{
+    "folder":  "04 Julie Goodway",
+    "address":  "62 Ashcroft Road, Ipswich, Suffolk, IP1 6AD",
+    "postcode":  "IP1 6AD",
+    "localAuthority":  "Ipswich Borough Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "GARAGE_CONVERSIONS",
+    "instructionDate":  "2019",
+    "description":  "A single-storey rear extension with a roof lantern, combined with converting the existing garage into bright new living space, at a home in Ipswich.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mrs Goodway asked Architecture ONE to add space to her home at 62 Ashcroft Road in Ipswich, making better use of the existing garage alongside a new rear extension."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The design combines a single-storey rear extension topped with a roof lantern with converting the adjoining garage into habitable space, opening up the back of the house."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Ipswich Borough Council granted full planning permission for the scheme in April 2019 (application ref. IP/19/00273/FUL), on condition that the new external materials matched the existing building."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\04 Julie Goodway",
+    "planImages":  [
+                       "images/04-julie-goodway/plan-proposed.jpg",
+                       "images/04-julie-goodway/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/04-julie-goodway/photos/IMG_7788.JPG",
+                   "images/04-julie-goodway/photos/IMG_7789.JPG",
+                   "images/04-julie-goodway/photos/IMG_7790.JPG",
+                   "images/04-julie-goodway/photos/IMG_7791.JPG",
+                   "images/04-julie-goodway/photos/IMG_7793.JPG",
+                   "images/04-julie-goodway/photos/IMG_7794.JPG",
+                   "images/04-julie-goodway/photos/IMG_7795.JPG",
+                   "images/04-julie-goodway/photos/IMG_7796.JPG",
+                   "images/04-julie-goodway/photos/IMG_7797.JPG",
+                   "images/04-julie-goodway/photos/IMG_7798.JPG",
+                   "images/04-julie-goodway/photos/IMG_7799.JPG",
+                   "images/04-julie-goodway/photos/IMG_7800.JPG",
+                   "images/04-julie-goodway/photos/IMG_7801.JPG",
+                   "images/04-julie-goodway/photos/IMG_7802.JPG",
+                   "images/04-julie-goodway/photos/IMG_7803.jpg",
+                   "images/04-julie-goodway/photos/after-15.jpg",
+                   "images/04-julie-goodway/photos/after-16.jpg",
+                   "images/04-julie-goodway/photos/after-17.jpg",
+                   "images/04-julie-goodway/photos/after-18.jpg",
+                   "images/04-julie-goodway/photos/after-19.jpg",
+                   "images/04-julie-goodway/photos/after-20.jpg"
+               ]
+}

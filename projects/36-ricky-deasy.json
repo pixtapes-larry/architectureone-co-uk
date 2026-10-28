@@ -1,0 +1,50 @@
+﻿{
+    "folder":  "36 Ricky Deasy",
+    "address":  "75 Robin Drive, Chantry, Ipswich, Suffolk, IP2 0TE",
+    "postcode":  "IP2 0TE",
+    "localAuthority":  "Ipswich Borough Council",
+    "planningType":  "PERMITTED_DEVELOPMENT",
+    "projectType":  "SMALL_WRAP_AROUND_EXTENSIONS",
+    "instructionDate":  "2018",
+    "description":  "A rear single-storey extension at a home in Chantry, Ipswich, confirmed as lawful development ahead of construction.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mr Deasy asked Architecture ONE to add a rear single-storey extension to his home at 75 Robin Drive, Chantry, Ipswich."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "Architecture ONE prepared the proposed plans and secured a Certificate of Lawful Development confirming the rear extension could proceed as permitted development, before taking the scheme through building control."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Ipswich Borough Council issued a Certificate of Lawful Development in February 2019 (ref. IP/18/01077/CLD), and a full plans building regulation application followed in March 2019."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\36 Ricky Deasy",
+    "note":  "Corrected from an earlier pass that classified this as a garage conversion. The Certificate of Lawful Development (IP/18/01077/CLD) and Building Notice both describe the works as a rear single-storey extension; projectType and description updated accordingly, and postcode (IP2 0TE) confirmed from those documents.",
+    "planImages":  [
+                       "images/36-ricky-deasy/plan-proposed.jpg",
+                       "images/36-ricky-deasy/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/36-ricky-deasy/photos/16 May 2019 Download 1018.JPG",
+                   "images/36-ricky-deasy/photos/16 May 2019 Download 1019.JPG",
+                   "images/36-ricky-deasy/photos/16 May 2019 Download 1020.JPG",
+                   "images/36-ricky-deasy/photos/IMG_4187.jpg",
+                   "images/36-ricky-deasy/photos/IMG_4218.jpg",
+                   "images/36-ricky-deasy/photos/IMG_4233.jpg",
+                   "images/36-ricky-deasy/photos/IMG_4237.jpg",
+                   "images/36-ricky-deasy/photos/IMG_4238.jpg",
+                   "images/36-ricky-deasy/photos/IMG_4372.jpg",
+                   "images/36-ricky-deasy/photos/IMG_4373.jpg",
+                   "images/36-ricky-deasy/photos/IMG_4374.jpg",
+                   "images/36-ricky-deasy/photos/IMG_4386.jpg",
+                   "images/36-ricky-deasy/photos/IMG_4401.jpg",
+                   "images/36-ricky-deasy/photos/IMG_4402.jpg",
+                   "images/36-ricky-deasy/photos/IMG_4404.jpg",
+                   "images/36-ricky-deasy/photos/IMG_4405.jpg",
+                   "images/36-ricky-deasy/photos/IMG_4406.jpg",
+                   "images/36-ricky-deasy/photos/IMG_4407.jpg"
+               ]
+}

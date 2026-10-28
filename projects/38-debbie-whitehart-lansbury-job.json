@@ -1,0 +1,26 @@
+﻿{
+    "folder":  "38 Debbie Whitehart (Lansbury JOB)",
+    "address":  "64 Tye Green, Glemsford, Sudbury, Suffolk, CO10 7RG",
+    "postcode":  "CO10 7RG",
+    "localAuthority":  "Babergh District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "NEW_BUILDS",
+    "instructionDate":  "2019",
+    "description":  "Early-stage design, heritage and environmental work supporting a proposed new dwelling at Glemsford, Suffolk.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\38 Debbie Whitehart (Lansbury JOB)",
+    "note":  "Heavy pre-application/heritage/contamination survey work present (outline application); full planning outcome not confirmed.",
+    "caseStudy":  [
+                      {
+                          "text":  "The client was exploring a new dwelling at 64 Tye Green, Glemsford, Suffolk.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "Early-stage design work was supported by heritage and environmental (contamination) surveys, ahead of an outline application.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "Babergh District Council\u0027s full planning outcome for the scheme is not confirmed in the surviving paperwork.",
+                          "heading":  "The Outcome"
+                      }
+                  ]
+}

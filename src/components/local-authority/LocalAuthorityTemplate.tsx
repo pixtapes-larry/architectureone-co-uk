@@ -1,7 +1,12 @@
 import Link from "next/link";
 import type { LocalAuthorityStats } from "@/lib/local-authorities";
 import { PROJECT_TYPE_LABELS } from "@/lib/project-labels";
-import { HOME_HREF, BOOK_CONSULTATION_HREF } from "@/lib/nav";
+import {
+  HOME_HREF,
+  BOOK_CONSULTATION_HREF,
+  EXPLORE_PROJECTS_HREF,
+} from "@/lib/nav";
+import LocalAuthorityMapLoader from "./LocalAuthorityMapLoader";
 import styles from "./LocalAuthorityTemplate.module.css";
 
 export default function LocalAuthorityTemplate({
@@ -20,31 +25,59 @@ export default function LocalAuthorityTemplate({
         <div className={styles.intro}>
           <h1 className={styles.title}>{stats.name}</h1>
           <p className={styles.lead}>
-            Planning permission granted across {stats.name} — {stats.total}{" "}
-            project{stats.total === 1 ? "" : "s"} and counting.
+            {stats.blurb ?? (
+              <>
+                Planning permission granted across {stats.name} —{" "}
+                {stats.total} project{stats.total === 1 ? "" : "s"} and
+                counting.
+              </>
+            )}
           </p>
         </div>
 
-        <div className={styles.statsRow}>
-          <div className={styles.statTile}>
-            <div className={styles.statCount}>{stats.total}</div>
-            <div className={styles.statLabel}>Projects delivered</div>
-          </div>
-          <div className={styles.statTile}>
-            <div className={styles.statCount}>{stats.featuredCount}</div>
-            <div className={styles.statLabel}>Featured case studies</div>
-          </div>
-          <div className={styles.statTile} style={{ flex: 1 }}>
-            <div className={styles.statLabel} style={{ marginBottom: 10 }}>
-              Project types
+        <div className={styles.layout}>
+          <div className={styles.left}>
+            <div className={styles.statsRow}>
+              <div className={styles.statTile}>
+                <div className={styles.statCount}>{stats.total}</div>
+                <div className={styles.statLabel}>Projects delivered</div>
+              </div>
+              <div className={styles.statTile}>
+                <div className={styles.statCount}>{stats.featuredCount}</div>
+                <div className={styles.statLabel}>Featured case studies</div>
+              </div>
             </div>
-            <div className={styles.categoryChips}>
-              {stats.byCategory.map((c) => (
-                <span key={c.label} className={styles.categoryChip}>
-                  {c.label} · {c.count}
-                </span>
-              ))}
+
+            <div className={styles.typesCard}>
+              <div className={styles.statLabel} style={{ marginBottom: 10 }}>
+                Project types
+              </div>
+              <div className={styles.categoryChips}>
+                {stats.byCategory.map((c) => (
+                  <span key={c.label} className={styles.categoryChip}>
+                    {c.label} · {c.count}
+                  </span>
+                ))}
+              </div>
             </div>
+          </div>
+
+          <div className={styles.right}>
+            <LocalAuthorityMapLoader
+              name={stats.name}
+              pins={stats.projects.map((p) => ({
+                latitude: p.latitude,
+                longitude: p.longitude,
+                address: p.address,
+                featured: p.featured,
+              }))}
+            />
+            <Link
+              href={EXPLORE_PROJECTS_HREF}
+              className={styles.exploreMapBtn}
+            >
+              Explore all projects
+            </Link>
           </div>
         </div>
       </div>

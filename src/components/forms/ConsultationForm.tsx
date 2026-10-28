@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { PLACEHOLDER_CONTACT_EMAIL } from "@/lib/site-content";
 import { CATEGORY_LABELS, CATEGORIES } from "@/lib/project-labels";
 import styles from "./forms.module.css";
 
@@ -10,7 +9,7 @@ import styles from "./forms.module.css";
 // a pre-filled request rather than silently failing or faking a
 // confirmation. Replace with a real booking flow (API route + calendar
 // integration) before launch.
-export default function ConsultationForm() {
+export default function ConsultationForm({ contactEmail }: { contactEmail: string }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -32,7 +31,7 @@ export default function ConsultationForm() {
     ]
       .filter((line) => line !== null)
       .join("\n");
-    window.location.href = `mailto:${PLACEHOLDER_CONTACT_EMAIL}?subject=${encodeURIComponent(
+    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(
       subject,
     )}&body=${encodeURIComponent(body)}`;
   }

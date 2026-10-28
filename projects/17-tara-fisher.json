@@ -1,0 +1,30 @@
+﻿{
+    "folder":  "17 Tara Fisher",
+    "address":  "38 Perry Road, Benfleet, Essex, SS7 5DJ",
+    "postcode":  "SS7 5DJ",
+    "localAuthority":  "Castle Point Borough Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LARGE_TWO_STOREY_EXTENSIONS",
+    "instructionDate":  "2018",
+    "description":  "A rear extension together with a part first-floor, part two-storey side extension, a partial garage conversion and a new porch, significantly enlarging a home in Benfleet.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\17 Tara Fisher",
+    "caseStudy":  [
+                      {
+                          "text":  "The Fishers wanted to substantially enlarge their home at 38 Perry Road, Benfleet.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "The design combines a rear extension with a part first-floor, part two-storey side extension, a partial garage conversion, and a new porch.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "Castle Point Borough Council granted full planning permission for the scheme.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "planImages":  [
+                       "images/17-tara-fisher/elevations-proposed.jpg",
+                       "images/17-tara-fisher/plans-proposed.jpg",
+                       "images/17-tara-fisher/site-plan.jpg"
+                   ]
+}

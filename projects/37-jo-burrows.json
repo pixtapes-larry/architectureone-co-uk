@@ -1,0 +1,29 @@
+﻿{
+    "folder":  "37 Jo Burrows",
+    "address":  "229 Rosehill Road, Ipswich, IP3 8HG",
+    "postcode":  "IP3 8HG",
+    "localAuthority":  "Ipswich Borough Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "SMALL_WRAP_AROUND_EXTENSIONS",
+    "instructionDate":  "2019",
+    "description":  "A single-storey extension adding valuable extra space to a home in Ipswich.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\37 Jo Burrows",
+    "caseStudy":  [
+                      {
+                          "text":  "Ms Burrows wanted extra space at 229 Rosehill Road, Ipswich.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "The design added a single-storey extension to the property.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "Ipswich Borough Council granted full planning permission for the scheme in 2019.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "planImages":  [
+                       "images/37-jo-burrows/plan-proposed.jpg",
+                       "images/37-jo-burrows/site-plan.jpg"
+                   ]
+}

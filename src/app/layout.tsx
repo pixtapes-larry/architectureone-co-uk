@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import SiteHeader from "@/components/layout/SiteHeader";
-import SiteFooter from "@/components/layout/SiteFooter";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -18,11 +16,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={montserrat.variable}>
-      <body>
-        <SiteHeader />
-        <main style={{ flex: 1 }}>{children}</main>
-        <SiteFooter />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

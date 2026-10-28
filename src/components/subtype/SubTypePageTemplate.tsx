@@ -6,22 +6,26 @@ import {
   subTypeCategoryLabel,
   type SubTypePageConfig,
 } from "@/lib/sub-type-pages";
-import { MOCK_PROJECTS } from "@/lib/mock-projects";
+import type { ProjectMapSummary } from "@/lib/mock-projects";
+import type { PackageTier } from "@/lib/packages";
 import { PROJECT_TYPE_LABELS } from "@/lib/project-labels";
 import { HOME_HREF, BOOK_CONSULTATION_HREF, ABOUT_SERVICES_HREF } from "@/lib/nav";
 import styles from "./SubTypePageTemplate.module.css";
 
 export default function SubTypePageTemplate({
   config,
+  examples,
+  packageTiers,
+  packageNote,
 }: {
   config: SubTypePageConfig;
+  examples: ProjectMapSummary[];
+  packageTiers?: PackageTier[];
+  packageNote?: string;
 }) {
   const categoryHref = subTypeCategoryHref(config);
   const categoryLabel = subTypeCategoryLabel(config);
   const heroTitle = PROJECT_TYPE_LABELS[config.projectType];
-  const examples = MOCK_PROJECTS.filter(
-    (p) => p.projectType === config.projectType,
-  ).slice(0, 4);
 
   return (
     <>
@@ -151,21 +155,24 @@ export default function SubTypePageTemplate({
                 package&apos;s own page.
               </p>
               <div className={styles.pkgGrid}>
-                {config.pricing.tiers.map((tier) => (
+                {(packageTiers ?? []).map((tier) => (
                   <div
-                    key={tier.name}
+                    key={tier.slug}
                     className={`${styles.pkg} ${tier.featured ? styles.pkgFeatured : ""}`}
                   >
                     <div className={styles.pkgName}>{tier.name}</div>
                     <div className={styles.pkgPrice}>{tier.price}</div>
                     <div className={styles.pkgVat}>inc. VAT</div>
                     <ul className={styles.pkgList}>
-                      {tier.bullets.map((b, i) => (
-                        <li key={i}>{b}</li>
+                      {tier.includedServices.map((s, i) => (
+                        <li key={i}>
+                          {s.title}
+                          {s.constraintNote ? ` (${s.constraintNote})` : ""}
+                        </li>
                       ))}
                     </ul>
                     <Link
-                      href={tier.slug ? `/packages/${tier.slug}` : "#"}
+                      href={`/packages/${tier.slug}`}
                       className={
                         tier.featured ? styles.btnPrimary : styles.btnOutline
                       }
@@ -175,7 +182,7 @@ export default function SubTypePageTemplate({
                   </div>
                 ))}
               </div>
-              <div className={styles.note}>{config.pricing.note}</div>
+              <div className={styles.note}>{packageNote}</div>
             </>
           ) : (
             <>

@@ -1,8 +1,8 @@
 import Link from "next/link";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import type { CategoryPageConfig } from "@/lib/category-pages";
+import type { PackageTier } from "@/lib/packages";
 import { HOME_HREF, CONTACT_HREF, BOOK_CONSULTATION_HREF } from "@/lib/nav";
-import { ARCHITECTURE_ONE_PROMISE } from "@/lib/site-content";
 import styles from "./CategoryPageTemplate.module.css";
 
 function Kicker({ n, label }: { n: number; label: string }) {
@@ -15,8 +15,14 @@ function Kicker({ n, label }: { n: number; label: string }) {
 
 export default function CategoryPageTemplate({
   config,
+  packageTiers,
+  packageNote,
+  promiseBullets,
 }: {
   config: CategoryPageConfig;
+  packageTiers?: PackageTier[];
+  packageNote?: string;
+  promiseBullets: string[];
 }) {
   let n = 0;
   const kIntro = ++n;
@@ -118,7 +124,11 @@ export default function CategoryPageTemplate({
                   {config.planningRoute.items.map((item) => (
                     <div key={item.title} className={styles.checkItem}>
                       <div className={styles.checkItemTitle}>
-                        {item.title}
+                        {item.href ? (
+                          <Link href={item.href}>{item.title} →</Link>
+                        ) : (
+                          item.title
+                        )}
                       </div>
                       <div className={styles.checkItemDesc}>
                         {item.description}
@@ -141,21 +151,24 @@ export default function CategoryPageTemplate({
                 package&apos;s own page.
               </p>
               <div className={styles.pkgGrid}>
-                {config.pricing.tiers.map((tier) => (
+                {(packageTiers ?? []).map((tier) => (
                   <div
-                    key={tier.name}
+                    key={tier.slug}
                     className={`${styles.pkg} ${tier.featured ? styles.pkgFeatured : ""}`}
                   >
                     <div className={styles.pkgName}>{tier.name}</div>
                     <div className={styles.pkgPrice}>{tier.price}</div>
                     <div className={styles.pkgVat}>inc. VAT</div>
                     <ul className={styles.pkgList}>
-                      {tier.bullets.map((b, i) => (
-                        <li key={i}>{b}</li>
+                      {tier.includedServices.map((s, i) => (
+                        <li key={i}>
+                          {s.title}
+                          {s.constraintNote ? ` (${s.constraintNote})` : ""}
+                        </li>
                       ))}
                     </ul>
                     <Link
-                      href={tier.slug ? `/packages/${tier.slug}` : "#"}
+                      href={`/packages/${tier.slug}`}
                       className={
                         tier.featured ? styles.btnPrimary : styles.btnOutline
                       }
@@ -165,7 +178,7 @@ export default function CategoryPageTemplate({
                   </div>
                 ))}
               </div>
-              <div className={styles.note}>{config.pricing.note}</div>
+              <div className={styles.note}>{packageNote}</div>
             </>
           ) : (
             <>
@@ -225,7 +238,7 @@ export default function CategoryPageTemplate({
                 <div className={styles.trustCard}>
                   <h3>The Architecture ONE Promise</h3>
                   <ul className={styles.trustList}>
-                    {ARCHITECTURE_ONE_PROMISE.map((item) => (
+                    {promiseBullets.map((item) => (
                       <li key={item}>{item}</li>
                     ))}
                   </ul>

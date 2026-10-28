@@ -1,64 +1,78 @@
-// The 3 fixed-price Permitted Development packages — single source of
-// truth, reused by the Permitted Development category page and all 4 of
-// its sub-type pages (previously duplicated separately in category-pages.ts
-// and sub-type-pages.ts), and by the Package detail page itself.
+// The 3 fixed-price Permitted Development packages — DB-backed (see
+// prisma/schema.prisma Package/PackageSettings/PackageService), reused by
+// the Permitted Development category page and all 4 of its sub-type pages,
+// and by the Package detail page itself.
+//
+// "What's included" is a selection from the shared Service catalog
+// (src/lib/services.ts), each optionally constrained with its own note
+// (e.g. "up to 2 rounds of amendments") rather than free-text bullets.
+import { prisma } from "./prisma";
 
 // A quantifiable scope item — "count: null" means genuinely not decided
 // yet, rendered as an honest "TBC" rather than a guessed number.
 export type ExpectationItem = { label: string; count: number | null };
 
+export type IncludedService = {
+  title: string;
+  constraintNote?: string;
+};
+
 export type PackageTier = {
   slug: string;
   name: string;
   price: string;
-  featured?: boolean;
-  bullets: string[];
+  featured: boolean;
+  includedServices: IncludedService[];
   expectations: ExpectationItem[];
 };
 
-// TODO: none of these counts are decided yet — each tier should end up
-// with its own real numbers (Extended presumably allowing more of each
-// than Starter), not identical placeholders. Filled in once scope is
-// war-gamed against real project experience, same caveat as the bullets.
-const UNCONFIRMED_EXPECTATIONS: ExpectationItem[] = [
-  { label: "Meetings", count: null },
-  { label: "Deliverables", count: null },
-  { label: "Submissions", count: null },
-  { label: "Reworks", count: null },
-  { label: "Amendments", count: null },
-];
-
-// TODO: scope bullets are placeholders — Luke wants these war-gamed
-// against real project experience before they go public (see the
-// project brief). Prices are working guide figures, not locked.
-export const PD_PACKAGE_TIERS: PackageTier[] = [
-  {
-    slug: "starter",
-    name: "Starter",
-    price: "£1,199",
-    bullets: ["Scope to be confirmed", "Scope to be confirmed", "Scope to be confirmed"],
-    expectations: UNCONFIRMED_EXPECTATIONS,
+const WITH_SERVICES = {
+  services: {
+    include: { service: true },
+    orderBy: { sortOrder: "asc" as const },
   },
-  {
-    slug: "standard",
-    name: "Standard",
-    price: "£1,799",
-    featured: true,
-    bullets: ["Scope to be confirmed", "Scope to be confirmed", "Scope to be confirmed"],
-    expectations: UNCONFIRMED_EXPECTATIONS,
-  },
-  {
-    slug: "extended",
-    name: "Extended",
-    price: "£2,499",
-    bullets: ["Scope to be confirmed", "Scope to be confirmed", "Scope to be confirmed"],
-    expectations: UNCONFIRMED_EXPECTATIONS,
-  },
-];
+};
 
-export const PD_PACKAGE_NOTE =
-  "All exclude planning/structural/other third-party fees. Working guide prices only — not yet locked.";
+type PackageRow = {
+  slug: string;
+  name: string;
+  price: string;
+  featured: boolean;
+  expectations: unknown;
+  services: { constraintNote: string | null; service: { title: string } }[];
+};
 
-export function findPackageTier(slug: string): PackageTier | undefined {
-  return PD_PACKAGE_TIERS.find((t) => t.slug === slug);
+function toTier(row: PackageRow): PackageTier {
+  return {
+    slug: row.slug,
+    name: row.name,
+    price: row.price,
+    featured: row.featured,
+    expectations: row.expectations as ExpectationItem[],
+    includedServices: row.services.map((s) => ({
+      title: s.service.title,
+      constraintNote: s.constraintNote ?? undefined,
+    })),
+  };
+}
+
+export async function getPackageTiers(): Promise<PackageTier[]> {
+  const rows = await prisma.package.findMany({
+    include: WITH_SERVICES,
+    orderBy: { sortOrder: "asc" },
+  });
+  return rows.map(toTier);
+}
+
+export async function findPackageTier(slug: string): Promise<PackageTier | undefined> {
+  const row = await prisma.package.findUnique({
+    where: { slug },
+    include: WITH_SERVICES,
+  });
+  return row ? toTier(row) : undefined;
+}
+
+export async function getPackageNote(): Promise<string> {
+  const settings = await prisma.packageSettings.findUnique({ where: { id: 1 } });
+  return settings?.note ?? "";
 }

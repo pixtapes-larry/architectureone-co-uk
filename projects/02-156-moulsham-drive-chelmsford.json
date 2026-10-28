@@ -1,0 +1,41 @@
+﻿{
+    "folder":  "02 156 Moulsham Drive, Chelmsford",
+    "address":  "156 Moulsham Drive, Chelmsford, CM2 9QA",
+    "postcode":  "CM2 9QA",
+    "localAuthority":  "Chelmsford City Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LOFT_CONVERSIONS",
+    "instructionDate":  "2017",
+    "description":  "A loft conversion with front and rear dormer windows, creating extra bedroom space in the roof of a semi-detached home on Moulsham Drive, Chelmsford.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\02 156 Moulsham Drive, Chelmsford",
+    "note":  "House type (semi-detached) and photo credit (Charles David Casson estate agents) confirmed directly by the user.",
+    "caseStudy":  [
+                      {
+                          "text":  "The owners of 156 Moulsham Drive, a semi-detached home in Chelmsford, wanted to make better use of their roof space with a proper loft conversion.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "Architecture ONE designed a loft conversion with front and rear dormer windows, adding bedroom space within the existing roofline.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "Chelmsford City Council granted full planning permission for the scheme. A later resale listing (photography courtesy of Charles David Casson) shows the finished layout, including an open-plan kitchen/dining extension with roof lantern.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "planImages":  [
+                       "images/02-156-moulsham-drive-chelmsford/floorplan-estate-agent.png"
+                   ],
+    "photos":  [
+                   "images/02-156-moulsham-drive-chelmsford/photos/resale-after-1.jpg",
+                   "images/02-156-moulsham-drive-chelmsford/photos/resale-after-2.jpg",
+                   "images/02-156-moulsham-drive-chelmsford/photos/resale-after-3.jpg",
+                   "images/02-156-moulsham-drive-chelmsford/photos/resale-after-4.jpg",
+                   "images/02-156-moulsham-drive-chelmsford/photos/resale-after-5.jpg",
+                   "images/02-156-moulsham-drive-chelmsford/photos/resale-after-6.jpg",
+                   "images/02-156-moulsham-drive-chelmsford/photos/resale-after-7.jpg",
+                   "images/02-156-moulsham-drive-chelmsford/photos/resale-before-9.jpg",
+                   "images/02-156-moulsham-drive-chelmsford/photos/resale-before-10.jpg",
+                   "images/02-156-moulsham-drive-chelmsford/photos/resale-before-11.jpg"
+               ]
+}

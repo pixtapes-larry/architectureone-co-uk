@@ -1,0 +1,61 @@
+﻿{
+    "folder":  "51 Jess Horksley",
+    "address":  "20 Keelers Way, Great Horkesley, Colchester, CO6 4EE",
+    "postcode":  "CO6 4EE",
+    "localAuthority":  "Colchester Borough Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LARGE_TWO_STOREY_EXTENSIONS",
+    "instructionDate":  "2019-12-05",
+    "description":  "A proposed first-floor extension and roof lift for a home in Great Horkesley, Colchester; the initial application was refused and a revised scheme considered.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Ms Atkins asked Architecture ONE to enlarge the first floor of her chalet bungalow at 20 Keelers Way, Great Horkesley, with a roof lift to create fuller bedrooms upstairs."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The scheme went through several rounds of design, raising the roof and extending the first floor; after refusal, Architecture ONE prepared a resubmitted set of drawings addressing the council\u0027s concerns about overlooking and streetscene impact."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Colchester Borough Council refused the original application in January 2020 (ref. 192805), citing overlooking of 12 Manor Close and an overbearing impact on the streetscene given the property\u0027s constrained plot. Architecture ONE prepared a revised resubmission in response."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\51 Jess Horksley",
+    "planImages":  [
+                       "images/51-jess-horksley/plan-proposed.jpg",
+                       "images/51-jess-horksley/elevations-proposed.jpg",
+                       "images/51-jess-horksley/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/51-jess-horksley/photos/52407_969920_IMG_00_0000_max_656x437.JPG",
+                   "images/51-jess-horksley/photos/52407_969920_IMG_28_0001_max_656x437.JPG",
+                   "images/51-jess-horksley/photos/IMG_20200602_160139.jpg",
+                   "images/51-jess-horksley/photos/IMG_20200602_160215-01.jpg",
+                   "images/51-jess-horksley/photos/IMG_20200602_160215.jpg",
+                   "images/51-jess-horksley/photos/IMG_20200602_160224.jpg",
+                   "images/51-jess-horksley/photos/IMG_20200602_160246.jpg",
+                   "images/51-jess-horksley/photos/IMG_20200602_160311.jpg",
+                   "images/51-jess-horksley/photos/IMG_20200602_160425.jpg",
+                   "images/51-jess-horksley/photos/IMG_20200602_160555.jpg",
+                   "images/51-jess-horksley/photos/IMG_20200602_160615.jpg",
+                   "images/51-jess-horksley/photos/IMG_8166.JPG",
+                   "images/51-jess-horksley/photos/IMG_8167.JPG",
+                   "images/51-jess-horksley/photos/IMG_8168.JPG",
+                   "images/51-jess-horksley/photos/IMG_8169.JPG",
+                   "images/51-jess-horksley/photos/IMG_8170.JPG",
+                   "images/51-jess-horksley/photos/IMG_8171.JPG",
+                   "images/51-jess-horksley/photos/IMG_8172.JPG",
+                   "images/51-jess-horksley/photos/IMG_8173.JPG",
+                   "images/51-jess-horksley/photos/IMG_8174.JPG",
+                   "images/51-jess-horksley/photos/IMG_8175.JPG",
+                   "images/51-jess-horksley/photos/IMG_8176.JPG",
+                   "images/51-jess-horksley/photos/IMG_8177.JPG",
+                   "images/51-jess-horksley/photos/IMG_8178.JPG",
+                   "images/51-jess-horksley/photos/IMG_8179.JPG",
+                   "images/51-jess-horksley/photos/IMG_8180.JPG",
+                   "images/51-jess-horksley/photos/IMG_8181.JPG",
+                   "images/51-jess-horksley/photos/IMG_8182.JPG",
+                   "images/51-jess-horksley/photos/IMG_8183.JPG"
+               ]
+}

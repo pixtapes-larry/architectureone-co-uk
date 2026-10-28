@@ -1,0 +1,30 @@
+﻿{
+    "folder":  "39 Dave Hammond",
+    "address":  "Puddledock Barn, Clay Hall Lane, Acton, Sudbury, Suffolk, CO10 0AQ",
+    "postcode":  "CO10 0AQ",
+    "localAuthority":  "Babergh District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "OUTBUILDINGS",
+    "instructionDate":  "2019-01-14",
+    "description":  "Replacing the existing entrance gates with a new set at a barn conversion property near Sudbury, Suffolk.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\39 Dave Hammond",
+    "note":  "Project is a gate/entrance replacement, which doesn\u0027t map cleanly onto any of the 10 project-type categories; OUTBUILDINGS used as the closest fit.",
+    "caseStudy":  [
+                      {
+                          "text":  "Mr Hammond wanted to replace the entrance gates at Puddledock Barn, Clay Hall Lane, Acton, near Sudbury.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "The work replaced the existing gates with a new set at the barn conversion property.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "Babergh District Council granted full planning permission for the scheme in early 2019.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "planImages":  [
+                       "images/39-dave-hammond/plan-proposed.jpg",
+                       "images/39-dave-hammond/site-plan.jpg"
+                   ]
+}

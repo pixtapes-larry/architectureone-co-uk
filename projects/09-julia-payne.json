@@ -1,0 +1,30 @@
+﻿{
+    "folder":  "09 Julia Payne",
+    "address":  "The Gables, Banters Lane, Great Leighs, Chelmsford, CM3 1NT",
+    "postcode":  "CM3 1NT",
+    "localAuthority":  "Chelmsford City Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "SMALL_WRAP_AROUND_EXTENSIONS",
+    "instructionDate":  "2018",
+    "description":  "A single-storey side and rear extension creating a larger kitchen and living area in Great Leighs, Chelmsford.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\09 Julia Payne",
+    "caseStudy":  [
+                      {
+                          "text":  "The Paynes asked Architecture ONE for more space at The Gables, Banters Lane, Great Leighs, Chelmsford.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "The design added a single-storey side and rear extension, creating a larger kitchen and living area.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "Chelmsford City Council granted full planning permission for the extension in August 2018 (application ref. 18/01184/FUL). A later phase of work (see \u002715 Julia Payne\u0027) carried the approved scheme through to construction-ready drawings.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "planImages":  [
+                       "images/15-julia-payne/plan-proposed.jpg",
+                       "images/15-julia-payne/elevations-proposed.jpg",
+                       "images/15-julia-payne/site-plan.jpg"
+                   ]
+}

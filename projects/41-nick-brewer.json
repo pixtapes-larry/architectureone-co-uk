@@ -1,0 +1,44 @@
+﻿{
+    "folder":  "41 Nick Brewer",
+    "address":  "1 Edwins Hall Cottages, Crows Lane, Woodham Ferrers, Chelmsford, CM3 8RT",
+    "postcode":  "CM3 8RT",
+    "localAuthority":  "Chelmsford City Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LARGE_TWO_STOREY_EXTENSIONS",
+    "instructionDate":  "2019-02-14",
+    "description":  "A two-storey side extension with a new side porch, expanding a home in Woodham Ferrers, Chelmsford.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mr Brewer asked Architecture ONE to extend his home at 1 Edwins Hall Cottages, Crows Lane, Woodham Ferrers, with a two-storey side extension and new side porch."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The scheme was revised following an initial planning sketch, with a resubmitted design in February 2019 adding the two-storey side extension and porch, with materials matched to the existing cottage."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Chelmsford City Council granted full planning permission for the scheme in April 2019 (application ref. 19/00250/FUL)."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\41 Nick Brewer",
+    "planImages":  [
+                       "images/41-nick-brewer/plan-proposed.jpg",
+                       "images/41-nick-brewer/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/41-nick-brewer/photos/IMG_7697.JPG",
+                   "images/41-nick-brewer/photos/IMG_7698.JPG",
+                   "images/41-nick-brewer/photos/IMG_7699.JPG",
+                   "images/41-nick-brewer/photos/IMG_7700.JPG",
+                   "images/41-nick-brewer/photos/IMG_7701.JPG",
+                   "images/41-nick-brewer/photos/IMG_7702.JPG",
+                   "images/41-nick-brewer/photos/IMG_7703.JPG",
+                   "images/41-nick-brewer/photos/IMG_7704.jpg",
+                   "images/41-nick-brewer/photos/IMG_7705.jpg",
+                   "images/41-nick-brewer/photos/IMG_7706.jpg",
+                   "images/41-nick-brewer/photos/IMG_7707.jpg",
+                   "images/41-nick-brewer/photos/IMG_7708.jpg",
+                   "images/41-nick-brewer/photos/IMG_7709.jpg"
+               ]
+}

@@ -1,0 +1,58 @@
+﻿{
+    "folder":  "07 Chris Coley",
+    "address":  "51 Thornton Drive, Colchester, Essex, CO4 5WB",
+    "postcode":  "CO4 5WB",
+    "localAuthority":  "Colchester Borough Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "SMALL_WRAP_AROUND_EXTENSIONS",
+    "otherTags":  [
+                      "Garage Conversion",
+                      "Loft Conversion"
+                  ],
+    "instructionDate":  "2018-02-01",
+    "description":  "A side extension combined with a garage conversion and loft conversion, significantly extending a home in Colchester.",
+    "note":  "Corrected from an earlier pass that classified this as a loft conversion only — the actual planning application (180704) covers a side extension, garage conversion AND loft conversion together.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mr Coley instructed Architecture ONE to extend and reconfigure his home at 51 Thornton Drive, Colchester, looking to combine several improvements into a single project."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The scheme combines a side extension with a garage conversion and a loft conversion — adding a new kitchen and living space, extra bedrooms, and usable loft space across the property."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Colchester Borough Council granted full planning permission in 2018 (application ref. 180704). Completed-site photography shows the finished side extension and rooflights."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\07 Chris Coley",
+    "planImages":  [
+                       "images/07-chris-coley/plan-proposed.jpg",
+                       "images/07-chris-coley/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8137.JPG",
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8138.JPG",
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8139.JPG",
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8140.JPG",
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8141.JPG",
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8142.JPG",
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8143.JPG",
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8144.JPG",
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8145.JPG",
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8146.JPG",
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8147.JPG",
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8148.JPG",
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8149.JPG",
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8150.JPG",
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8151.JPG",
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8152.JPG",
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8153.JPG",
+                   "images/07-chris-coley/photos/2015-2018 April I phone 8154.JPG",
+                   "images/07-chris-coley/photos-after/IMG-20190816-WA0000.jpg",
+                   "images/07-chris-coley/photos-after/internal build shot.jpg",
+                   "images/07-chris-coley/photos-after/Side thornton.jpg",
+                   "images/07-chris-coley/photos-after/sky lights thornton.jpg"
+               ]
+}

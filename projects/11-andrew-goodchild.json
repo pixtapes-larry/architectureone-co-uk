@@ -1,0 +1,43 @@
+﻿{
+    "folder":  "11 Andrew Goodchild",
+    "address":  "7 Friends Walk, Kesgrave, Suffolk, IP5 2FH",
+    "postcode":  "IP5 2FH",
+    "localAuthority":  "East Suffolk Council (Suffolk Coastal District Council at time of decision)",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LARGE_TWO_STOREY_EXTENSIONS",
+    "instructionDate":  "2018",
+    "description":  "A first-floor extension over the garage, a side kitchen extension and a rebuilt conservatory, substantially enlarging a home in Kesgrave.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mr Goodchild wanted considerably more space at 7 Friends Walk, Kesgrave, combining a tired old conservatory, a cramped kitchen and an underused garage into one coherent, enlarged home."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The design adds a first-floor extension over the existing attached garage, a side extension to enlarge the kitchen, and a full rebuild of the existing rear conservatory, with a first-floor side window specified in obscured glazing to protect the neighbouring property\u0027s privacy."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Suffolk Coastal District Council (now East Suffolk Council) granted full planning permission in July 2018 (application ref. DC/18/1971/FUL)."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\11 Andrew Goodchild",
+    "planImages":  [
+                       "images/11-andrew-goodchild/plan-proposed.jpg",
+                       "images/11-andrew-goodchild/elevations-proposed.jpg",
+                       "images/11-andrew-goodchild/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/11-andrew-goodchild/photos/2015-2018 April I phone 8401.JPG",
+                   "images/11-andrew-goodchild/photos/2015-2018 April I phone 8402.JPG",
+                   "images/11-andrew-goodchild/photos/2015-2018 April I phone 8403.JPG",
+                   "images/11-andrew-goodchild/photos/2015-2018 April I phone 8404.JPG",
+                   "images/11-andrew-goodchild/photos/2015-2018 April I phone 8405.JPG",
+                   "images/11-andrew-goodchild/photos/2015-2018 April I phone 8406.JPG",
+                   "images/11-andrew-goodchild/photos/2015-2018 April I phone 8407.JPG",
+                   "images/11-andrew-goodchild/photos/2015-2018 April I phone 8408.JPG",
+                   "images/11-andrew-goodchild/photos/before-24.jpg",
+                   "images/11-andrew-goodchild/photos/before-25.jpg",
+                   "images/11-andrew-goodchild/photos/before-26.jpg"
+               ]
+}

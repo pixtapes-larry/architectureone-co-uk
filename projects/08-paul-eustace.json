@@ -1,0 +1,41 @@
+﻿{
+    "folder":  "08 Paul Eustace",
+    "address":  "Pipers Ley, Burstall Hill, Burstall, Ipswich, Suffolk, IP8 3ED",
+    "postcode":  "IP8 3ED",
+    "localAuthority":  "Babergh District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "GARAGE_CONVERSIONS",
+    "instructionDate":  "2018",
+    "description":  "Converting and extending the existing garage with a new first floor, two front dormers and new rear patio doors linking through to the house, adding valuable extra space to a home near Ipswich.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mr Eustace asked Architecture ONE to make better use of the garage at Pipers Ley, Burstall Hill, near Ipswich, turning underused space into a proper part of the home."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The design raises a new first floor above the garage and adds two front dormers for light, together with new rear patio doors and a link through to the main house, tying the extended space into day-to-day living."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Babergh District Council granted planning permission for the scheme in June 2018 (application ref. DC/18/01868)."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\08 Paul Eustace",
+    "planImages":  [
+                       "images/08-paul-eustace/plan-proposed.jpg",
+                       "images/08-paul-eustace/elevations-proposed.jpg",
+                       "images/08-paul-eustace/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/08-paul-eustace/photos/image1 (2).jpeg",
+                   "images/08-paul-eustace/photos/IMG_5230.JPG",
+                   "images/08-paul-eustace/photos/IMG_5231.JPG",
+                   "images/08-paul-eustace/photos/IMG_5232.JPG",
+                   "images/08-paul-eustace/photos/IMG_5233.JPG",
+                   "images/08-paul-eustace/photos/IMG_5234.JPG",
+                   "images/08-paul-eustace/photos/IMG_5235.JPG",
+                   "images/08-paul-eustace/photos/IMG_5236.JPG",
+                   "images/08-paul-eustace/photos/IMG_5237.JPG"
+               ]
+}

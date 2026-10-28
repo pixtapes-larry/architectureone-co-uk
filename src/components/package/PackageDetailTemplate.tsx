@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { PackageTier } from "@/lib/packages";
-import { PD_PACKAGE_TIERS, PD_PACKAGE_NOTE } from "@/lib/packages";
 import { HOME_HREF, BOOK_CONSULTATION_HREF } from "@/lib/nav";
 import styles from "./PackageDetailTemplate.module.css";
 
@@ -9,10 +8,14 @@ const CATEGORY_LABEL = "Permitted Development";
 
 export default function PackageDetailTemplate({
   tier,
+  allTiers,
+  note,
 }: {
   tier: PackageTier;
+  allTiers: PackageTier[];
+  note: string;
 }) {
-  const otherTiers = PD_PACKAGE_TIERS.filter((t) => t.slug !== tier.slug);
+  const otherTiers = allTiers.filter((t) => t.slug !== tier.slug);
 
   return (
     <div className={styles.page}>
@@ -30,11 +33,14 @@ export default function PackageDetailTemplate({
 
           <h2 className={styles.h2}>What&apos;s included</h2>
           <ul className={styles.includesList}>
-            {tier.bullets.map((b, i) => (
-              <li key={i}>{b}</li>
+            {tier.includedServices.map((s, i) => (
+              <li key={i}>
+                {s.title}
+                {s.constraintNote ? ` (${s.constraintNote})` : ""}
+              </li>
             ))}
           </ul>
-          <div className={styles.note}>{PD_PACKAGE_NOTE}</div>
+          <div className={styles.note}>{note}</div>
 
           <h2 className={styles.h2}>What you can expect</h2>
           <div className={styles.expectGrid}>

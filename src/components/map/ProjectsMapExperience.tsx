@@ -5,11 +5,8 @@ import Link from "next/link";
 import type L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { pinIcon } from "./pin-icons";
-import {
-  MOCK_PROJECTS,
-  POSTCODE_SEARCH_ANCHORS,
-  type ProjectMapSummary,
-} from "@/lib/mock-projects";
+import type { ProjectMapSummary } from "@/lib/mock-projects";
+import { POSTCODE_SEARCH_ANCHORS } from "@/lib/postcode-anchors";
 import {
   CATEGORIES,
   CATEGORY_LABELS,
@@ -40,7 +37,17 @@ function haversineMiles(
 
 type VisibleProject = ProjectMapSummary & { distance: number };
 
-export default function ProjectsMapExperience() {
+export default function ProjectsMapExperience({
+  projects,
+  searchHeading,
+  searchLead,
+  startingNote,
+}: {
+  projects: ProjectMapSummary[];
+  searchHeading: string;
+  searchLead: string;
+  startingNote: string;
+}) {
   const mapElRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const markersRef = useRef<Map<ProjectMapSummary, L.Marker>>(new Map());
@@ -86,7 +93,7 @@ export default function ProjectsMapExperience() {
         attribution: JAWG_ATTRIBUTION,
       }).addTo(map);
 
-      MOCK_PROJECTS.forEach((p) => {
+      projects.forEach((p) => {
         const marker = Leaflet.marker([p.latitude, p.longitude], {
           icon: pinIcon(p.featured),
         });
@@ -118,7 +125,7 @@ export default function ProjectsMapExperience() {
         const bounds = map.getBounds();
         const center = map.getCenter();
         const category = activeCategoryRef.current;
-        const inView = MOCK_PROJECTS.filter(
+        const inView = projects.filter(
           (p) =>
             (category === "all" ||
               PROJECT_TYPE_CATEGORY[p.projectType] === category) &&
@@ -137,7 +144,7 @@ export default function ProjectsMapExperience() {
         setStatus(
           inView.length === 0
             ? "No projects in view — zoom out or pan to find one."
-            : `${inView.length} of ${MOCK_PROJECTS.length} projects visible — pan or zoom to see more.`,
+            : `${inView.length} of ${projects.length} projects visible — pan or zoom to see more.`,
         );
       };
       map.on("moveend zoomend", refreshList);
@@ -192,7 +199,7 @@ export default function ProjectsMapExperience() {
     import("leaflet").then((leafletModule) => {
       const Leaflet = leafletModule.default;
       map.removeLayer(layerGroupRef.current!);
-      const shown = MOCK_PROJECTS.filter(
+      const shown = projects.filter(
         (p) =>
           activeCategory === "all" ||
           PROJECT_TYPE_CATEGORY[p.projectType] === activeCategory,
@@ -228,8 +235,8 @@ export default function ProjectsMapExperience() {
 
   const stripTitle =
     activeCategory === "all"
-      ? `On screen (${visible.length} of ${MOCK_PROJECTS.length})`
-      : `${CATEGORY_LABELS[activeCategory]}s on screen (${visible.length} of ${MOCK_PROJECTS.length})`;
+      ? `On screen (${visible.length} of ${projects.length})`
+      : `${CATEGORY_LABELS[activeCategory]}s on screen (${visible.length} of ${projects.length})`;
 
   return (
     <div className={styles.wrap}>
@@ -273,14 +280,19 @@ export default function ProjectsMapExperience() {
       {searchOpen && (
         <div className={styles.searchcard}>
           <h1>
-            <span>850+ projects.</span>
-            <br />
-            One map.
+            {(() => {
+              const splitAt = searchHeading.indexOf(". ");
+              if (splitAt === -1) return searchHeading;
+              return (
+                <>
+                  <span>{searchHeading.slice(0, splitAt + 1)}</span>
+                  <br />
+                  {searchHeading.slice(splitAt + 2)}
+                </>
+              );
+            })()}
           </h1>
-          <p>
-            Enter a postcode district to see Architecture ONE&apos;s work
-            near you.
-          </p>
+          <p>{searchLead}</p>
           <div className={styles.searchRow}>
             <input
               ref={postcodeInputRef}
@@ -313,10 +325,7 @@ export default function ProjectsMapExperience() {
               </svg>
             </button>
           </div>
-          <div className={styles.searchMeta}>
-            We&apos;re starting you off in Hadleigh, Suffolk — search to look
-            elsewhere
-          </div>
+          <div className={styles.searchMeta}>{startingNote}</div>
         </div>
       )}
       {!searchOpen && (

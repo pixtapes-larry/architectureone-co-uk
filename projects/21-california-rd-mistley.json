@@ -1,0 +1,30 @@
+﻿{
+    "folder":  "21 California Rd Mistley",
+    "address":  "15 California Road, Mistley, Manningtree, Essex, CO11 1HU",
+    "postcode":  "CO11 1HU",
+    "localAuthority":  "Tendring District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LARGE_TWO_STOREY_EXTENSIONS",
+    "instructionDate":  "2018-07-09",
+    "description":  "A two-storey side addition with new roof windows to the loft, extending a home in Mistley.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\21 California Rd Mistley",
+    "note":  null,
+    "caseStudy":  [
+                      {
+                          "text":  "The client wanted to extend their home at 15 California Road, Mistley.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "The design adds a two-storey side addition, with new roof windows bringing light into the loft.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "Tendring District Council granted full planning permission for the scheme in mid-2018.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "planImages":  [
+                       "images/21-california-rd-mistley/plan-proposed.jpg",
+                       "images/21-california-rd-mistley/site-plan.jpg"
+                   ]
+}

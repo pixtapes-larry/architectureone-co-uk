@@ -1,0 +1,39 @@
+﻿{
+    "folder":  "19 Jamie Lunan",
+    "address":  "3 Abbey Road, Hullbridge, Essex, SS5 6DG",
+    "postcode":  "SS5 6DG",
+    "localAuthority":  "Rochford District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LOFT_CONVERSIONS",
+    "instructionDate":  "2018",
+    "description":  "Front dormers with a carport beneath, a new porch and an extended rear dormer, intended to add bedroom space in Hullbridge; the initial scheme was refused and a revised design prepared.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mr Lunan asked Architecture ONE to add bedroom space to 3 Abbey Road, Hullbridge, using flat-roofed front dormers over a new carport, a front porch, and an extended rear dormer."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The scheme combined flat-roofed front dormers with a carport beneath, a pitched-roof front porch, and an extended rear dormer with a new double-pitched roof over the existing rear extension."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Rochford District Council refused the initial application in October 2018 (ref. 18/00689/FUL), citing the scale and form of the front dormer within the street scene and the impact of the rear dormer on the neighbouring property at 5 Abbey Road. Architecture ONE prepared a revised design and resubmitted the application in early 2019."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\19 Jamie Lunan",
+    "planImages":  [
+                       "images/19-jamie-lunan/elevations-proposed.jpg",
+                       "images/19-jamie-lunan/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/19-jamie-lunan/photos/IMG_0382.jpg",
+                   "images/19-jamie-lunan/photos/IMG_0383.jpg",
+                   "images/19-jamie-lunan/photos/IMG_0384.jpg",
+                   "images/19-jamie-lunan/photos/IMG_0385.jpg",
+                   "images/19-jamie-lunan/photos/IMG_0386.jpg",
+                   "images/19-jamie-lunan/photos/IMG_0387.jpg",
+                   "images/19-jamie-lunan/photos/IMG_0388.jpg",
+                   "images/19-jamie-lunan/photos/IMG_20190701_122327 (1).jpg"
+               ]
+}

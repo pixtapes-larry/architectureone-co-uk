@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { PLACEHOLDER_CONTACT_EMAIL } from "@/lib/site-content";
 import styles from "./forms.module.css";
 
 // No backend is wired up yet — submitting builds a mailto: link from
@@ -10,7 +9,7 @@ import styles from "./forms.module.css";
 // without needing a server, an email-sending service, or any secrets;
 // swap for a real API route + email service before launch if a plain
 // mailto isn't the final answer.
-export default function ContactForm() {
+export default function ContactForm({ contactEmail }: { contactEmail: string }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -28,7 +27,7 @@ export default function ContactForm() {
     ]
       .filter((line) => line !== null)
       .join("\n");
-    window.location.href = `mailto:${PLACEHOLDER_CONTACT_EMAIL}?subject=${encodeURIComponent(
+    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(
       subject,
     )}&body=${encodeURIComponent(body)}`;
   }

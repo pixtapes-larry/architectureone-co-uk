@@ -1,12 +1,9 @@
 import Link from "next/link";
 import type { ProjectMapSummary } from "@/lib/mock-projects";
-import { MOCK_PROJECTS } from "@/lib/mock-projects";
 import {
   PROJECT_TYPE_LABELS,
   PROJECT_TYPE_ROUTES,
-  PROJECT_TYPE_CATEGORY,
   PLANNING_TYPE_LABELS,
-  SERVICE_DELIVERED_LABELS,
 } from "@/lib/project-labels";
 import { HOME_HREF, BOOK_CONSULTATION_HREF } from "@/lib/nav";
 import { localAuthoritySlug } from "@/lib/local-authorities";
@@ -23,20 +20,13 @@ function yearFromCompleted(completed: string): string {
 
 export default function FeaturedProjectTemplate({
   project,
+  related,
 }: {
   project: ProjectMapSummary;
+  related: ProjectMapSummary[];
 }) {
   const typeLabel = PROJECT_TYPE_LABELS[project.projectType];
   const typeHref = PROJECT_TYPE_ROUTES[project.projectType];
-  const category = PROJECT_TYPE_CATEGORY[project.projectType];
-
-  const related = MOCK_PROJECTS.filter(
-    (p) =>
-      p.featured &&
-      p.slug &&
-      p.slug !== project.slug &&
-      PROJECT_TYPE_CATEGORY[p.projectType] === category,
-  ).slice(0, 3);
 
   const beforePhotos = project.photos?.filter((p) => p.isBefore) ?? [];
   const afterPhotos = project.photos?.filter((p) => !p.isBefore) ?? [];
@@ -205,7 +195,7 @@ export default function FeaturedProjectTemplate({
                 <div className={styles.cardLabel}>Services Delivered</div>
                 <ul className={styles.servicesList}>
                   {project.services.map((service) => (
-                    <li key={service}>{SERVICE_DELIVERED_LABELS[service]}</li>
+                    <li key={service}>{service}</li>
                   ))}
                 </ul>
               </div>

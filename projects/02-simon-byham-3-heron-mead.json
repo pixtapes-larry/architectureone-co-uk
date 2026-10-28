@@ -1,0 +1,30 @@
+﻿{
+    "folder":  "02 Simon Byham 3 Heron Mead",
+    "address":  "3 Heron Mead, Enfield, EN3 6FD",
+    "postcode":  "EN3 6FD",
+    "localAuthority":  "London Borough of Enfield",
+    "planningType":  "PERMITTED_DEVELOPMENT",
+    "projectType":  "SMALL_WRAP_AROUND_EXTENSIONS",
+    "instructionDate":  "2018",
+    "description":  "A single-storey rear extension carried out under permitted development, adding extra living space to a home in Enfield.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\02 Simon Byham 3 Heron Mead",
+    "caseStudy":  [
+                      {
+                          "text":  "Mr Byham instructed Architecture ONE to add a single-storey rear extension to his home at 3 Heron Mead, Enfield.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "The scheme added a single-storey rear extension, submitted to the council via the Building Notice route rather than a full planning application.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "Enfield Council\u0027s Building Control accepted the Building Notice in August 2018 (ref. 18/00708/DEXBND) for the single-storey rear extension.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "planImages":  [
+                       "images/02-simon-byham-3-heron-mead/elevations-proposed.jpg",
+                       "images/02-simon-byham-3-heron-mead/plans-proposed.jpg",
+                       "images/02-simon-byham-3-heron-mead/site-plan.jpg"
+                   ]
+}

@@ -1,0 +1,50 @@
+﻿{
+    "folder":  "25 Danny Grimsey",
+    "address":  "15 Station Road, Hadleigh, Ipswich, Suffolk, IP7 5JF",
+    "postcode":  "IP7 5JF",
+    "localAuthority":  "Babergh District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LOFT_CONVERSIONS",
+    "instructionDate":  "2018-09-20",
+    "description":  "A new garage, porch and rear extension together with a loft conversion and roof alterations, substantially extending a home in Hadleigh.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Mr Grimsey asked Architecture ONE to substantially extend 15 Station Road, Hadleigh, combining a new garage, a porch, a rear extension and a loft conversion into one scheme."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The design adds a new garage, porch extension and rear extension at ground level, together with a loft extension and roof alterations above; rooflights facing the neighbouring property were specified in obscured glass to protect its privacy."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "Babergh District Council granted full planning permission for the scheme in November 2018 (application ref. DC/18/04209)."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\25 Danny Grimsey",
+    "planImages":  [
+                       "images/25-danny-grimsey/plan-proposed.jpg",
+                       "images/25-danny-grimsey/elevations-proposed.jpg",
+                       "images/25-danny-grimsey/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/25-danny-grimsey/photos/IMG_6643.JPG",
+                   "images/25-danny-grimsey/photos/IMG_6644.JPG",
+                   "images/25-danny-grimsey/photos/IMG_6645.JPG",
+                   "images/25-danny-grimsey/photos/IMG_6646.JPG",
+                   "images/25-danny-grimsey/photos/IMG_6647.JPG",
+                   "images/25-danny-grimsey/photos/IMG_6648.JPG",
+                   "images/25-danny-grimsey/photos/IMG_6649.JPG",
+                   "images/25-danny-grimsey/photos/IMG_6650.JPG",
+                   "images/25-danny-grimsey/photos/IMG_6651.JPG",
+                   "images/25-danny-grimsey/photos/IMG_6652.JPG",
+                   "images/25-danny-grimsey/photos/IMG_6653.JPG",
+                   "images/25-danny-grimsey/photos/IMG_6654.JPG",
+                   "images/25-danny-grimsey/photos/IMG_6655.JPG",
+                   "images/25-danny-grimsey/photos/IMG_6656.JPG",
+                   "images/25-danny-grimsey/photos/IMG_6657.JPG",
+                   "images/25-danny-grimsey/photos/IMG_6658.JPG",
+                   "images/25-danny-grimsey/photos/15 Station Road.jpeg",
+                   "images/25-danny-grimsey/photos/WhatsApp Image 2020-02-28 at 18.48.03.jpeg"
+               ]
+}

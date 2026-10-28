@@ -1,0 +1,28 @@
+﻿{
+    "folder":  "03 Abi Dittrich Insurance Job",
+    "address":  "17 Perry Road, Tiptree, Colchester, CO5 0UA",
+    "postcode":  "CO5 0UA",
+    "localAuthority":  "Colchester Borough Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LARGE_TWO_STOREY_EXTENSIONS",
+    "instructionDate":  "2018",
+    "description":  "Insurance-related rebuild works tied to the approved two-storey extension at the same Tiptree property.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\03 Abi Dittrich Insurance Job",
+    "caseStudy":  [
+                      {
+                          "text":  "Following a buildings insurance claim, works were needed at the same Tiptree property already extended under Architecture ONE\u0027s earlier scheme at 17 Perry Road.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "This folder covers insurance-related rebuild works tied to the approved two-storey extension, run as a distinct job from the original planning application.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "The exact scope of the insurance works is not fully documented in the surviving paperwork; this record is kept alongside the original extension (see \u002701 Abigail Dittrich\u0027) for reference.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "planImages":  [
+                       "images/03-abi-dittrich-insurance-job/plan-proposed.jpg"
+                   ]
+}

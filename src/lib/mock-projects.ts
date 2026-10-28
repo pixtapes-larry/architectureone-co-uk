@@ -8,7 +8,7 @@
 // localAuthority values below are inferred from the town/outcode, NOT
 // confirmed against real records yet — flag for the harvesting pass.
 
-import { ProjectType, PlanningType, ServiceDelivered } from "@/generated/prisma/enums";
+import { ProjectType, PlanningType } from "@/generated/prisma/enums";
 
 export type ProjectMapSummary = {
   slug: string | null; // null for non-featured pins — nothing to link to
@@ -42,7 +42,7 @@ export type ProjectMapSummary = {
   elevationAfterImage?: string;
   year?: number;
   status?: string;
-  services?: ServiceDelivered[];
+  services?: string[]; // service titles — e.g. "Measured Survey"
   teamNote?: string; // "A note from the team" — only ever real, never fabricated
 };
 
@@ -100,17 +100,17 @@ export const MOCK_PROJECTS: ProjectMapSummary[] = [
     // Plausible for a Class Q barn conversion, not yet verified against
     // this specific project's real records — flag for the harvesting pass.
     services: [
-      ServiceDelivered.PRIOR_APPROVAL_APPLICATION,
-      ServiceDelivered.MEASURED_SURVEY,
-      ServiceDelivered.SITE_LOCATION_PLANS,
-      ServiceDelivered.ELEVATIONS_FLOOR_PLANS,
-      ServiceDelivered.STRUCTURAL_SURVEYS_CALCULATIONS,
-      ServiceDelivered.ECOLOGY_SURVEYS,
-      ServiceDelivered.BUILDING_REGULATIONS_DRAWINGS,
-      ServiceDelivered.BUILDING_REGULATIONS_APPLICATION,
-      ServiceDelivered.TENDERING_PROCESS,
-      ServiceDelivered.QUALITY_CONTROL,
-      ServiceDelivered.ON_SITE_SUPPORT,
+      "Prior Approval Applications (Class Q / Larger Home Extension)",
+      "Measured Survey",
+      "Site & Location Plans",
+      "Elevations & Floor Plans",
+      "Structural Surveys & Calculations",
+      "Ecology Surveys (e.g. bat surveys)",
+      "Building Regulations Drawings",
+      "Building Regulations Application / Building Notice",
+      "Tendering Process",
+      "Quality Control",
+      "On Site Support",
     ],
   },
   {
@@ -242,16 +242,3 @@ export const MOCK_PROJECTS: ProjectMapSummary[] = [
 ];
 
 export const MOCK_FEATURED_PROJECTS = MOCK_PROJECTS.filter((p) => p.featured);
-
-// A small postcode-outcode → coordinates table, standing in for real
-// geocoding until addresses are harvested and run through postcodes.io
-// (see the Project Data Schema's geocoding note).
-export const POSTCODE_SEARCH_ANCHORS: Record<string, [number, number]> = {
-  IP7: [52.0456, 0.9592],
-  IP1: [52.0665, 1.1456],
-  IP8: [52.0586, 1.063],
-  CO9: [51.9711, 0.5799],
-  CO10: [52.0256, 0.8694],
-  CM6: [51.8544, 0.4287],
-  CM3: [51.6961, 0.595],
-};

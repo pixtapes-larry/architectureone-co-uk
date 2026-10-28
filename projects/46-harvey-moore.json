@@ -1,0 +1,32 @@
+﻿{
+    "folder":  "46 Harvey Moore",
+    "address":  "17 Martins Drive, Hertford, SG13 7TA",
+    "postcode":  "SG13 7TA",
+    "localAuthority":  "East Hertfordshire District Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "LARGE_TWO_STOREY_EXTENSIONS",
+    "instructionDate":  "2019",
+    "description":  "A two-storey side extension incorporating a garage conversion, adding a new office and extra bedroom space to a home in Hertford.",
+    "sourceRef":  "Z:\\Architecture ONE 2018\\46 Harvey Moore",
+    "note":  "Confirmed by the user as a two-storey side extension with garage conversion, likely completed in 2019. Local authority is East Hertfordshire District Council (confirmed from the postcode, SG13). Planning type confirmed as Full Planning, as a two-storey side extension of this kind would not qualify as permitted development; no decision notice survives in the archive to confirm the application reference or exact date.",
+    "caseStudy":  [
+                      {
+                          "text":  "Mr Moore wanted a substantial two-storey side extension for his home at 17 Martins Drive, Hertford, making better use of the existing garage and roof space at the same time.",
+                          "heading":  "The Brief"
+                      },
+                      {
+                          "text":  "Architecture ONE\u0027s drawings show a two-storey side extension incorporating the existing garage, with a new office added at ground floor and the roof void converted into additional first-floor bedroom space.",
+                          "heading":  "The Approach"
+                      },
+                      {
+                          "text":  "Drawings for both the existing and proposed layouts were prepared (job ref. 2019/046); the project is understood to have run into 2019.",
+                          "heading":  "The Outcome"
+                      }
+                  ],
+    "otherTags":  [
+                      "Garage Conversion"
+                  ],
+    "planImages":  [
+                       "images/46-harvey-moore/plan-proposed.jpg"
+                   ]
+}

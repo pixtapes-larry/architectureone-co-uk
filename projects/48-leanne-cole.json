@@ -1,0 +1,36 @@
+﻿{
+    "folder":  "48 Leanne Cole",
+    "address":  "26 Dovedale N, Felixstowe, Suffolk, IP11 2PL",
+    "postcode":  "IP11 2PL",
+    "localAuthority":  "East Suffolk Council",
+    "planningType":  "FULL_PLANNING",
+    "projectType":  "SMALL_WRAP_AROUND_EXTENSIONS",
+    "instructionDate":  "2019-03-26",
+    "description":  "A single-storey rear extension replacing an old conservatory, adding modern living space to a home in Felixstowe.",
+    "caseStudy":  [
+                      {
+                          "heading":  "The Brief",
+                          "text":  "Ms Cole asked Architecture ONE to replace the ageing conservatory at 26 Dovedale, Felixstowe, with a proper single-storey rear extension."
+                      },
+                      {
+                          "heading":  "The Approach",
+                          "text":  "The scheme involved demolishing the existing conservatory and building a single-storey rear extension in its place, designed to suit the local streetscape."
+                      },
+                      {
+                          "heading":  "The Outcome",
+                          "text":  "East Suffolk Council granted full planning permission for the extension in May 2019 (application ref. DC/19/1274/FUL)."
+                      }
+                  ],
+    "sourceRef":  "Z:\\Architecture ONE 2018\\48 Leanne Cole",
+    "planImages":  [
+                       "images/48-leanne-cole/plan-proposed.jpg",
+                       "images/48-leanne-cole/site-plan.jpg"
+                   ],
+    "photos":  [
+                   "images/48-leanne-cole/photos/20191002_083906.jpg",
+                   "images/48-leanne-cole/photos/20191002_083919.jpg",
+                   "images/48-leanne-cole/photos/20191002_083923.jpg",
+                   "images/48-leanne-cole/photos/IMG_20200406_120056.jpg",
+                   "images/48-leanne-cole/photos/IMG_20200406_120126.jpg"
+               ]
+}
