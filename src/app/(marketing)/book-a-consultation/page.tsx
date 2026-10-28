@@ -1,13 +1,29 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import ConsultationForm from "@/components/forms/ConsultationForm";
 import { getSiteSettings } from "@/lib/site-settings";
+import { getBookConsultationPageContent } from "@/lib/book-consultation-content";
+import { pageMetadata } from "@/lib/seo";
 import { HOME_HREF, CONTACT_HREF } from "@/lib/nav";
 import styles from "./page.module.css";
 
 export const instant = false;
 
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getBookConsultationPageContent();
+  return pageMetadata({
+    metaTitle: content.metaTitle,
+    metaDescription: content.metaDescription,
+    fallbackTitle: content.heading,
+    fallbackDescription: content.lead,
+  });
+}
+
 export default async function BookAConsultationPage() {
-  const settings = await getSiteSettings();
+  const [settings, content] = await Promise.all([
+    getSiteSettings(),
+    getBookConsultationPageContent(),
+  ]);
 
   return (
     <div className={styles.page}>
@@ -16,11 +32,8 @@ export default async function BookAConsultationPage() {
       </div>
 
       <div className={styles.intro}>
-        <h1 className={styles.title}>Book a Consultation</h1>
-        <p className={styles.lead}>
-          Book a paid initial consultation — you&apos;ll leave with a
-          written brief covering scope, approach and indicative costs.
-        </p>
+        <h1 className={styles.title}>{content.heading}</h1>
+        <p className={styles.lead}>{content.lead}</p>
       </div>
 
       <div className={styles.layout}>
@@ -30,11 +43,11 @@ export default async function BookAConsultationPage() {
 
         <div className={styles.sidebar}>
           <div className={styles.includesCard}>
-            <h3>What&apos;s included</h3>
+            <h3>{content.includesHeading}</h3>
             <ul className={styles.includesList}>
-              <li>A clear view of the scope for your project</li>
-              <li>Our honest approach to what&apos;s achievable</li>
-              <li>Indicative costs, in writing</li>
+              {content.includesList.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
             </ul>
             <p className={styles.contactNote}>
               Have a question first?{" "}

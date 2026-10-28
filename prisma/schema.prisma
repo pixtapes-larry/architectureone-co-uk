@@ -349,6 +349,22 @@ model TestimonialsPageContent {
   metaDescription String?
 }
 
+// Single shared row — the /book-a-consultation page's copy. The booking
+// form itself and the contact details it submits to are unrelated to this
+// (see ConsultationForm / SiteSettings.contactEmail) — this is just the
+// page's own heading, lead and "what's included" list.
+model BookConsultationPageContent {
+  id Int @id @default(1)
+
+  heading         String
+  lead            String @db.Text
+  includesHeading String
+  includesList    Json // string[]
+
+  metaTitle       String?
+  metaDescription String?
+}
+
 // The team roster shown on the About page. The first member (lowest
 // sortOrder) renders as the large "lead bio" with its own bigger photo;
 // the rest render in the grid of smaller cards — so adding a 4th member

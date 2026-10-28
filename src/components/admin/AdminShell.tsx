@@ -47,7 +47,7 @@ const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
       },
       { label: "Projects map", href: "/admin/projects-map-content" },
       { label: "Testimonials", href: "/admin/testimonials-page-content" },
-      { label: "Book a consultation" }, // not built yet
+      { label: "Book a consultation", href: "/admin/book-consultation-content" },
       { label: "Contact", href: "/admin/settings" }, // copy lives in Settings
       { label: "Privacy", href: "/admin/privacy-content" },
     ],
