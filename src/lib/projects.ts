@@ -26,6 +26,7 @@ function formatInstructionDate(date: Date): string {
 
 function toSummary(p: ProjectWithRelations): ProjectMapSummary {
   return {
+    id: p.id,
     slug: p.slug,
     featured: p.featured,
     address: p.address,

@@ -4,7 +4,10 @@
 import { prisma } from "./prisma";
 
 export async function getAllTestimonials() {
-  return prisma.testimonial.findMany({ orderBy: { sortOrder: "asc" } });
+  return prisma.testimonial.findMany({
+    orderBy: { sortOrder: "asc" },
+    include: { project: { select: { id: true, address: true, place: true, slug: true } } },
+  });
 }
 
 export async function getFeaturedTestimonial() {
@@ -12,4 +15,17 @@ export async function getFeaturedTestimonial() {
     where: { featured: true },
     orderBy: { sortOrder: "asc" },
   });
+}
+
+// Used by a project's case-study page to link its "note from the team"
+// quote through to that same testimonial's full entry on /testimonials —
+// only possible when that quote also exists as a Testimonial row attached
+// to this project (via the admin's project picker). Returns null
+// otherwise, in which case the note just renders in full with no link.
+export async function findTestimonialIdForProject(projectId: number): Promise<number | null> {
+  const row = await prisma.testimonial.findFirst({
+    where: { projectId },
+    select: { id: true },
+  });
+  return row?.id ?? null;
 }

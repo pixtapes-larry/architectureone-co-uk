@@ -335,6 +335,20 @@ model Testimonial {
   projectId Int?
 }
 
+// Single shared row — the /testimonials page's own intro copy, above the
+// full list of every Testimonial. The home page and featured-project
+// pages show truncated quotes that link here (to that specific
+// testimonial's own #anchor) for the full text.
+model TestimonialsPageContent {
+  id Int @id @default(1)
+
+  heading         String
+  introParagraphs Json // string[]
+
+  metaTitle       String?
+  metaDescription String?
+}
+
 // The team roster shown on the About page. The first member (lowest
 // sortOrder) renders as the large "lead bio" with its own bigger photo;
 // the rest render in the grid of smaller cards — so adding a 4th member

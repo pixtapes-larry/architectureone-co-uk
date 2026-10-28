@@ -5,7 +5,7 @@ import {
   PROJECT_TYPE_ROUTES,
   PLANNING_TYPE_LABELS,
 } from "@/lib/project-labels";
-import { HOME_HREF, BOOK_CONSULTATION_HREF } from "@/lib/nav";
+import { HOME_HREF, BOOK_CONSULTATION_HREF, TESTIMONIALS_HREF } from "@/lib/nav";
 import { localAuthoritySlug } from "@/lib/local-authorities";
 import ProjectMiniMapLoader from "./ProjectMiniMapLoader";
 import { LightboxProvider } from "./Lightbox";
@@ -21,9 +21,11 @@ function yearFromCompleted(completed: string): string {
 export default function FeaturedProjectTemplate({
   project,
   related,
+  teamNoteTestimonialId,
 }: {
   project: ProjectMapSummary;
   related: ProjectMapSummary[];
+  teamNoteTestimonialId?: number | null;
 }) {
   const typeLabel = PROJECT_TYPE_LABELS[project.projectType];
   const typeHref = PROJECT_TYPE_ROUTES[project.projectType];
@@ -124,9 +126,17 @@ export default function FeaturedProjectTemplate({
             {project.teamNote && (
               <div className={styles.noteCard}>
                 <div className={styles.noteLabel}>A note from the team</div>
-                <div className={styles.noteText}>
+                <div className={teamNoteTestimonialId ? styles.noteTextClamp : styles.noteText}>
                   &quot;{project.teamNote}&quot;
                 </div>
+                {teamNoteTestimonialId && (
+                  <Link
+                    href={`${TESTIMONIALS_HREF}#testimonial-${teamNoteTestimonialId}`}
+                    className={styles.noteReadMore}
+                  >
+                    Read more →
+                  </Link>
+                )}
               </div>
             )}
           </div>

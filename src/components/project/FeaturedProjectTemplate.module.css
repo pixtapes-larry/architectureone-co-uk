@@ -111,6 +111,27 @@
   line-height: 1.6;
 }
 
+.noteTextClamp {
+  font-size: 16px;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.noteReadMore {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-coral);
+}
+
+.noteReadMore:hover {
+  text-decoration: underline;
+}
+
 .sidebar {
   width: 340px;
   flex: 0 0 340px;

@@ -7,7 +7,7 @@ import { getHomePageContent } from "@/lib/home-content";
 import { getHomeCategoryTeasers } from "@/lib/category-pages";
 import { getFeaturedTestimonial } from "@/lib/testimonials";
 import { getProjectCount, withProjectCount } from "@/lib/project-count";
-import { EXPLORE_PROJECTS_HREF, ABOUT_HREF, BOOK_CONSULTATION_HREF } from "@/lib/nav";
+import { EXPLORE_PROJECTS_HREF, ABOUT_HREF, BOOK_CONSULTATION_HREF, TESTIMONIALS_HREF } from "@/lib/nav";
 import styles from "./page.module.css";
 
 // Dynamic DB read now powers the featured list — see the instant=false
@@ -70,7 +70,10 @@ export default async function Home() {
         {testimonial && (
           <div className={styles.floatingQuote}>
             <div className={styles.stars}>{"★".repeat(testimonial.stars)}</div>
-            <div>&quot;{testimonial.quote}&quot;</div>
+            <div className={styles.quoteClamp}>&quot;{testimonial.quote}&quot;</div>
+            <Link href={`${TESTIMONIALS_HREF}#testimonial-${testimonial.id}`} className={styles.quoteReadMore}>
+              Read more →
+            </Link>
           </div>
         )}
       </section>

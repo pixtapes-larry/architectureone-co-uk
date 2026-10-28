@@ -185,6 +185,25 @@
   margin-bottom: 6px;
 }
 
+.quoteClamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.quoteReadMore {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-coral);
+}
+
+.quoteReadMore:hover {
+  text-decoration: underline;
+}
+
 /* --- Audience cards / featured projects --- */
 
 .audienceGrid,

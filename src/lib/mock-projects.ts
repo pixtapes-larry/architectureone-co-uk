@@ -11,6 +11,7 @@
 import { ProjectType, PlanningType } from "@/generated/prisma/enums";
 
 export type ProjectMapSummary = {
+  id?: number; // only populated where a caller needs the real DB id (e.g. to look up a linked Testimonial) — mock data has none
   slug: string | null; // null for non-featured pins — nothing to link to
   featured: boolean;
   address: string;

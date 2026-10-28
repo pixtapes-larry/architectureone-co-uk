@@ -7,3 +7,4 @@ export const ABOUT_SERVICES_HREF = "/about/services";
 export const HOME_HREF = "/";
 export const BOOK_CONSULTATION_HREF = "/book-a-consultation";
 export const CONTACT_HREF = "/contact";
+export const TESTIMONIALS_HREF = "/testimonials";

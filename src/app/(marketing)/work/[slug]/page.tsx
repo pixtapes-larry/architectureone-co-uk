@@ -6,6 +6,7 @@ import {
   getFeaturedProjects,
   getFeaturedProjectSlugs,
 } from "@/lib/projects";
+import { findTestimonialIdForProject } from "@/lib/testimonials";
 import { PROJECT_TYPE_CATEGORY } from "@/lib/project-labels";
 import { pageMetadata } from "@/lib/seo";
 
@@ -54,7 +55,11 @@ export default async function FeaturedProjectPage({
   }
 
   const category = PROJECT_TYPE_CATEGORY[project.projectType];
-  const related = (await getFeaturedProjects())
+  const [featuredProjects, teamNoteTestimonialId] = await Promise.all([
+    getFeaturedProjects(),
+    project.id ? findTestimonialIdForProject(project.id) : Promise.resolve(null),
+  ]);
+  const related = featuredProjects
     .filter(
       (p) =>
         p.slug &&
@@ -63,5 +68,11 @@ export default async function FeaturedProjectPage({
     )
     .slice(0, 3);
 
-  return <FeaturedProjectTemplate project={project} related={related} />;
+  return (
+    <FeaturedProjectTemplate
+      project={project}
+      related={related}
+      teamNoteTestimonialId={teamNoteTestimonialId}
+    />
+  );
 }

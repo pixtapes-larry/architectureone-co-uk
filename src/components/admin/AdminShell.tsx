@@ -46,7 +46,7 @@ const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
         children: [{ label: "Services intro", href: "/admin/services-page-content" }],
       },
       { label: "Projects map", href: "/admin/projects-map-content" },
-      { label: "Testimonials" }, // intro copy above the list — not built yet
+      { label: "Testimonials", href: "/admin/testimonials-page-content" },
       { label: "Book a consultation" }, // not built yet
       { label: "Contact", href: "/admin/settings" }, // copy lives in Settings
       { label: "Privacy", href: "/admin/privacy-content" },
