@@ -19,7 +19,7 @@ export default async function EditCategoryPagePage({
   return (
     <>
       <h1 style={{ fontSize: 24, fontWeight: 800, marginBottom: 24 }}>
-        Edit category page — {page.heroTitle}
+        Edit project category — {page.heroTitle}
       </h1>
       <CategoryPageForm page={page} />
     </>

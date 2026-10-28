@@ -1,12 +1,28 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getServiceGroups } from "@/lib/services";
+import { getServicesPageContent } from "@/lib/services-page-content";
+import { pageMetadata } from "@/lib/seo";
 import { HOME_HREF, ABOUT_HREF, BOOK_CONSULTATION_HREF } from "@/lib/nav";
 import styles from "./page.module.css";
 
 export const instant = false;
 
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getServicesPageContent();
+  return pageMetadata({
+    metaTitle: content.metaTitle,
+    metaDescription: content.metaDescription,
+    fallbackTitle: content.heading,
+    fallbackDescription: content.introParagraphs[0] ?? "",
+  });
+}
+
 export default async function ServicesPage() {
-  const serviceGroups = await getServiceGroups();
+  const [serviceGroups, content] = await Promise.all([
+    getServiceGroups(),
+    getServicesPageContent(),
+  ]);
   return (
     <>
       <div className={styles.page}>
@@ -16,11 +32,12 @@ export default async function ServicesPage() {
         </div>
 
         <div className={styles.intro}>
-          <h1 className={styles.title}>Services</h1>
-          <p className={styles.lead}>
-            From first sketch to a finished build, here&apos;s the full
-            range of what we do.
-          </p>
+          <h1 className={styles.title}>{content.heading}</h1>
+          {content.introParagraphs.map((para, i) => (
+            <p key={i} className={styles.lead}>
+              {para}
+            </p>
+          ))}
         </div>
 
         <div className={styles.groupGrid}>
@@ -46,11 +63,8 @@ export default async function ServicesPage() {
       </div>
 
       <section className={styles.ctaBand} id="book">
-        <h2 className={styles.h2}>Ready to talk about your project?</h2>
-        <p className={styles.ctaLead}>
-          Book a conversation with us — we&apos;ll help you work out
-          what&apos;s possible, honestly, before you commit to anything.
-        </p>
+        <h2 className={styles.h2}>{content.finalCtaHeading}</h2>
+        <p className={styles.ctaLead}>{content.finalCtaLead}</p>
         <Link href={BOOK_CONSULTATION_HREF} className={styles.btnPrimary}>
           Book a Consultation
         </Link>

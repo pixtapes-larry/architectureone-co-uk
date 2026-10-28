@@ -43,7 +43,7 @@ const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
       {
         label: "About",
         href: "/admin/about-content",
-        children: [{ label: "Services", href: "/admin/services" }],
+        children: [{ label: "Services intro", href: "/admin/services-page-content" }],
       },
       { label: "Projects map", href: "/admin/projects-map-content" },
       { label: "Testimonials" }, // intro copy above the list — not built yet
@@ -59,6 +59,7 @@ const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
     items: [
       { label: "Projects", href: "/admin/projects" },
       { label: "Packages", href: "/admin/packages" },
+      { label: "Services", href: "/admin/services" },
       { label: "Team members", href: "/admin/team-members" },
       { label: "Testimonials", href: "/admin/testimonials" },
       { label: "Local authorities", href: "/admin/local-authorities" },
@@ -78,8 +79,20 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-function NavItemRow({ item, pathname, depth }: { item: NavItem; pathname: string; depth: number }) {
+function NavItemRow({
+  item,
+  pathname,
+  depth,
+  navCounts,
+}: {
+  item: NavItem;
+  pathname: string;
+  depth: number;
+  navCounts?: Record<string, number>;
+}) {
   const style = { paddingLeft: 12 + depth * 14 };
+  const count = item.href ? navCounts?.[item.href] : undefined;
+  const label = count !== undefined ? `${item.label} (${count})` : item.label;
 
   return (
     <>
@@ -91,7 +104,7 @@ function NavItemRow({ item, pathname, depth }: { item: NavItem; pathname: string
             .filter(Boolean)
             .join(" ")}
         >
-          {item.label}
+          {label}
         </Link>
       ) : (
         <span style={style} className={styles.navLinkSoon} title="Not built yet">
@@ -100,7 +113,7 @@ function NavItemRow({ item, pathname, depth }: { item: NavItem; pathname: string
         </span>
       )}
       {item.children?.map((child) => (
-        <NavItemRow key={child.label} item={child} pathname={pathname} depth={depth + 1} />
+        <NavItemRow key={child.label} item={child} pathname={pathname} depth={depth + 1} navCounts={navCounts} />
       ))}
     </>
   );
@@ -108,9 +121,11 @@ function NavItemRow({ item, pathname, depth }: { item: NavItem; pathname: string
 
 export default function AdminShell({
   user,
+  navCounts,
   children,
 }: {
   user: { name: string; email: string };
+  navCounts?: Record<string, number>;
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
@@ -128,7 +143,7 @@ export default function AdminShell({
             <div key={group.title} className={styles.navGroup}>
               <div className={styles.navGroupTitle}>{group.title}</div>
               {group.items.map((item) => (
-                <NavItemRow key={item.label} item={item} pathname={pathname} depth={0} />
+                <NavItemRow key={item.label} item={item} pathname={pathname} depth={0} navCounts={navCounts} />
               ))}
             </div>
           ))}

@@ -21,7 +21,7 @@ export default async function EditSubTypePagePage({
   return (
     <>
       <h1 style={{ fontSize: 24, fontWeight: 800, marginBottom: 24 }}>
-        Edit sub-type page — {PROJECT_TYPE_LABELS[page.projectType]}
+        Edit project type — {PROJECT_TYPE_LABELS[page.projectType]}
       </h1>
       <SubTypePageForm page={page} />
     </>

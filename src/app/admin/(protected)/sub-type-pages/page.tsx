@@ -11,7 +11,7 @@ export default async function AdminSubTypePagesPage() {
   return (
     <>
       <div className={styles.header}>
-        <h1 className={styles.title}>Sub-type pages ({pages.length})</h1>
+        <h1 className={styles.title}>Project types ({pages.length})</h1>
       </div>
       <p style={{ fontSize: 13, color: "var(--color-muted)", marginBottom: 20 }}>
         The project-type pages one level below each category (e.g. Permitted

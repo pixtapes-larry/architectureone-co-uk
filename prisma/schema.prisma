@@ -290,6 +290,24 @@ model AboutPageContent {
   metaDescription String?
 }
 
+// Single shared row — the /about/services page's own copy (its intro and
+// closing CTA band). Distinct from the Service catalog itself (see the
+// Service model below) — that's the list of individual offerings shown
+// grouped by category on this page; this is just the page's own framing
+// text around that list.
+model ServicesPageContent {
+  id Int @id @default(1)
+
+  heading         String
+  introParagraphs Json // string[] — a paragraph or two introducing the list below
+
+  finalCtaHeading String
+  finalCtaLead    String @db.Text
+
+  metaTitle       String?
+  metaDescription String?
+}
+
 // A client testimonial/review. Admin picks which ones are "featured" (the
 // home page shows the first featured one, by sortOrder, in its quote
 // bubble); the About page lists all of them, newest-editable-first.

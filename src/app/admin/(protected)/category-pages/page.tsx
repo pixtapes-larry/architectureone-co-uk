@@ -10,7 +10,7 @@ export default async function AdminCategoryPagesPage() {
   return (
     <>
       <div className={styles.header}>
-        <h1 className={styles.title}>Category pages ({pages.length})</h1>
+        <h1 className={styles.title}>Project categories ({pages.length})</h1>
       </div>
       <p style={{ fontSize: 13, color: "var(--color-muted)", marginBottom: 20 }}>
         The 3 top-level category pages — hero copy, sub-type teaser cards,
