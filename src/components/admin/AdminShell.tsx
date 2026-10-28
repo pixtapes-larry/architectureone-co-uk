@@ -20,7 +20,10 @@ type NavItem = {
 const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
   {
     title: "Overview",
-    items: [{ label: "Dashboard", href: "/admin" }],
+    items: [
+      { label: "Dashboard", href: "/admin" },
+      { label: "Site map", href: "/admin/site-map" },
+    ],
   },
   {
     // The words on specific public pages — usually one form per page,
