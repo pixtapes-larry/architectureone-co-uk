@@ -9,6 +9,7 @@ import { saveCategoryPageAction, type CategoryPageFormState } from "@/app/admin/
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ProjectForm.module.css";
 import SeoFields from "./SeoFields";
+import TemplateNote from "./TemplateNote";
 
 type CategoryPageRecord = NonNullable<Awaited<ReturnType<typeof getCategoryPageAdmin>>>;
 
@@ -201,6 +202,7 @@ export default function CategoryPageForm({ page }: { page: CategoryPageRecord })
 
   return (
     <form action={formAction} className={styles.form}>
+      <TemplateNote templateName="Category Page" />
       <input type="hidden" name="id" value={page.id} />
       <input type="hidden" name="category" value={page.category} />
       <input type="hidden" name="cardCount" value={cards.length} />

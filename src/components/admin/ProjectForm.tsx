@@ -10,6 +10,7 @@ import { saveProjectAction, type ProjectFormState } from "@/app/admin/(protected
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ProjectForm.module.css";
 import SeoFields from "./SeoFields";
+import TemplateNote from "./TemplateNote";
 
 type ProjectWithRelations = NonNullable<Awaited<ReturnType<typeof getProjectAdmin>>>;
 
@@ -218,6 +219,7 @@ export default function ProjectForm({
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Featured case study</h2>
+        <TemplateNote templateName="Featured Project" />
         <label className={styles.checkboxRow}>
           <input
             type="checkbox"

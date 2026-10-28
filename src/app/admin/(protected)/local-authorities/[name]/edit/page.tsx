@@ -4,6 +4,7 @@ import { saveLocalAuthorityBlurbAction } from "../../actions";
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "@/components/admin/ProjectForm.module.css";
 import SeoFields from "@/components/admin/SeoFields";
+import TemplateNote from "@/components/admin/TemplateNote";
 
 export const instant = false;
 
@@ -42,6 +43,7 @@ export default async function EditLocalAuthorityPage({
         )}
       </p>
       <form action={saveLocalAuthorityBlurbAction} className={styles.form}>
+        <TemplateNote templateName="Local Authority" />
         <input type="hidden" name="name" value={name} />
         <section className={styles.section}>
           <div className={formStyles.field}>

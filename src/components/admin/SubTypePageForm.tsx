@@ -7,6 +7,7 @@ import { saveSubTypePageAction, type SubTypePageFormState } from "@/app/admin/(p
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ProjectForm.module.css";
 import SeoFields from "./SeoFields";
+import TemplateNote from "./TemplateNote";
 
 type SubTypePageRecord = NonNullable<Awaited<ReturnType<typeof getSubTypePageAdmin>>>;
 
@@ -126,6 +127,7 @@ export default function SubTypePageForm({ page }: { page: SubTypePageRecord }) {
 
   return (
     <form action={formAction} className={styles.form}>
+      <TemplateNote templateName="Project Type" />
       <input type="hidden" name="id" value={page.id} />
       <input type="hidden" name="projectType" value={page.projectType} />
 

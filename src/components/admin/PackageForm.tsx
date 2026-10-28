@@ -9,6 +9,7 @@ import type { ExpectationItem } from "@/lib/packages";
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ProjectForm.module.css";
 import SeoFields from "./SeoFields";
+import TemplateNote from "./TemplateNote";
 
 type PackageRecord = NonNullable<Awaited<ReturnType<typeof getPackageAdmin>>>;
 
@@ -58,6 +59,7 @@ export default function PackageForm({
 
   return (
     <form action={formAction} className={styles.form}>
+      <TemplateNote templateName="Package Detail" />
       <input type="hidden" name="id" value={pkg?.id ?? ""} />
 
       <section className={styles.section}>
