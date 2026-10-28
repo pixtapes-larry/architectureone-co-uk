@@ -4,6 +4,7 @@ import { getAllTestimonials } from "@/lib/testimonials";
 import { getTestimonialsPageContent } from "@/lib/testimonials-page-content";
 import { pageMetadata } from "@/lib/seo";
 import { HOME_HREF } from "@/lib/nav";
+import TestimonialCard from "./TestimonialCard";
 import styles from "./page.module.css";
 
 export const instant = false;
@@ -24,6 +25,10 @@ export default async function TestimonialsPage() {
     getAllTestimonials(),
   ]);
 
+  const count = testimonials.length;
+  const average =
+    count > 0 ? testimonials.reduce((sum, t) => sum + t.stars, 0) / count : 0;
+
   return (
     <div className={styles.page}>
       <div className={styles.crumb}>
@@ -37,42 +42,33 @@ export default async function TestimonialsPage() {
             {para}
           </p>
         ))}
+        {count > 0 && (
+          <div className={styles.summary}>
+            <span className={styles.summaryStars}>{"★".repeat(Math.round(average))}</span>
+            <span className={styles.summaryText}>
+              {average.toFixed(1)} average from {count} review{count === 1 ? "" : "s"}
+            </span>
+          </div>
+        )}
       </div>
 
-      {testimonials.length === 0 ? (
+      {count === 0 ? (
         <p className={styles.lead}>No testimonials yet.</p>
       ) : (
-        <div className={styles.list}>
+        <div className={styles.grid}>
           {testimonials.map((t) => (
-            <div key={t.id} id={`testimonial-${t.id}`} className={styles.card}>
-              <div className={styles.stars}>{"★".repeat(t.stars)}</div>
-              <p className={styles.quote}>&quot;{t.quote}&quot;</p>
-              <div className={styles.meta}>
-                {t.authorName && <span className={styles.author}>{t.authorName}</span>}
-                {t.source && (
-                  <span className={styles.source}>
-                    {t.sourceUrl ? (
-                      <a href={t.sourceUrl} target="_blank" rel="noreferrer" className={styles.sourceLink}>
-                        via {t.source}
-                      </a>
-                    ) : (
-                      `via ${t.source}`
-                    )}
-                  </span>
-                )}
-                {t.project && (
-                  <span className={styles.project}>
-                    {t.project.slug ? (
-                      <Link href={`/work/${t.project.slug}`} className={styles.sourceLink}>
-                        {t.project.address}, {t.project.place}
-                      </Link>
-                    ) : (
-                      `${t.project.address}, ${t.project.place}`
-                    )}
-                  </span>
-                )}
-              </div>
-            </div>
+            <TestimonialCard
+              key={t.id}
+              testimonial={{
+                id: t.id,
+                quote: t.quote,
+                stars: t.stars,
+                authorName: t.authorName,
+                source: t.source,
+                sourceUrl: t.sourceUrl,
+                project: t.project,
+              }}
+            />
           ))}
         </div>
       )}
