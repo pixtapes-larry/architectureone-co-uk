@@ -4,6 +4,7 @@ import type { getProjectsMapContentAdmin } from "@/lib/admin/projects-map-conten
 import { saveProjectsMapContentAction } from "@/app/admin/(protected)/projects-map-content/actions";
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ProjectForm.module.css";
+import SeoFields from "./SeoFields";
 
 type ProjectsMapContentRecord = NonNullable<Awaited<ReturnType<typeof getProjectsMapContentAdmin>>>;
 
@@ -28,6 +29,8 @@ export default function ProjectsMapContentForm({ content }: { content: ProjectsM
           <textarea id="startingNote" name="startingNote" required defaultValue={content.startingNote} className={formStyles.textarea} />
         </div>
       </section>
+
+      <SeoFields metaTitle={content.metaTitle} metaDescription={content.metaDescription} />
 
       <div className={styles.actions}>
         <button type="submit" className={formStyles.submitBtn}>

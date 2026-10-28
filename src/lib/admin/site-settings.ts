@@ -18,6 +18,8 @@ export type SiteSettingsAdminInput = {
   contactLead: string;
   contactSidebarHeading: string;
   contactEmailUnconfirmedNote: string;
+  contactMetaTitle: string | null;
+  contactMetaDescription: string | null;
 
   googleReviewsUrl: string | null;
 };

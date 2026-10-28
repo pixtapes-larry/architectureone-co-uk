@@ -6,6 +6,7 @@ import type { getSubTypePageAdmin } from "@/lib/admin/sub-type-pages";
 import { saveSubTypePageAction, type SubTypePageFormState } from "@/app/admin/(protected)/sub-type-pages/actions";
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ProjectForm.module.css";
+import SeoFields from "./SeoFields";
 
 type SubTypePageRecord = NonNullable<Awaited<ReturnType<typeof getSubTypePageAdmin>>>;
 
@@ -285,6 +286,8 @@ export default function SubTypePageForm({ page }: { page: SubTypePageRecord }) {
           <textarea id="ctaQuestion" name="ctaQuestion" required defaultValue={page.ctaQuestion} className={formStyles.textarea} />
         </div>
       </section>
+
+      <SeoFields metaTitle={page.metaTitle} metaDescription={page.metaDescription} />
 
       {state.error && <p className={styles.error}>{state.error}</p>}
 

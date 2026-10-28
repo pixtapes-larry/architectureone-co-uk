@@ -9,6 +9,8 @@ export type PrivacyPageContentAdminInput = {
   intro: string;
   bodyParagraphs: string[];
   lastUpdatedNote: string;
+  metaTitle: string | null;
+  metaDescription: string | null;
 };
 
 export async function updatePrivacyPageContentAdmin(input: PrivacyPageContentAdminInput) {

@@ -29,6 +29,8 @@ export async function saveSiteSettingsAction(formData: FormData) {
     contactLead: str(formData, "contactLead"),
     contactSidebarHeading: str(formData, "contactSidebarHeading"),
     contactEmailUnconfirmedNote: str(formData, "contactEmailUnconfirmedNote"),
+    contactMetaTitle: str(formData, "metaTitle") || null,
+    contactMetaDescription: str(formData, "metaDescription") || null,
 
     googleReviewsUrl: str(formData, "googleReviewsUrl") || null,
   });

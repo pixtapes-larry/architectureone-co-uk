@@ -9,6 +9,7 @@ import type { ServiceGroup } from "@/lib/services";
 import { saveProjectAction, type ProjectFormState } from "@/app/admin/(protected)/projects/actions";
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ProjectForm.module.css";
+import SeoFields from "./SeoFields";
 
 type ProjectWithRelations = NonNullable<Awaited<ReturnType<typeof getProjectAdmin>>>;
 
@@ -288,6 +289,8 @@ export default function ProjectForm({
           />
         </div>
       </section>
+
+      <SeoFields metaTitle={project?.metaTitle} metaDescription={project?.metaDescription} />
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Plan images</h2>

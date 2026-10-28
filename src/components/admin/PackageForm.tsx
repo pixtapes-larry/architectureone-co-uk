@@ -8,6 +8,7 @@ import { savePackageAction, type PackageFormState } from "@/app/admin/(protected
 import type { ExpectationItem } from "@/lib/packages";
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ProjectForm.module.css";
+import SeoFields from "./SeoFields";
 
 type PackageRecord = NonNullable<Awaited<ReturnType<typeof getPackageAdmin>>>;
 
@@ -207,6 +208,8 @@ export default function PackageForm({
           + Add expectation
         </button>
       </section>
+
+      <SeoFields metaTitle={pkg?.metaTitle} metaDescription={pkg?.metaDescription} />
 
       {state.error && <p className={styles.error}>{state.error}</p>}
 

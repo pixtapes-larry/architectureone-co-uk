@@ -1,9 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import { getSiteSettings } from "@/lib/site-settings";
 import { getAboutPageContent, getTeamMembers } from "@/lib/about-content";
 import { getAllTestimonials } from "@/lib/testimonials";
 import { getProjectCount, withProjectCount } from "@/lib/project-count";
+import { pageMetadata } from "@/lib/seo";
 import {
   HOME_HREF,
   ABOUT_SERVICES_HREF,
@@ -12,6 +14,16 @@ import {
 import styles from "./page.module.css";
 
 export const instant = false;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const [content, projectCount] = await Promise.all([getAboutPageContent(), getProjectCount()]);
+  return pageMetadata({
+    metaTitle: content.metaTitle,
+    metaDescription: content.metaDescription,
+    fallbackTitle: "About Us",
+    fallbackDescription: withProjectCount(content.heroTagline, projectCount),
+  });
+}
 
 export default async function AboutPage() {
   const [settings, content, team, testimonials, projectCount] = await Promise.all([

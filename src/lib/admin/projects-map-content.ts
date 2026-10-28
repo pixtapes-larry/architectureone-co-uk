@@ -8,6 +8,8 @@ export type ProjectsMapContentAdminInput = {
   searchHeading: string;
   searchLead: string;
   startingNote: string;
+  metaTitle: string | null;
+  metaDescription: string | null;
 };
 
 export async function updateProjectsMapContentAdmin(input: ProjectsMapContentAdminInput) {

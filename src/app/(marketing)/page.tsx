@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
 import { getFeaturedProjects } from "@/lib/projects";
@@ -12,6 +13,20 @@ import styles from "./page.module.css";
 // Dynamic DB read now powers the featured list — see the instant=false
 // note in work/[slug]/page.tsx for why this flag is needed in dev.
 export const instant = false;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getHomePageContent();
+  return {
+    title: {
+      absolute:
+        content.metaTitle?.trim() ||
+        "Architecture ONE — Residential Architects in the East of England",
+    },
+    description:
+      content.metaDescription?.trim() ||
+      "Award-winning residential architecture across the East of England — extensions, loft conversions and new builds.",
+  };
+}
 
 export default async function Home() {
   const [content, featuredProjects, categoryTeasers, testimonial, projectCount] =

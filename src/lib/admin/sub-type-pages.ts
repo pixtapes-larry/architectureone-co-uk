@@ -41,6 +41,9 @@ export type SubTypePageAdminInput = {
   pricingQuoteLead: string;
 
   ctaQuestion: string;
+
+  metaTitle: string;
+  metaDescription: string;
 };
 
 function toCoreData(input: SubTypePageAdminInput) {
@@ -62,6 +65,9 @@ function toCoreData(input: SubTypePageAdminInput) {
     pricingQuoteLead: input.pricingKind === "quote" ? input.pricingQuoteLead : undefined,
 
     ctaQuestion: input.ctaQuestion,
+
+    metaTitle: input.metaTitle || null,
+    metaDescription: input.metaDescription || null,
   };
 }
 

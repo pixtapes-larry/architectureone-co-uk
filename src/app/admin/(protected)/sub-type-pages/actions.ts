@@ -74,6 +74,9 @@ function parseCoreFields(formData: FormData): SubTypePageAdminInput {
     pricingQuoteLead: str(formData, "pricingQuoteLead"),
 
     ctaQuestion: str(formData, "ctaQuestion"),
+
+    metaTitle: str(formData, "metaTitle"),
+    metaDescription: str(formData, "metaDescription"),
   };
 }
 

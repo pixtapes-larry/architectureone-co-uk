@@ -58,6 +58,9 @@ export async function saveHomeContentAction(formData: FormData) {
 
     finalCtaHeading: str(formData, "finalCtaHeading"),
     finalCtaLead: str(formData, "finalCtaLead"),
+
+    metaTitle: str(formData, "metaTitle") || null,
+    metaDescription: str(formData, "metaDescription") || null,
   });
 
   revalidatePath("/");

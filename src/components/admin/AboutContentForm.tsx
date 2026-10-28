@@ -5,6 +5,7 @@ import type { getAboutPageContentAdmin } from "@/lib/admin/about-content";
 import { saveAboutContentAction } from "@/app/admin/(protected)/about-content/actions";
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ProjectForm.module.css";
+import SeoFields from "./SeoFields";
 
 type AboutContentRecord = NonNullable<Awaited<ReturnType<typeof getAboutPageContentAdmin>>>;
 
@@ -91,6 +92,8 @@ export default function AboutContentForm({ content }: { content: AboutContentRec
           <textarea id="finalCtaLead" name="finalCtaLead" required defaultValue={content.finalCtaLead} className={formStyles.textarea} />
         </div>
       </section>
+
+      <SeoFields metaTitle={content.metaTitle} metaDescription={content.metaDescription} />
 
       <div className={styles.actions}>
         <button type="submit" className={formStyles.submitBtn}>

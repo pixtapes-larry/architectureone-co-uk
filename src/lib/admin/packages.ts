@@ -28,6 +28,8 @@ export type PackageAdminInput = {
   sortOrder: number;
   expectations: ExpectationItem[];
   services: { serviceId: number; constraintNote?: string }[];
+  metaTitle: string | null;
+  metaDescription: string | null;
 };
 
 export async function createPackageAdmin(input: PackageAdminInput) {

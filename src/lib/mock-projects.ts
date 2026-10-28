@@ -44,6 +44,8 @@ export type ProjectMapSummary = {
   status?: string;
   services?: string[]; // service titles — e.g. "Measured Survey"
   teamNote?: string; // "A note from the team" — only ever real, never fabricated
+  metaTitle?: string;
+  metaDescription?: string;
 };
 
 export const MOCK_PROJECTS: ProjectMapSummary[] = [

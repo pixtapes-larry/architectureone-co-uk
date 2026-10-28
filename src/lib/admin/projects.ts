@@ -79,6 +79,8 @@ export type ProjectAdminInput = {
   testimonial?: string;
   customerName?: string;
   customerConsent?: boolean;
+  metaTitle?: string;
+  metaDescription?: string;
   services: number[]; // Service ids
 };
 

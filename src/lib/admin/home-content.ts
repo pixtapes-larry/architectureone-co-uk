@@ -41,6 +41,9 @@ export type HomePageContentAdminInput = {
 
   finalCtaHeading: string;
   finalCtaLead: string;
+
+  metaTitle: string | null;
+  metaDescription: string | null;
 };
 
 export async function updateHomePageContentAdmin(input: HomePageContentAdminInput) {

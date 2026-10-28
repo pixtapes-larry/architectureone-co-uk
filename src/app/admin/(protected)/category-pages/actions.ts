@@ -115,6 +115,9 @@ function parseCoreFields(formData: FormData): CategoryPageAdminInput {
     homeTeaserPhotoLabel: str(formData, "homeTeaserPhotoLabel"),
 
     subTypeCards: parseSubTypeCards(formData),
+
+    metaTitle: str(formData, "metaTitle"),
+    metaDescription: str(formData, "metaDescription"),
   };
 }
 

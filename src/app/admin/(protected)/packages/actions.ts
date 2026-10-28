@@ -46,6 +46,8 @@ function parseCoreFields(formData: FormData): PackageAdminInput {
     sortOrder: Number(str(formData, "sortOrder") || "0"),
     expectations,
     services,
+    metaTitle: str(formData, "metaTitle") || null,
+    metaDescription: str(formData, "metaDescription") || null,
   };
 }
 

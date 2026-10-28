@@ -62,6 +62,8 @@ export type CategoryPageConfig = {
   considerationsHeading: string;
   considerations: ConsiderationItem[];
   closing: ClosingSection;
+  metaTitle: string | null;
+  metaDescription: string | null;
 };
 
 export type HomeCategoryTeaser = {
@@ -171,5 +173,7 @@ export async function getCategoryPageConfig(category: Category): Promise<Categor
     considerationsHeading: row.considerationsHeading,
     considerations: row.considerations as ConsiderationItem[],
     closing,
+    metaTitle: row.metaTitle,
+    metaDescription: row.metaDescription,
   };
 }

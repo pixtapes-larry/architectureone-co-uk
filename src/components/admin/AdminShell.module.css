@@ -5,8 +5,8 @@
 }
 
 .sidebar {
-  width: 240px;
-  flex: 0 0 240px;
+  width: 272px;
+  flex: 0 0 272px;
   background: var(--color-white);
   border-right: 1px solid var(--color-line);
   padding: 24px 20px;
@@ -43,15 +43,34 @@
 .nav {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 20px;
+  overflow-y: auto;
+}
+
+.navGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.navGroupTitle {
+  padding: 0 12px;
+  margin-bottom: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
 }
 
 .navLink {
-  padding: 10px 12px;
+  display: block;
+  padding: 9px 12px;
   border-radius: var(--radius-card);
   font-size: 13.5px;
   font-weight: 600;
   color: var(--color-muted-dark);
+  white-space: nowrap;
 }
 
 .navLink:hover {
@@ -62,6 +81,32 @@
 .navLinkActive {
   background: var(--color-chip-bg);
   color: var(--color-coral);
+}
+
+.navLinkSoon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 9px 12px;
+  border-radius: var(--radius-card);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-muted);
+  cursor: default;
+  white-space: nowrap;
+}
+
+.soonTag {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  padding: 1px 6px;
 }
 
 .footer {

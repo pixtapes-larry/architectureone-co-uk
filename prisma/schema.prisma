@@ -85,6 +85,9 @@ model CategoryPage {
   homeTeaserLinkLabel  String?
   homeTeaserPhotoLabel String?
 
+  metaTitle       String?
+  metaDescription String?
+
   subTypeCards CategorySubTypeCard[]
 }
 
@@ -129,6 +132,9 @@ model SubTypePage {
 
   ctaQuestion String
 
+  metaTitle       String?
+  metaDescription String?
+
   typesSectionItems SubTypePageTypeItem[]
 }
 
@@ -167,6 +173,11 @@ model SiteSettings {
   // Linked from the About page's reviews section — "See all reviews on
   // Google". Left null until the real Business Profile URL is confirmed.
   googleReviewsUrl String?
+
+  // SEO title/description for the Contact page specifically (the rest of
+  // this model is contact details + contact page copy, not page-level SEO).
+  contactMetaTitle       String?
+  contactMetaDescription String?
 }
 
 // Single shared row — the /projects map page's search-card copy,
@@ -178,6 +189,9 @@ model ProjectsMapContent {
   searchHeading String
   searchLead    String @db.Text
   startingNote  String @db.Text
+
+  metaTitle       String?
+  metaDescription String?
 }
 
 // Single shared row — the Privacy page's copy. Placeholder/draft text,
@@ -190,6 +204,9 @@ model PrivacyPageContent {
   intro           String @db.Text
   bodyParagraphs  Json // string[]
   lastUpdatedNote String
+
+  metaTitle       String?
+  metaDescription String?
 }
 
 // Single shared row — the home page's copy, previously hardcoded in
@@ -241,6 +258,9 @@ model HomePageContent {
 
   finalCtaHeading String
   finalCtaLead    String @db.Text
+
+  metaTitle       String?
+  metaDescription String?
 }
 
 // Single shared row — the About page's copy, previously hardcoded in
@@ -265,6 +285,9 @@ model AboutPageContent {
 
   finalCtaHeading String
   finalCtaLead    String @db.Text
+
+  metaTitle       String?
+  metaDescription String?
 }
 
 // A client testimonial/review. Admin picks which ones are "featured" (the
@@ -315,6 +338,9 @@ model LocalAuthorityInfo {
   id             Int     @id @default(autoincrement())
   localAuthority String  @unique
   blurb          String? @db.Text
+
+  metaTitle       String?
+  metaDescription String?
 }
 
 // The 3 fixed-price Permitted Development packages (Starter/Standard/
@@ -333,6 +359,9 @@ model Package {
   // rather than free-text bullets, optionally adding its own constraining
   // line (e.g. "up to 2 rounds of amendments").
   services PackageService[]
+
+  metaTitle       String?
+  metaDescription String?
 }
 
 // The shared Service catalog — single source of truth for: (1) a Project's
@@ -437,6 +466,11 @@ model Project {
   year                 Int?
   status               String?  @default("Completed")
   slug                 String?  @unique // case-study page URL, e.g. ip7-hadleigh-loft-conversion
+
+  // SEO overrides for this project's /work/[slug] case-study page — falls
+  // back to "<address>, <place>" / `description` when not set.
+  metaTitle       String?
+  metaDescription String?
 
   // --- Optional on any project ---
   otherTags       Json? // e.g. ["Heritage", "Class Q", "Change of Use"]

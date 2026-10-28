@@ -13,6 +13,8 @@ export async function saveProjectsMapContentAction(formData: FormData) {
     searchHeading: str(formData, "searchHeading"),
     searchLead: str(formData, "searchLead"),
     startingNote: str(formData, "startingNote"),
+    metaTitle: str(formData, "metaTitle") || null,
+    metaDescription: str(formData, "metaDescription") || null,
   });
 
   revalidatePath("/projects");

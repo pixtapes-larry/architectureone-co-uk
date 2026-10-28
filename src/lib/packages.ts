@@ -24,6 +24,8 @@ export type PackageTier = {
   featured: boolean;
   includedServices: IncludedService[];
   expectations: ExpectationItem[];
+  metaTitle: string | null;
+  metaDescription: string | null;
 };
 
 const WITH_SERVICES = {
@@ -40,6 +42,8 @@ type PackageRow = {
   featured: boolean;
   expectations: unknown;
   services: { constraintNote: string | null; service: { title: string } }[];
+  metaTitle: string | null;
+  metaDescription: string | null;
 };
 
 function toTier(row: PackageRow): PackageTier {
@@ -53,6 +57,8 @@ function toTier(row: PackageRow): PackageTier {
       title: s.service.title,
       constraintNote: s.constraintNote ?? undefined,
     })),
+    metaTitle: row.metaTitle,
+    metaDescription: row.metaDescription,
   };
 }
 

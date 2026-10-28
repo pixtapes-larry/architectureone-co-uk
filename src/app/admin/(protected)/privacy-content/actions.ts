@@ -22,6 +22,8 @@ export async function savePrivacyContentAction(formData: FormData) {
     intro: str(formData, "intro"),
     bodyParagraphs: list(formData, "bodyParagraph"),
     lastUpdatedNote: str(formData, "lastUpdatedNote"),
+    metaTitle: str(formData, "metaTitle") || null,
+    metaDescription: str(formData, "metaDescription") || null,
   });
 
   revalidatePath("/privacy");

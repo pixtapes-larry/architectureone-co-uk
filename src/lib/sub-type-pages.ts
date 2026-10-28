@@ -34,6 +34,8 @@ export type SubTypePageConfig = {
   steps: ProcessStep[];
   pricing: PricingSection;
   ctaQuestion: string;
+  metaTitle: string | null;
+  metaDescription: string | null;
 };
 
 // Every sub-type page closes the same way — a simple "more than just
@@ -99,5 +101,7 @@ export async function getSubTypePageConfig(
     steps: row.steps as ProcessStep[],
     pricing,
     ctaQuestion: row.ctaQuestion,
+    metaTitle: row.metaTitle,
+    metaDescription: row.metaDescription,
   };
 }

@@ -8,7 +8,10 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Architecture ONE",
+  title: {
+    default: "Architecture ONE",
+    template: "%s | Architecture ONE",
+  },
   description:
     "Award-winning residential architecture across the East of England — extensions, loft conversions and new builds.",
 };

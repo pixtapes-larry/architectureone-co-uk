@@ -5,6 +5,7 @@ import type { getHomePageContentAdmin } from "@/lib/admin/home-content";
 import { saveHomeContentAction } from "@/app/admin/(protected)/home-content/actions";
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ProjectForm.module.css";
+import SeoFields from "./SeoFields";
 
 type HomeContentRecord = NonNullable<Awaited<ReturnType<typeof getHomePageContentAdmin>>>;
 
@@ -212,6 +213,8 @@ export default function HomeContentForm({ content }: { content: HomeContentRecor
           <textarea id="finalCtaLead" name="finalCtaLead" required defaultValue={content.finalCtaLead} className={formStyles.textarea} />
         </div>
       </section>
+
+      <SeoFields metaTitle={content.metaTitle} metaDescription={content.metaDescription} />
 
       <div className={styles.actions}>
         <button type="submit" className={formStyles.submitBtn}>

@@ -8,6 +8,7 @@ import type { getCategoryPageAdmin } from "@/lib/admin/category-pages";
 import { saveCategoryPageAction, type CategoryPageFormState } from "@/app/admin/(protected)/category-pages/actions";
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ProjectForm.module.css";
+import SeoFields from "./SeoFields";
 
 type CategoryPageRecord = NonNullable<Awaited<ReturnType<typeof getCategoryPageAdmin>>>;
 
@@ -580,6 +581,8 @@ export default function CategoryPageForm({ page }: { page: CategoryPageRecord })
           <textarea id="homeTeaserPhotoLabel" name="homeTeaserPhotoLabel" defaultValue={page.homeTeaserPhotoLabel ?? ""} className={formStyles.textarea} />
         </div>
       </section>
+
+      <SeoFields metaTitle={page.metaTitle} metaDescription={page.metaDescription} />
 
       {state.error && <p className={styles.error}>{state.error}</p>}
 

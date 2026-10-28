@@ -1,11 +1,23 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import ContactForm from "@/components/forms/ContactForm";
 import OfficeMapLoader from "@/components/map/OfficeMapLoader";
 import { getSiteSettings } from "@/lib/site-settings";
+import { pageMetadata } from "@/lib/seo";
 import { HOME_HREF } from "@/lib/nav";
 import styles from "./page.module.css";
 
 export const instant = false;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  return pageMetadata({
+    metaTitle: settings.contact.metaTitle,
+    metaDescription: settings.contact.metaDescription,
+    fallbackTitle: "Contact Us",
+    fallbackDescription: settings.contact.lead,
+  });
+}
 
 export default async function ContactPage() {
   const settings = await getSiteSettings();

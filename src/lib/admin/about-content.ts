@@ -14,6 +14,8 @@ export type AboutPageContentAdminInput = {
   reviewsPlaceholderNote: string;
   finalCtaHeading: string;
   finalCtaLead: string;
+  metaTitle: string | null;
+  metaDescription: string | null;
 };
 
 export async function updateAboutPageContentAdmin(input: AboutPageContentAdminInput) {

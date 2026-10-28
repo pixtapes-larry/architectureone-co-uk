@@ -5,6 +5,7 @@ import type { getSiteSettingsAdmin } from "@/lib/admin/site-settings";
 import { saveSiteSettingsAction } from "@/app/admin/(protected)/settings/actions";
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ProjectForm.module.css";
+import SeoFields from "./SeoFields";
 
 type SiteSettingsRecord = NonNullable<Awaited<ReturnType<typeof getSiteSettingsAdmin>>>;
 
@@ -89,6 +90,11 @@ export default function SiteSettingsForm({
           />
         </div>
       </section>
+
+      <p style={{ fontSize: 13, color: "var(--color-muted)", margin: "0 0 -8px" }}>
+        The section below is SEO for the Contact page specifically.
+      </p>
+      <SeoFields metaTitle={settings.contactMetaTitle} metaDescription={settings.contactMetaDescription} />
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Reviews</h2>

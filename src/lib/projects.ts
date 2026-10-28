@@ -60,6 +60,8 @@ function toSummary(p: ProjectWithRelations): ProjectMapSummary {
     status: p.status ?? undefined,
     services: p.services.map((s) => s.service.title),
     teamNote: p.testimonial ?? undefined,
+    metaTitle: p.metaTitle ?? undefined,
+    metaDescription: p.metaDescription ?? undefined,
   };
 }
 

@@ -45,6 +45,8 @@ export type LocalAuthorityStats = {
   projects: ProjectMapSummary[];
   featuredProjects: ProjectMapSummary[];
   blurb?: string;
+  metaTitle: string | null;
+  metaDescription: string | null;
 };
 
 export async function localAuthorityStats(
@@ -70,5 +72,7 @@ export async function localAuthorityStats(
     projects,
     featuredProjects,
     blurb: info?.blurb ?? undefined,
+    metaTitle: info?.metaTitle ?? null,
+    metaDescription: info?.metaDescription ?? null,
   };
 }

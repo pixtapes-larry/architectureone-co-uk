@@ -19,6 +19,8 @@ export type SiteSettingsData = {
     lead: string;
     sidebarHeading: string;
     emailUnconfirmedNote: string;
+    metaTitle: string | null;
+    metaDescription: string | null;
   };
   googleReviewsUrl: string | null;
 };
@@ -41,6 +43,8 @@ export async function getSiteSettings(): Promise<SiteSettingsData> {
       lead: row.contactLead,
       sidebarHeading: row.contactSidebarHeading,
       emailUnconfirmedNote: row.contactEmailUnconfirmedNote,
+      metaTitle: row.contactMetaTitle,
+      metaDescription: row.contactMetaDescription,
     },
     googleReviewsUrl: row.googleReviewsUrl,
   };

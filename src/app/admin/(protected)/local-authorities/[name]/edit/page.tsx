@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
-import { getLocalAuthorityBlurbAdmin } from "@/lib/admin/local-authorities";
-import { allLocalAuthorityNames } from "@/lib/local-authorities";
+import { getLocalAuthorityBlurbAdmin, listLocalAuthoritiesAdmin } from "@/lib/admin/local-authorities";
 import { saveLocalAuthorityBlurbAction } from "../../actions";
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "@/components/admin/ProjectForm.module.css";
+import SeoFields from "@/components/admin/SeoFields";
 
 export const instant = false;
 
@@ -15,20 +15,32 @@ export default async function EditLocalAuthorityPage({
   const { name: encodedName } = await params;
   const name = decodeURIComponent(encodedName);
 
-  const [names, info] = await Promise.all([
-    allLocalAuthorityNames(),
+  const [rows, info] = await Promise.all([
+    listLocalAuthoritiesAdmin(),
     getLocalAuthorityBlurbAdmin(name),
   ]);
+  const row = rows.find((r) => r.name === name);
 
-  if (!names.includes(name)) {
+  if (!row) {
     notFound();
   }
 
   return (
     <>
-      <h1 style={{ fontSize: 24, fontWeight: 800, marginBottom: 24 }}>
+      <h1 style={{ fontSize: 24, fontWeight: 800, marginBottom: 8 }}>
         Edit blurb — {name}
       </h1>
+      <p style={{ fontSize: 13, color: "var(--color-muted)", marginBottom: 24 }}>
+        Page: <code>/local-authority/{row.slug}</code> · {row.projectCount}{" "}
+        project{row.projectCount === 1 ? "" : "s"} ·{" "}
+        {row.hasBoundary ? (
+          <span style={{ color: "var(--color-coral)" }}>
+            map boundary found ({row.boundarySlug}.geojson)
+          </span>
+        ) : (
+          <span>no map boundary file — the page works, just no shaded outline on the map</span>
+        )}
+      </p>
       <form action={saveLocalAuthorityBlurbAction} className={styles.form}>
         <input type="hidden" name="name" value={name} />
         <section className={styles.section}>
@@ -46,6 +58,7 @@ export default async function EditLocalAuthorityPage({
             />
           </div>
         </section>
+        <SeoFields metaTitle={info?.metaTitle} metaDescription={info?.metaDescription} />
         <div className={styles.actions}>
           <button type="submit" className={formStyles.submitBtn}>
             Save

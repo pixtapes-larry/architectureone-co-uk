@@ -5,6 +5,7 @@ import type { getPrivacyPageContentAdmin } from "@/lib/admin/privacy-content";
 import { savePrivacyContentAction } from "@/app/admin/(protected)/privacy-content/actions";
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ProjectForm.module.css";
+import SeoFields from "./SeoFields";
 
 type PrivacyContentRecord = NonNullable<Awaited<ReturnType<typeof getPrivacyPageContentAdmin>>>;
 
@@ -68,6 +69,8 @@ export default function PrivacyContentForm({ content }: { content: PrivacyConten
           <textarea id="lastUpdatedNote" name="lastUpdatedNote" required defaultValue={content.lastUpdatedNote} className={formStyles.textarea} />
         </div>
       </section>
+
+      <SeoFields metaTitle={content.metaTitle} metaDescription={content.metaDescription} />
 
       <div className={styles.actions}>
         <button type="submit" className={formStyles.submitBtn}>

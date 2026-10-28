@@ -27,6 +27,8 @@ export async function saveAboutContentAction(formData: FormData) {
     reviewsPlaceholderNote: str(formData, "reviewsPlaceholderNote"),
     finalCtaHeading: str(formData, "finalCtaHeading"),
     finalCtaLead: str(formData, "finalCtaLead"),
+    metaTitle: str(formData, "metaTitle") || null,
+    metaDescription: str(formData, "metaDescription") || null,
   });
 
   revalidatePath("/about");

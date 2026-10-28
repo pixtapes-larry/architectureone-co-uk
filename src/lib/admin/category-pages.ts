@@ -65,6 +65,9 @@ export type CategoryPageAdminInput = {
   homeTeaserPhotoLabel: string;
 
   subTypeCards: CategorySubTypeCardInput[];
+
+  metaTitle: string;
+  metaDescription: string;
 };
 
 function toCoreData(input: CategoryPageAdminInput) {
@@ -105,6 +108,9 @@ function toCoreData(input: CategoryPageAdminInput) {
     homeTeaserBlurb: input.homeTeaserBlurb || null,
     homeTeaserLinkLabel: input.homeTeaserLinkLabel || null,
     homeTeaserPhotoLabel: input.homeTeaserPhotoLabel || null,
+
+    metaTitle: input.metaTitle || null,
+    metaDescription: input.metaDescription || null,
   };
 }
 

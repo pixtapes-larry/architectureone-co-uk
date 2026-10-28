@@ -69,6 +69,8 @@ function parseCoreFields(formData: FormData): CoreFields {
     testimonial: optionalStr(formData, "testimonial"),
     customerName: optionalStr(formData, "customerName"),
     customerConsent: formData.get("customerConsent") === "on",
+    metaTitle: optionalStr(formData, "metaTitle"),
+    metaDescription: optionalStr(formData, "metaDescription"),
     services: formData.getAll("services").map(Number).filter((n) => !Number.isNaN(n)),
   };
 }
