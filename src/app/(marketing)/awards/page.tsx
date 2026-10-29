@@ -42,6 +42,10 @@ export default async function AwardsPage() {
         <div className={styles.list}>
           {awards.map((award) => (
             <div key={award.id} className={styles.card}>
+              {award.imageUrl && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={award.imageUrl} alt="" className={styles.badge} />
+              )}
               <div className={styles.year}>{award.year}</div>
               <div className={styles.name}>{award.name}</div>
               {award.sourceUrl && (

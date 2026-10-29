@@ -15,6 +15,7 @@ export type AwardAdminInput = {
   name: string;
   year: number;
   sourceUrl: string | null;
+  imageUrl?: string;
   projectId: number | null;
 };
 

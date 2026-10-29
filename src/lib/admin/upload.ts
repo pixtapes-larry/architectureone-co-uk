@@ -17,6 +17,14 @@ const UPLOAD_ROOT = path.join(
   "projects",
 );
 
+const AWARDS_UPLOAD_ROOT = path.join(
+  process.cwd(),
+  "public",
+  "uploads",
+  "architectureone",
+  "awards",
+);
+
 export type UploadRole =
   | "cover"
   | "gallery-before"
@@ -71,6 +79,35 @@ export async function saveProjectImage(
 // triggered the cleanup.
 export async function deleteProjectImage(publicUrl: string): Promise<void> {
   if (!publicUrl.startsWith("/uploads/architectureone/projects/")) return;
+  const filePath = path.join(process.cwd(), "public", publicUrl);
+  try {
+    await unlink(filePath);
+  } catch {
+    // already gone, or never existed — fine either way
+  }
+}
+
+// Award badge/logo images — same storage convention as project photos, one
+// flat folder per award since there's only ever one image per award.
+export async function saveAwardImage(file: File, awardId: number): Promise<string> {
+  const dir = path.join(AWARDS_UPLOAD_ROOT, String(awardId));
+  await mkdir(dir, { recursive: true });
+
+  const filename = `${randomUUID()}.jpg`;
+  const destPath = path.join(dir, filename);
+
+  const buffer = Buffer.from(await file.arrayBuffer());
+  await sharp(buffer)
+    .rotate()
+    .resize({ width: 800, height: 800, fit: "inside", withoutEnlargement: true })
+    .jpeg({ quality: 85 })
+    .toFile(destPath);
+
+  return `/uploads/architectureone/awards/${awardId}/${filename}`;
+}
+
+export async function deleteAwardImage(publicUrl: string): Promise<void> {
+  if (!publicUrl.startsWith("/uploads/architectureone/awards/")) return;
   const filePath = path.join(process.cwd(), "public", publicUrl);
   try {
     await unlink(filePath);

@@ -365,6 +365,10 @@ model Award {
   // as a "View announcement" link on the public Awards page.
   sourceUrl String?
 
+  // The award's own badge/logo image, shown alongside its entry on the
+  // public Awards page.
+  imageUrl String?
+
   project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
   projectId Int?
 }

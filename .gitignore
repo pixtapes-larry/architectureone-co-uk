@@ -41,3 +41,7 @@ yarn-error.log*
 next-env.d.ts
 
 /src/generated/prisma
+
+# admin-uploaded images — live on the persistent-disk host's own
+# filesystem (see src/lib/admin/upload.ts), not source-controlled
+/public/uploads

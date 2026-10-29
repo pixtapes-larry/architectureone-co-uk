@@ -27,6 +27,7 @@ export default async function AdminAwardsPage() {
         <table className={styles.table}>
           <thead>
             <tr>
+              <th></th>
               <th>Award</th>
               <th>Year</th>
               <th>Link</th>
@@ -37,6 +38,14 @@ export default async function AdminAwardsPage() {
           <tbody>
             {awards.map((award) => (
               <tr key={award.id}>
+                <td>
+                  {award.imageUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={award.imageUrl} alt="" className={styles.thumb} />
+                  ) : (
+                    <span style={{ color: "var(--color-muted)" }}>—</span>
+                  )}
+                </td>
                 <td>{award.name}</td>
                 <td>{award.year}</td>
                 <td>

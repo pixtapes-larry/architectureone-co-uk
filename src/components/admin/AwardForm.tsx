@@ -74,6 +74,23 @@ export default function AwardForm({
         />
       </section>
 
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Badge image</h2>
+        {award?.imageUrl && (
+          <div className={styles.photoPreview}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={award.imageUrl} alt="Current badge" />
+            <span className={styles.photoPreviewUrl}>{award.imageUrl}</span>
+          </div>
+        )}
+        <div className={formStyles.field}>
+          <label className={formStyles.label} htmlFor="image">
+            {award?.imageUrl ? "Replace badge image" : "Badge image (optional)"}
+          </label>
+          <input id="image" name="image" type="file" accept="image/*" className={formStyles.input} />
+        </div>
+      </section>
+
       {state.error && <p className={styles.error}>{state.error}</p>}
 
       <div className={styles.actions}>

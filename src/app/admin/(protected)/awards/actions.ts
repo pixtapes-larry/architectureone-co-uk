@@ -6,8 +6,10 @@ import {
   createAwardAdmin,
   updateAwardAdmin,
   deleteAwardAdmin,
+  getAwardAdmin,
   type AwardAdminInput,
 } from "@/lib/admin/awards";
+import { saveAwardImage, deleteAwardImage, isUploadableFile } from "@/lib/admin/upload";
 
 export type AwardFormState = { error?: string };
 
@@ -43,10 +45,22 @@ export async function saveAwardAction(
     return { error: "Award name is required." };
   }
 
+  const imageFile = formData.get("image");
+  let awardId: number;
+
   if (isEdit) {
-    await updateAwardAdmin(Number(idRaw), core);
+    awardId = Number(idRaw);
+    await updateAwardAdmin(awardId, core);
   } else {
-    await createAwardAdmin(core);
+    const created = await createAwardAdmin(core);
+    awardId = created.id;
+  }
+
+  if (isUploadableFile(imageFile)) {
+    const existing = isEdit ? await getAwardAdmin(awardId) : null;
+    if (existing?.imageUrl) await deleteAwardImage(existing.imageUrl);
+    const imageUrl = await saveAwardImage(imageFile, awardId);
+    await updateAwardAdmin(awardId, { ...core, imageUrl });
   }
 
   revalidateAwards();
@@ -56,6 +70,8 @@ export async function saveAwardAction(
 export async function deleteAwardFormAction(formData: FormData) {
   const id = Number(formData.get("id"));
   if (!Number.isNaN(id)) {
+    const existing = await getAwardAdmin(id);
+    if (existing?.imageUrl) await deleteAwardImage(existing.imageUrl);
     await deleteAwardAdmin(id);
   }
   revalidateAwards();
