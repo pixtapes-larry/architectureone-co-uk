@@ -42,6 +42,18 @@ export type UploadRole =
   | "elevation-before"
   | "elevation-after";
 
+// Fractional crop rect (0–1), relative to the original image's own pixel
+// dimensions — what the crop UI produces and what gets stored alongside
+// the derivative it made, so the same original can be cropped again
+// differently for a second use without touching this one.
+export type CropRect = { x: number; y: number; width: number; height: number };
+
+// Fixed output size per field type, so every cover photo (and every gallery
+// photo) on the site is the same pixel dimensions, aspect and roughly the
+// same file size — not just "whatever the source photo happened to be".
+export const COVER_TARGET = { width: 1200, height: 900 };
+export const GALLERY_TARGET = { width: 1200, height: 900 };
+
 // Max edge length for any stored image — the site never displays project
 // photos larger than this, so there's no reason to keep the original
 // camera-resolution file around just to serve it smaller every request.
@@ -80,6 +92,46 @@ export async function saveProjectImage(
     .toFile(destPath);
 
   return `/uploads/architectureone/projects/${projectId}/${role}/${filename}`;
+}
+
+// Crops a region out of a retained original (an Asset's own file, stored
+// uncropped) and saves it as a field's own derivative — the original on
+// disk is never modified, so it can be cropped again differently for
+// another field without affecting this one.
+export async function saveCroppedDerivative(
+  originalUrl: string,
+  crop: CropRect,
+  projectId: number,
+  role: UploadRole,
+  target: { width: number; height: number },
+): Promise<{ url: string; fileSizeKb: number; width: number; height: number }> {
+  const dir = path.join(UPLOAD_ROOT, String(projectId), role);
+  await mkdir(dir, { recursive: true });
+
+  const filename = `${randomUUID()}.jpg`;
+  const destPath = path.join(dir, filename);
+  const sourcePath = path.join(process.cwd(), "public", originalUrl);
+
+  const meta = await sharp(sourcePath).metadata();
+  const sw = meta.width ?? 0;
+  const sh = meta.height ?? 0;
+  const left = Math.max(0, Math.min(sw - 1, Math.round(crop.x * sw)));
+  const top = Math.max(0, Math.min(sh - 1, Math.round(crop.y * sh)));
+  const width = Math.max(1, Math.min(sw - left, Math.round(crop.width * sw)));
+  const height = Math.max(1, Math.min(sh - top, Math.round(crop.height * sh)));
+
+  const info = await sharp(sourcePath)
+    .extract({ left, top, width, height })
+    .resize({ width: target.width, height: target.height, fit: "cover" })
+    .jpeg({ quality: 85 })
+    .toFile(destPath);
+
+  return {
+    url: `/uploads/architectureone/projects/${projectId}/${role}/${filename}`,
+    fileSizeKb: Math.round(info.size / 1024),
+    width: info.width,
+    height: info.height,
+  };
 }
 
 // Best-effort delete — called when a photo row is removed or replaced.

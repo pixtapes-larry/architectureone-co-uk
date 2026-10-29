@@ -14,6 +14,7 @@ import TemplateNote from "./TemplateNote";
 import ImageUploadField from "./ImageUploadField";
 import MultiImageUploadField from "./MultiImageUploadField";
 import GalleryEditor from "./GalleryEditor";
+import CoverPhotoField from "./CoverPhotoField";
 
 type ProjectWithRelations = NonNullable<Awaited<ReturnType<typeof getProjectAdmin>>>;
 
@@ -191,12 +192,17 @@ export default function ProjectForm({
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Cover photo</h2>
-        <ImageUploadField
-          name="coverPhoto"
-          label={project ? "Replace cover photo" : "Cover photo"}
-          existingUrl={project?.coverPhotoUrl}
-          aspectRatio={4 / 3}
-        />
+        {project ? (
+          <CoverPhotoField projectId={project.id} existingUrl={project.coverPhotoUrl} />
+        ) : (
+          <>
+            <p className={formStyles.formNote}>
+              Crop and upload this once the project is created below — come back to its edit
+              page afterwards to change it, which applies immediately there.
+            </p>
+            <ImageUploadField name="coverPhoto" label="Cover photo" aspectRatio={4 / 3} />
+          </>
+        )}
       </section>
 
       <section className={styles.section}>

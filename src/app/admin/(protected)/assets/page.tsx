@@ -81,7 +81,7 @@ export default async function AdminAssetsPage({
       source: "asset",
       assetId: a.id,
       owner: null,
-      useCount: usage.get(a.url) ?? 0,
+      useCount: (usage.byUrl.get(a.url) ?? 0) + (usage.byAssetId.get(a.id) ?? 0),
     })),
     ...owned.map((o): UnifiedAsset => ({
       key: o.url,
@@ -97,7 +97,7 @@ export default async function AdminAssetsPage({
       source: o.owner.kind,
       assetId: null,
       owner: { kind: o.owner.kind, id: o.owner.id, editHref: o.owner.editHref },
-      useCount: usage.get(o.url) ?? 0,
+      useCount: usage.byUrl.get(o.url) ?? 0,
     })),
   ].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 

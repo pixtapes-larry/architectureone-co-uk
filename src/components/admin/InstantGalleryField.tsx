@@ -5,10 +5,9 @@ import { useRouter } from "next/navigation";
 import Cropper from "react-easy-crop";
 import type { Area } from "react-easy-crop";
 import "react-easy-crop/react-easy-crop.css";
-import { cropImageToFile, type PixelCrop } from "@/lib/image-crop";
-import AssetLibraryPicker from "./AssetLibraryPicker";
-import type { LibraryImage } from "@/lib/admin/library-images";
-import { addGalleryPhotoAction } from "@/app/admin/(protected)/projects/actions";
+import OriginalLibraryPicker from "./OriginalLibraryPicker";
+import type { OriginalImage } from "@/lib/admin/original-images";
+import { uploadOriginalAction, applyGalleryCropAction } from "@/app/admin/(protected)/projects/actions";
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ImageUploadField.module.css";
 
@@ -16,6 +15,8 @@ import styles from "./ImageUploadField.module.css";
 // page, same as the cover photo — crop to that ratio here so what's picked
 // is what shows, instead of an arbitrary auto-crop at render time.
 const GALLERY_ASPECT = 4 / 3;
+
+type CropTarget = { assetId: number; url: string };
 
 export default function InstantGalleryField({
   projectId,
@@ -33,15 +34,18 @@ export default function InstantGalleryField({
   const [busy, setBusy] = useState(false);
   const [queue, setQueue] = useState<File[]>([]);
 
-  const [cropSrc, setCropSrc] = useState<string | null>(null);
+  const [cropTarget, setCropTarget] = useState<CropTarget | null>(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
+  const [croppedAreaPercent, setCroppedAreaPercent] = useState<Area | null>(null);
 
-  function openCropFor(file: File) {
-    const reader = new FileReader();
-    reader.onload = () => setCropSrc(reader.result as string);
-    reader.readAsDataURL(file);
+  async function openCropFor(file: File) {
+    setBusy(true);
+    const original = await uploadOriginalAction(file);
+    setBusy(false);
+    setCrop({ x: 0, y: 0 });
+    setZoom(1);
+    setCropTarget({ assetId: original.assetId, url: original.url });
   }
 
   function enqueue(files: FileList) {
@@ -53,14 +57,16 @@ export default function InstantGalleryField({
   }
 
   async function confirmCrop() {
-    if (!cropSrc || !croppedAreaPixels) return;
-    const file = await cropImageToFile(cropSrc, croppedAreaPixels as PixelCrop, `${projectId}-gallery.jpg`);
-    setCropSrc(null);
-    setCrop({ x: 0, y: 0 });
-    setZoom(1);
+    if (!cropTarget || !croppedAreaPercent) return;
     setBusy(true);
-    await addGalleryPhotoAction(projectId, isBefore, file, null);
+    await applyGalleryCropAction(projectId, isBefore, cropTarget.assetId, {
+      x: croppedAreaPercent.x / 100,
+      y: croppedAreaPercent.y / 100,
+      width: croppedAreaPercent.width / 100,
+      height: croppedAreaPercent.height / 100,
+    });
     setBusy(false);
+    setCropTarget(null);
     router.refresh();
 
     const [next, ...rest] = queue;
@@ -69,17 +75,16 @@ export default function InstantGalleryField({
   }
 
   function cancelCrop() {
-    setCropSrc(null);
+    setCropTarget(null);
     const [next, ...rest] = queue;
     setQueue(rest);
     if (next) openCropFor(next);
   }
 
-  async function handleLibrarySelect(image: LibraryImage) {
-    setBusy(true);
-    await addGalleryPhotoAction(projectId, isBefore, null, image.url);
-    setBusy(false);
-    router.refresh();
+  function handleLibrarySelect(image: OriginalImage) {
+    setCrop({ x: 0, y: 0 });
+    setZoom(1);
+    setCropTarget({ assetId: image.id, url: image.url });
   }
 
   return (
@@ -111,7 +116,7 @@ export default function InstantGalleryField({
         }}
       >
         <span className={styles.dropzoneText}>
-          {busy ? "Adding…" : "Drag images here, or click to browse — added straight away, no save needed"}
+          {busy ? "Working…" : "Drag images here, or click to browse — crop, then added straight away"}
         </span>
       </div>
       <div className={styles.fieldActions}>
@@ -120,20 +125,20 @@ export default function InstantGalleryField({
         </button>
       </div>
 
-      <AssetLibraryPicker open={pickerOpen} onClose={() => setPickerOpen(false)} onSelect={handleLibrarySelect} />
+      <OriginalLibraryPicker open={pickerOpen} onClose={() => setPickerOpen(false)} onSelect={handleLibrarySelect} />
 
-      {cropSrc && (
+      {cropTarget && (
         <div className={styles.cropOverlay}>
           <div className={styles.cropPanel}>
             <div className={styles.cropStage}>
               <Cropper
-                image={cropSrc}
+                image={cropTarget.url}
                 crop={crop}
                 zoom={zoom}
                 aspect={GALLERY_ASPECT}
                 onCropChange={setCrop}
                 onZoomChange={setZoom}
-                onCropComplete={(_area, pixels) => setCroppedAreaPixels(pixels)}
+                onCropComplete={(area) => setCroppedAreaPercent(area)}
               />
             </div>
             <div className={styles.cropControls}>
@@ -150,8 +155,8 @@ export default function InstantGalleryField({
                 <button type="button" className={styles.cropCancel} onClick={cancelCrop}>
                   Cancel
                 </button>
-                <button type="button" className={styles.cropConfirm} onClick={confirmCrop}>
-                  Add photo{queue.length > 0 ? ` (${queue.length + 1} left)` : ""}
+                <button type="button" className={styles.cropConfirm} onClick={confirmCrop} disabled={busy}>
+                  {busy ? "Adding…" : `Add photo${queue.length > 0 ? ` (${queue.length + 1} left)` : ""}`}
                 </button>
               </div>
             </div>

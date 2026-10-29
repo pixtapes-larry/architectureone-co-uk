@@ -538,6 +538,15 @@ model Project {
   coverPhotoUrl   String // map pin / card thumbnail — independent of the
   // full before/after gallery in `photos`, so every project (featured or
   // not) always has one image to show without needing gallery entries
+  // Provenance for coverPhotoUrl — which retained original it was cropped
+  // from, and the crop rect used (fractional {x,y,width,height}, 0–1, in
+  // the original's own pixel space). Lets the same original be reused
+  // elsewhere with its own independent crop, and lets this crop be redone
+  // later without re-uploading. Null on photos uploaded before this existed
+  // — those keep working as a plain URL with no retained original.
+  coverPhotoAssetId Int?
+  coverPhotoAsset   Asset? @relation("ProjectCoverAsset", fields: [coverPhotoAssetId], references: [id], onDelete: SetNull)
+  coverPhotoCrop    Json?
 
   // --- Featured-only fields ---
   featured             Boolean @default(false)
@@ -583,6 +592,14 @@ model ProjectPhoto {
   caption   String?
   isBefore  Boolean @default(false) // true = "before", false = "after"
   sortOrder Int     @default(0)
+
+  // Same provenance pattern as Project.coverPhotoAssetId — which retained
+  // original this gallery crop came from, so it can be re-cropped or
+  // reused with a different crop elsewhere. Null on photos added before
+  // this existed.
+  assetId Int?
+  asset   Asset? @relation("ProjectPhotoAsset", fields: [assetId], references: [id], onDelete: SetNull)
+  crop    Json?
 }
 
 // Explicit join table (not an implicit m-n) so each row can carry its own
@@ -598,11 +615,17 @@ model ProjectServiceDelivered {
   @@unique([projectId, serviceId])
 }
 
-// A standalone uploaded file (brochure PDF, promo video, a loose image)
-// not tied to a project or award — the admin's general-purpose asset
-// library. Project photos, floorplans and award badges are NOT rows here;
-// those stay owned by their own record (Project/Award) as before. This is
-// only for files that don't belong to one specific thing.
+// Every uploaded file lives here — standalone library files (brochures,
+// promo video, loose images) AND, since the Asset-as-original model was
+// introduced, the retained, untouched original behind any cover photo or
+// gallery photo too (floorplans/elevations/award badges still bypass this
+// and store a plain URL directly on their own record — they're never
+// cropped, so there's no "original vs. derivative" distinction to track).
+// A field never displays this row's own `url` directly for a cropped use —
+// it generates its own derivative from it and stores that derivative's URL
+// (and this row's id + the crop used) on itself. That's what lets the same
+// original be reused in a second place with a completely different crop
+// without disturbing the first.
 model Asset {
   id         Int      @id @default(autoincrement())
   filename   String // original filename, for display
@@ -617,4 +640,7 @@ model Asset {
   // asset library be filtered/organized without touching real folder paths.
   category   String?
   createdAt  DateTime @default(now())
+
+  coverForProjects Project[]      @relation("ProjectCoverAsset")
+  galleryPhotos    ProjectPhoto[] @relation("ProjectPhotoAsset")
 }

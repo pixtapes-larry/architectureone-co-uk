@@ -10,9 +10,21 @@ import {
   getProjectAdmin,
   addProjectPhoto,
   deleteProjectPhoto,
+  setCoverPhotoAdmin,
   type ProjectAdminInput,
 } from "@/lib/admin/projects";
-import { saveProjectImage, deleteProjectImage, isUploadableFile, type UploadRole } from "@/lib/admin/upload";
+import {
+  saveProjectImage,
+  deleteProjectImage,
+  saveAsset,
+  saveCroppedDerivative,
+  isUploadableFile,
+  COVER_TARGET,
+  GALLERY_TARGET,
+  type UploadRole,
+  type CropRect,
+} from "@/lib/admin/upload";
+import { createAssetAdmin, getAssetAdmin } from "@/lib/admin/assets";
 
 export type ProjectFormState = { error?: string };
 
@@ -129,18 +141,68 @@ async function applyGalleryUploads(formData: FormData, projectId: number) {
   }
 }
 
-// Called directly from the gallery editor on the edit page (not part of the
-// big form submit) — a gallery photo is added the instant it's dropped,
-// cropped, or picked from the library, with no "Save" needed.
-export async function addGalleryPhotoAction(
+// Step 1 of the instant, asset-backed cover/gallery flow (both call this) —
+// a freshly dropped/selected file is uploaded and retained as-is (an
+// Asset row backed by an untouched, uncropped file) before any cropping
+// happens, so the same original can be cropped differently a second time
+// later without ever re-uploading from the user's computer.
+export async function uploadOriginalAction(
+  file: File,
+): Promise<{ assetId: number; url: string }> {
+  const { url, fileSizeKb, width, height } = await saveAsset(file);
+  const asset = await createAssetAdmin({
+    filename: file.name,
+    url,
+    mimeType: "image/jpeg",
+    fileSizeKb,
+    width,
+    height,
+    label: null,
+    category: null,
+  });
+  return { assetId: asset.id, url: asset.url };
+}
+
+// Step 2 — crops a retained original (freshly uploaded or picked from the
+// library) for the cover photo, and applies it immediately, no save needed.
+export async function applyCoverCropAction(projectId: number, assetId: number, crop: CropRect) {
+  const asset = await getAssetAdmin(assetId);
+  if (!asset) throw new Error("Original image not found.");
+
+  const existing = await getProjectAdmin(projectId);
+  const derivative = await saveCroppedDerivative(asset.url, crop, projectId, "cover", COVER_TARGET);
+
+  if (existing?.coverPhotoUrl) await deleteProjectImage(existing.coverPhotoUrl);
+  await setCoverPhotoAdmin(projectId, {
+    coverPhotoUrl: derivative.url,
+    coverPhotoAssetId: assetId,
+    coverPhotoCrop: crop,
+  });
+
+  revalidatePath(`/admin/projects/${projectId}/edit`);
+  revalidatePath("/admin/projects");
+}
+
+// Same idea for a gallery photo — crops a retained original and adds it
+// immediately, independent of the main form submit.
+export async function applyGalleryCropAction(
   projectId: number,
   isBefore: boolean,
-  file: File | null,
-  libraryUrl: string | null,
+  assetId: number,
+  crop: CropRect,
 ) {
-  const url = libraryUrl || (file ? await saveProjectImage(file, projectId, isBefore ? "gallery-before" : "gallery-after") : null);
-  if (!url) throw new Error("No file or library image given.");
-  await addProjectPhoto(projectId, { url, isBefore });
+  const asset = await getAssetAdmin(assetId);
+  if (!asset) throw new Error("Original image not found.");
+
+  const derivative = await saveCroppedDerivative(
+    asset.url,
+    crop,
+    projectId,
+    isBefore ? "gallery-before" : "gallery-after",
+    GALLERY_TARGET,
+  );
+  await addProjectPhoto(projectId, { url: derivative.url, isBefore, assetId, crop });
+
   revalidatePath(`/admin/projects/${projectId}/edit`);
 }
 

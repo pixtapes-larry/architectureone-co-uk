@@ -158,7 +158,16 @@ export async function deleteProjectAdmin(id: number) {
 
 export async function addProjectPhoto(
   projectId: number,
-  data: { url: string; isBefore: boolean; caption?: string },
+  data: {
+    url: string;
+    isBefore: boolean;
+    caption?: string;
+    // Which retained original (Asset) this photo was cropped from, and the
+    // fractional crop rect used — present when added via the asset-backed
+    // crop flow, absent for photos added before that existed.
+    assetId?: number;
+    crop?: { x: number; y: number; width: number; height: number };
+  },
 ) {
   const maxSort = await prisma.projectPhoto.aggregate({
     where: { projectId },
@@ -170,9 +179,26 @@ export async function addProjectPhoto(
       url: data.url,
       isBefore: data.isBefore,
       caption: data.caption,
+      assetId: data.assetId,
+      crop: data.crop,
       sortOrder: (maxSort._max.sortOrder ?? -1) + 1,
     },
   });
+}
+
+// Sets the cover photo along with the provenance of how it was produced
+// (which retained original, which crop) — separate from updateProjectAdmin
+// since this is called from the instant, no-save-needed cover photo editor,
+// not the big form submit.
+export async function setCoverPhotoAdmin(
+  projectId: number,
+  data: {
+    coverPhotoUrl: string;
+    coverPhotoAssetId: number;
+    coverPhotoCrop: { x: number; y: number; width: number; height: number };
+  },
+) {
+  return prisma.project.update({ where: { id: projectId }, data });
 }
 
 export async function deleteProjectPhoto(photoId: number) {
