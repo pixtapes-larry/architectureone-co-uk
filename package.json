@@ -17,6 +17,7 @@
     "next": "^16.4.3",
     "react": "19.3.0",
     "react-dom": "19.3.0",
+    "react-easy-crop": "^6.2.4",
     "react-leaflet": "^5.0.0",
     "sharp": "^0.35.5"
   },

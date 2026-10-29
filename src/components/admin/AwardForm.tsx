@@ -7,6 +7,7 @@ import { saveAwardAction, type AwardFormState } from "@/app/admin/(protected)/aw
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ProjectForm.module.css";
 import ProjectPicker from "./ProjectPicker";
+import ImageUploadField from "./ImageUploadField";
 
 type AwardRecord = NonNullable<Awaited<ReturnType<typeof getAwardAdmin>>>;
 type ProjectOption = { id: number; address: string; place: string; postcode: string };
@@ -76,19 +77,11 @@ export default function AwardForm({
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Badge image</h2>
-        {award?.imageUrl && (
-          <div className={styles.photoPreview}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={award.imageUrl} alt="Current badge" />
-            <span className={styles.photoPreviewUrl}>{award.imageUrl}</span>
-          </div>
-        )}
-        <div className={formStyles.field}>
-          <label className={formStyles.label} htmlFor="image">
-            {award?.imageUrl ? "Replace badge image" : "Badge image (optional)"}
-          </label>
-          <input id="image" name="image" type="file" accept="image/*" className={formStyles.input} />
-        </div>
+        <ImageUploadField
+          name="image"
+          label={award?.imageUrl ? "Replace badge image" : "Badge image (optional)"}
+          existingUrl={award?.imageUrl}
+        />
       </section>
 
       {state.error && <p className={styles.error}>{state.error}</p>}

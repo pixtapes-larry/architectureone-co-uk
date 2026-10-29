@@ -11,6 +11,7 @@ import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ProjectForm.module.css";
 import SeoFields from "./SeoFields";
 import TemplateNote from "./TemplateNote";
+import ImageUploadField from "./ImageUploadField";
 
 type ProjectWithRelations = NonNullable<Awaited<ReturnType<typeof getProjectAdmin>>>;
 
@@ -188,27 +189,12 @@ export default function ProjectForm({
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Cover photo</h2>
-        {project?.coverPhotoUrl && (
-          <div className={styles.photoPreview}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={project.coverPhotoUrl} alt="Current cover" />
-            <span className={styles.photoPreviewUrl}>
-              {project.coverPhotoUrl}
-            </span>
-          </div>
-        )}
-        <div className={formStyles.field}>
-          <label className={formStyles.label} htmlFor="coverPhoto">
-            {project ? "Replace cover photo" : "Cover photo"}
-          </label>
-          <input
-            id="coverPhoto"
-            name="coverPhoto"
-            type="file"
-            accept="image/*"
-            className={formStyles.input}
-          />
-        </div>
+        <ImageUploadField
+          name="coverPhoto"
+          label={project ? "Replace cover photo" : "Cover photo"}
+          existingUrl={project?.coverPhotoUrl}
+          aspectRatio={4 / 3}
+        />
       </section>
 
       <section className={styles.section}>
@@ -291,80 +277,28 @@ export default function ProjectForm({
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Plan images</h2>
         <div className={formStyles.row}>
-          <div className={formStyles.field}>
-            <label className={formStyles.label} htmlFor="floorplanBefore">
-              Floor plan — before
-            </label>
-            {project?.floorplanBeforeImage && (
-              <div className={styles.photoPreview}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={project.floorplanBeforeImage} alt="" />
-              </div>
-            )}
-            <input
-              id="floorplanBefore"
-              name="floorplanBefore"
-              type="file"
-              accept="image/*"
-              className={formStyles.input}
-            />
-          </div>
-          <div className={formStyles.field}>
-            <label className={formStyles.label} htmlFor="floorplanAfter">
-              Floor plan — after
-            </label>
-            {project?.floorplanAfterImage && (
-              <div className={styles.photoPreview}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={project.floorplanAfterImage} alt="" />
-              </div>
-            )}
-            <input
-              id="floorplanAfter"
-              name="floorplanAfter"
-              type="file"
-              accept="image/*"
-              className={formStyles.input}
-            />
-          </div>
+          <ImageUploadField
+            name="floorplanBefore"
+            label="Floor plan — before"
+            existingUrl={project?.floorplanBeforeImage}
+          />
+          <ImageUploadField
+            name="floorplanAfter"
+            label="Floor plan — after"
+            existingUrl={project?.floorplanAfterImage}
+          />
         </div>
         <div className={formStyles.row}>
-          <div className={formStyles.field}>
-            <label className={formStyles.label} htmlFor="elevationBefore">
-              Elevation — before
-            </label>
-            {project?.elevationBeforeImage && (
-              <div className={styles.photoPreview}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={project.elevationBeforeImage} alt="" />
-              </div>
-            )}
-            <input
-              id="elevationBefore"
-              name="elevationBefore"
-              type="file"
-              accept="image/*"
-              className={formStyles.input}
-            />
-          </div>
-          <div className={formStyles.field}>
-            <label className={formStyles.label} htmlFor="elevationAfter">
-              Elevation — after
-            </label>
-            {project?.elevationAfterImage && (
-              <div className={styles.photoPreview}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={project.elevationAfterImage} alt="" />
-              </div>
-            )}
-            <input
-              id="elevationAfter"
-              name="elevationAfter"
-              type="file"
-              accept="image/*"
-              className={formStyles.input}
-            />
-          </div>
+          <ImageUploadField
+            name="elevationBefore"
+            label="Elevation — before"
+            existingUrl={project?.elevationBeforeImage}
+          />
+          <ImageUploadField
+            name="elevationAfter"
+            label="Elevation — after"
+            existingUrl={project?.elevationAfterImage}
+          />
         </div>
       </section>
 
