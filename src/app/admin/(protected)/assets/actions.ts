@@ -20,12 +20,14 @@ export async function uploadAssetsAction(
   const category = String(formData.get("category") ?? "").trim() || null;
 
   for (const file of files) {
-    const { url, fileSizeKb } = await saveAsset(file);
+    const { url, fileSizeKb, width, height } = await saveAsset(file);
     await createAssetAdmin({
       filename: file.name,
       url,
       mimeType: file.type || "application/octet-stream",
       fileSizeKb,
+      width,
+      height,
       label,
       category,
     });

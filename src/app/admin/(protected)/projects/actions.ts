@@ -129,6 +129,26 @@ async function applyGalleryUploads(formData: FormData, projectId: number) {
   }
 }
 
+// Called directly from the gallery editor on the edit page (not part of the
+// big form submit) — a gallery photo is added the instant it's dropped,
+// cropped, or picked from the library, with no "Save" needed.
+export async function addGalleryPhotoAction(
+  projectId: number,
+  isBefore: boolean,
+  file: File | null,
+  libraryUrl: string | null,
+) {
+  const url = libraryUrl || (file ? await saveProjectImage(file, projectId, isBefore ? "gallery-before" : "gallery-after") : null);
+  if (!url) throw new Error("No file or library image given.");
+  await addProjectPhoto(projectId, { url, isBefore });
+  revalidatePath(`/admin/projects/${projectId}/edit`);
+}
+
+export async function deleteGalleryPhotoAction(projectId: number, photoId: number) {
+  await deleteProjectPhoto(photoId);
+  revalidatePath(`/admin/projects/${projectId}/edit`);
+}
+
 export async function saveProjectAction(
   _prevState: ProjectFormState,
   formData: FormData,
@@ -189,14 +209,6 @@ export async function saveProjectAction(
         elevationBeforeImage: imageUpdates.elevationBeforeImage ?? existing.elevationBeforeImage ?? undefined,
         elevationAfterImage: imageUpdates.elevationAfterImage ?? existing.elevationAfterImage ?? undefined,
       });
-
-      const deleteIds = formData
-        .getAll("deletePhotoIds")
-        .map((v) => Number(v))
-        .filter((n) => !Number.isNaN(n));
-      for (const photoId of deleteIds) {
-        await deleteProjectPhoto(photoId);
-      }
     }
 
     await applyGalleryUploads(formData, projectId);

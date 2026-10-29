@@ -4,7 +4,7 @@
 // own uploads if the same hosting account ever serves anything else, and
 // organized by project → role so a given project's files are easy to find
 // by hand on disk, not just via the DB.
-import { writeFile, mkdir, unlink, stat } from "node:fs/promises";
+import { writeFile, mkdir, unlink } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 import { randomUUID } from "node:crypto";
@@ -130,7 +130,7 @@ export async function deleteAwardImage(publicUrl: string): Promise<void> {
 // processed the same way — sharp only understands image formats.
 export async function saveAsset(
   file: File,
-): Promise<{ url: string; fileSizeKb: number }> {
+): Promise<{ url: string; fileSizeKb: number; width?: number; height?: number }> {
   const id = randomUUID();
   const dir = path.join(ASSETS_UPLOAD_ROOT, id);
   await mkdir(dir, { recursive: true });
@@ -141,13 +141,17 @@ export async function saveAsset(
   if (isImage) {
     const filename = "file.jpg";
     const destPath = path.join(dir, filename);
-    await sharp(buffer)
+    const info = await sharp(buffer)
       .rotate()
       .resize({ width: MAX_DIMENSION, height: MAX_DIMENSION, fit: "inside", withoutEnlargement: true })
       .jpeg({ quality: 85 })
       .toFile(destPath);
-    const { size } = await stat(destPath);
-    return { url: `/uploads/architectureone/assets/${id}/${filename}`, fileSizeKb: Math.round(size / 1024) };
+    return {
+      url: `/uploads/architectureone/assets/${id}/${filename}`,
+      fileSizeKb: Math.round(info.size / 1024),
+      width: info.width,
+      height: info.height,
+    };
   }
 
   // Keep the original extension for non-image files so the browser/OS

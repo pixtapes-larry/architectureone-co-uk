@@ -4,13 +4,29 @@
 // still wants to show "what's actually on disk" for a full picture.
 import fs from "node:fs/promises";
 import path from "node:path";
+import sharp from "sharp";
 import { prisma } from "../prisma";
 
 export type ScannedAsset = {
   url: string;
+  filename: string;
+  mimeType: string;
   fileSizeKb: number;
+  width: number | null;
+  height: number | null;
+  createdAt: Date;
+  category: string;
   owner: { kind: "project" | "award"; id: number; label: string; editHref: string };
 };
+
+async function imageDimensions(filePath: string): Promise<{ width: number | null; height: number | null }> {
+  try {
+    const meta = await sharp(filePath).metadata();
+    return { width: meta.width ?? null, height: meta.height ?? null };
+  } catch {
+    return { width: null, height: null };
+  }
+}
 
 async function walk(dir: string): Promise<string[]> {
   let entries;
@@ -49,10 +65,16 @@ export async function scanOwnedImages(): Promise<ScannedAsset[]> {
     const projectId = Number(rel[0]);
     const project = projectById.get(projectId);
     if (!project) continue; // orphaned on disk — the project was deleted
-    const stat = await fs.stat(file);
+    const [stat, dims] = await Promise.all([fs.stat(file), imageDimensions(file)]);
     results.push({
       url: `/uploads/architectureone/projects/${rel.join("/")}`,
+      filename: path.basename(file),
+      mimeType: "image/jpeg",
       fileSizeKb: Math.round(stat.size / 1024),
+      width: dims.width,
+      height: dims.height,
+      createdAt: stat.mtime,
+      category: "Project photos",
       owner: {
         kind: "project",
         id: projectId,
@@ -67,10 +89,16 @@ export async function scanOwnedImages(): Promise<ScannedAsset[]> {
     const awardId = Number(rel[0]);
     const award = awardById.get(awardId);
     if (!award) continue;
-    const stat = await fs.stat(file);
+    const [stat, dims] = await Promise.all([fs.stat(file), imageDimensions(file)]);
     results.push({
       url: `/uploads/architectureone/awards/${rel.join("/")}`,
+      filename: path.basename(file),
+      mimeType: "image/jpeg",
       fileSizeKb: Math.round(stat.size / 1024),
+      width: dims.width,
+      height: dims.height,
+      createdAt: stat.mtime,
+      category: "Award badges",
       owner: { kind: "award", id: awardId, label: award.name, editHref: `/admin/awards/${awardId}/edit` },
     });
   }

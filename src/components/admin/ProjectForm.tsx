@@ -13,6 +13,7 @@ import SeoFields from "./SeoFields";
 import TemplateNote from "./TemplateNote";
 import ImageUploadField from "./ImageUploadField";
 import MultiImageUploadField from "./MultiImageUploadField";
+import GalleryEditor from "./GalleryEditor";
 
 type ProjectWithRelations = NonNullable<Awaited<ReturnType<typeof getProjectAdmin>>>;
 
@@ -305,24 +306,25 @@ export default function ProjectForm({
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Before / after gallery</h2>
-        {project && project.photos.length > 0 && (
-          <div className={styles.galleryGrid}>
-            {project.photos.map((photo) => (
-              <div key={photo.id} className={styles.galleryItem}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={photo.url} alt={photo.caption ?? ""} />
-                <label className={styles.galleryDeleteLabel}>
-                  <input type="checkbox" name="deletePhotoIds" value={photo.id} />
-                  {photo.isBefore ? "Before" : "After"} — delete
-                </label>
-              </div>
-            ))}
-          </div>
+        {project ? (
+          <>
+            <p className={formStyles.formNote}>
+              Photos here are added and removed immediately — no need to save the rest of the form.
+            </p>
+            <GalleryEditor projectId={project.id} photos={project.photos} />
+          </>
+        ) : (
+          <>
+            <p className={formStyles.formNote}>
+              These are added when you create the project below. Once it's saved, come back to its
+              edit page to add more — they go in immediately there, no save needed.
+            </p>
+            <div className={formStyles.row}>
+              <MultiImageUploadField name="galleryBeforePhotos" label='Add "before" photos' />
+              <MultiImageUploadField name="galleryAfterPhotos" label='Add "after" photos' />
+            </div>
+          </>
         )}
-        <div className={formStyles.row}>
-          <MultiImageUploadField name="galleryBeforePhotos" label='Add "before" photos' />
-          <MultiImageUploadField name="galleryAfterPhotos" label='Add "after" photos' />
-        </div>
       </section>
 
       <section className={styles.section}>

@@ -46,6 +46,8 @@ export async function createAssetAdmin(input: {
   url: string;
   mimeType: string;
   fileSizeKb: number;
+  width?: number;
+  height?: number;
   label: string | null;
   category: string | null;
 }) {

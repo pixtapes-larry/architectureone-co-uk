@@ -609,6 +609,8 @@ model Asset {
   url        String // public path under /uploads/architectureone/assets/<id>/
   mimeType   String
   fileSizeKb Int
+  width      Int? // pixel dimensions, images only — null for PDFs/video
+  height     Int?
   label      String? // optional admin-facing note, e.g. "2024 brochure — print version"
   // Free-text, not an enum — same pattern as Service.group: pick an
   // existing one to keep them consistent, or type a new one. Lets the
