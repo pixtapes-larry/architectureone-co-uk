@@ -604,11 +604,15 @@ model ProjectServiceDelivered {
 // those stay owned by their own record (Project/Award) as before. This is
 // only for files that don't belong to one specific thing.
 model Asset {
-  id           Int    @id @default(autoincrement())
-  filename     String // original filename, for display
-  url          String // public path under /uploads/architectureone/assets/<id>/
-  mimeType     String
-  fileSizeKb   Int
-  label        String? // optional admin-facing note, e.g. "2024 brochure — print version"
-  createdAt    DateTime @default(now())
+  id         Int      @id @default(autoincrement())
+  filename   String // original filename, for display
+  url        String // public path under /uploads/architectureone/assets/<id>/
+  mimeType   String
+  fileSizeKb Int
+  label      String? // optional admin-facing note, e.g. "2024 brochure — print version"
+  // Free-text, not an enum — same pattern as Service.group: pick an
+  // existing one to keep them consistent, or type a new one. Lets the
+  // asset library be filtered/organized without touching real folder paths.
+  category   String?
+  createdAt  DateTime @default(now())
 }

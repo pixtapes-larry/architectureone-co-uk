@@ -17,6 +17,7 @@ export async function uploadAssetsAction(
   }
 
   const label = String(formData.get("label") ?? "").trim() || null;
+  const category = String(formData.get("category") ?? "").trim() || null;
 
   for (const file of files) {
     const { url, fileSizeKb } = await saveAsset(file);
@@ -26,6 +27,7 @@ export async function uploadAssetsAction(
       mimeType: file.type || "application/octet-stream",
       fileSizeKb,
       label,
+      category,
     });
   }
 

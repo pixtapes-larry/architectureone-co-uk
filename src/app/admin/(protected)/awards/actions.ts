@@ -46,6 +46,7 @@ export async function saveAwardAction(
   }
 
   const imageFile = formData.get("image");
+  const libraryUrl = str(formData, "imageLibraryUrl");
   let awardId: number;
 
   if (isEdit) {
@@ -56,7 +57,9 @@ export async function saveAwardAction(
     awardId = created.id;
   }
 
-  if (isUploadableFile(imageFile)) {
+  if (libraryUrl) {
+    await updateAwardAdmin(awardId, { ...core, imageUrl: libraryUrl });
+  } else if (isUploadableFile(imageFile)) {
     const existing = isEdit ? await getAwardAdmin(awardId) : null;
     if (existing?.imageUrl) await deleteAwardImage(existing.imageUrl);
     const imageUrl = await saveAwardImage(imageFile, awardId);

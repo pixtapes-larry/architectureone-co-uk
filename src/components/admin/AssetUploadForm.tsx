@@ -7,7 +7,7 @@ import styles from "./ImageUploadField.module.css";
 
 const initialState: AssetUploadState = {};
 
-export default function AssetUploadForm() {
+export default function AssetUploadForm({ existingCategories }: { existingCategories: string[] }) {
   const [state, formAction, pending] = useActionState(uploadAssetsAction, initialState);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -57,12 +57,32 @@ export default function AssetUploadForm() {
         </div>
       </div>
 
-      <div className={formStyles.field}>
-        <label className={formStyles.label} htmlFor="label">
-          Label (optional — applied to every file in this batch)
-        </label>
-        <input id="label" name="label" className={formStyles.input} placeholder="e.g. 2024 brochure" />
+      <div className={formStyles.row}>
+        <div className={formStyles.field}>
+          <label className={formStyles.label} htmlFor="label">
+            Label (optional)
+          </label>
+          <input id="label" name="label" className={formStyles.input} placeholder="e.g. 2024 brochure" />
+        </div>
+        <div className={formStyles.field}>
+          <label className={formStyles.label} htmlFor="category">
+            Category (optional — pick an existing one or type a new one)
+          </label>
+          <input
+            id="category"
+            name="category"
+            list="asset-category-options"
+            className={formStyles.input}
+            placeholder="e.g. Brochures"
+          />
+          <datalist id="asset-category-options">
+            {existingCategories.map((c) => (
+              <option key={c} value={c} />
+            ))}
+          </datalist>
+        </div>
       </div>
+      <p className={formStyles.formNote}>Applied to every file in this batch.</p>
 
       {state.error && <p style={{ color: "var(--color-coral)", fontSize: 13 }}>{state.error}</p>}
 

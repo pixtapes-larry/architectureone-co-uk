@@ -90,6 +90,14 @@ async function applySingleImageUploads(
 ): Promise<Partial<Record<string, string>>> {
   const updates: Partial<Record<string, string>> = {};
   for (const { formField, column, role } of SINGLE_IMAGE_FIELDS) {
+    // "Choose from library" wins if present — reuse that existing file's
+    // URL directly rather than uploading/re-processing anything.
+    const libraryUrl = str(formData, `${formField}LibraryUrl`);
+    if (libraryUrl) {
+      updates[column] = libraryUrl;
+      continue;
+    }
+
     const file = formData.get(formField);
     if (!isUploadableFile(file)) continue;
     const oldUrl = existingUrls[column];

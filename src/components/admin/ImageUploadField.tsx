@@ -5,6 +5,8 @@ import Cropper from "react-easy-crop";
 import type { Area } from "react-easy-crop";
 import "react-easy-crop/react-easy-crop.css";
 import { cropImageToFile, type PixelCrop } from "@/lib/image-crop";
+import AssetLibraryPicker from "./AssetLibraryPicker";
+import type { LibraryImage } from "@/lib/admin/library-images";
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ImageUploadField.module.css";
 
@@ -26,6 +28,8 @@ export default function ImageUploadField({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [libraryUrl, setLibraryUrl] = useState<string | null>(null);
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   const [cropSrc, setCropSrc] = useState<string | null>(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -40,6 +44,7 @@ export default function ImageUploadField({
 
   function handleFile(file: File) {
     if (!file.type.startsWith("image/")) return;
+    setLibraryUrl(null); // a freshly chosen file always wins over a prior library pick
 
     if (aspectRatio) {
       const reader = new FileReader();
@@ -62,7 +67,15 @@ export default function ImageUploadField({
     setZoom(1);
   }
 
-  const displayUrl = previewUrl ?? existingUrl ?? null;
+  function handleLibrarySelect(image: LibraryImage) {
+    // Picking from the library replaces any pending upload — clear the
+    // file input so the server action doesn't see both.
+    if (fileInputRef.current) fileInputRef.current.value = "";
+    setPreviewUrl(null);
+    setLibraryUrl(image.url);
+  }
+
+  const displayUrl = libraryUrl ?? previewUrl ?? existingUrl ?? null;
 
   return (
     <div className={formStyles.field}>
@@ -78,6 +91,7 @@ export default function ImageUploadField({
           if (file) handleFile(file);
         }}
       />
+      <input type="hidden" name={`${name}LibraryUrl`} value={libraryUrl ?? ""} />
       <div
         className={[styles.dropzone, isDragging ? styles.dropzoneActive : ""].join(" ")}
         onClick={() => fileInputRef.current?.click()}
@@ -100,15 +114,26 @@ export default function ImageUploadField({
           <span className={styles.dropzoneText}>Drag an image here, or click to browse</span>
         )}
       </div>
-      {previewUrl && (
-        <button
-          type="button"
-          className={styles.replaceLabel}
-          onClick={() => fileInputRef.current?.click()}
-        >
-          Choose a different image
+      <div className={styles.fieldActions}>
+        {(previewUrl || libraryUrl) && (
+          <button
+            type="button"
+            className={styles.replaceLabel}
+            onClick={() => fileInputRef.current?.click()}
+          >
+            Choose a different image
+          </button>
+        )}
+        <button type="button" className={styles.replaceLabel} onClick={() => setPickerOpen(true)}>
+          Choose from library
         </button>
-      )}
+      </div>
+
+      <AssetLibraryPicker
+        open={pickerOpen}
+        onClose={() => setPickerOpen(false)}
+        onSelect={handleLibrarySelect}
+      />
 
       {cropSrc && (
         <div className={styles.cropOverlay}>
