@@ -12,6 +12,7 @@ import styles from "./ProjectForm.module.css";
 import SeoFields from "./SeoFields";
 import TemplateNote from "./TemplateNote";
 import ImageUploadField from "./ImageUploadField";
+import MultiImageUploadField from "./MultiImageUploadField";
 
 type ProjectWithRelations = NonNullable<Awaited<ReturnType<typeof getProjectAdmin>>>;
 
@@ -319,32 +320,8 @@ export default function ProjectForm({
           </div>
         )}
         <div className={formStyles.row}>
-          <div className={formStyles.field}>
-            <label className={formStyles.label} htmlFor="galleryBeforePhotos">
-              Add "before" photos
-            </label>
-            <input
-              id="galleryBeforePhotos"
-              name="galleryBeforePhotos"
-              type="file"
-              accept="image/*"
-              multiple
-              className={formStyles.input}
-            />
-          </div>
-          <div className={formStyles.field}>
-            <label className={formStyles.label} htmlFor="galleryAfterPhotos">
-              Add "after" photos
-            </label>
-            <input
-              id="galleryAfterPhotos"
-              name="galleryAfterPhotos"
-              type="file"
-              accept="image/*"
-              multiple
-              className={formStyles.input}
-            />
-          </div>
+          <MultiImageUploadField name="galleryBeforePhotos" label='Add "before" photos' />
+          <MultiImageUploadField name="galleryAfterPhotos" label='Add "after" photos' />
         </div>
       </section>
 
