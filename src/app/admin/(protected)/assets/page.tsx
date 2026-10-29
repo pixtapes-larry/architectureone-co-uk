@@ -3,7 +3,7 @@ import { listAssetsAdmin, listAssetCategoriesAdmin } from "@/lib/admin/assets";
 import { scanOwnedImages } from "@/lib/admin/asset-scan";
 import { getAssetUsageCounts } from "@/lib/admin/asset-usage";
 import AssetUploadForm from "@/components/admin/AssetUploadForm";
-import DeleteAssetButton from "./DeleteAssetButton";
+import AssetBrowser, { type AssetRow } from "./AssetBrowser";
 import styles from "../projects/projects.module.css";
 import filterStyles from "./filters.module.css";
 
@@ -45,6 +45,10 @@ function kindOf(mimeType: string): "image" | "pdf" | "video" | "other" {
 function kindLabel(mimeType: string) {
   const kind = kindOf(mimeType);
   return kind === "other" ? "File" : kind === "pdf" ? "PDF" : kind === "video" ? "Video" : "Image";
+}
+
+function sourceLabel(source: UnifiedAsset["source"]) {
+  return source === "asset" ? "Standalone" : source === "project" ? "Project" : "Award";
 }
 
 const SYNTHETIC_CATEGORIES = ["Project photos", "Award badges"];
@@ -115,6 +119,23 @@ export default async function AdminAssetsPage({
 
   const hasFilters = Boolean(type || category || search);
 
+  const rows: AssetRow[] = filtered.map((a) => ({
+    key: a.key,
+    filename: a.filename,
+    url: a.url,
+    isImage: a.mimeType.startsWith("image/"),
+    typeLabel: kindLabel(a.mimeType),
+    category: a.category,
+    dimensions: a.width && a.height ? `${a.width} × ${a.height}` : null,
+    sizeLabel: formatSize(a.fileSizeKb),
+    dateLabel: formatDate(a.createdAt),
+    sourceLabel: sourceLabel(a.source),
+    label: a.label,
+    useLabel: a.useCount === 0 ? "Unused" : `${a.useCount}×`,
+    assetId: a.source === "asset" ? a.assetId : null,
+    editHref: a.owner?.editHref ?? null,
+  }));
+
   return (
     <>
       <h1 style={{ fontSize: 24, fontWeight: 800, marginBottom: 8 }}>Assets</h1>
@@ -173,70 +194,7 @@ export default async function AdminAssetsPage({
           {hasFilters ? "No files match those filters." : "No files yet."}
         </div>
       ) : (
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th></th>
-              <th>Filename</th>
-              <th>Source</th>
-              <th>Type</th>
-              <th>Category</th>
-              <th>Dimensions</th>
-              <th>Size</th>
-              <th>Added</th>
-              <th>Used</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((a) => (
-              <tr key={a.key}>
-                <td>
-                  {a.mimeType.startsWith("image/") ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={a.url} alt="" className={styles.thumb} />
-                  ) : (
-                    <span style={{ color: "var(--color-muted)", fontSize: 11, fontWeight: 700 }}>
-                      {kindLabel(a.mimeType)}
-                    </span>
-                  )}
-                </td>
-                <td>
-                  <a href={a.url} target="_blank" rel="noreferrer" className={styles.editLink}>
-                    {a.filename}
-                  </a>
-                  {a.label && (
-                    <span style={{ color: "var(--color-muted)", fontSize: 11, display: "block" }}>{a.label}</span>
-                  )}
-                </td>
-                <td>
-                  {a.source === "asset" ? "Standalone" : a.source === "project" ? "Project" : "Award"}
-                </td>
-                <td>{kindLabel(a.mimeType)}</td>
-                <td>{a.category ?? <span style={{ color: "var(--color-muted)" }}>—</span>}</td>
-                <td>{a.width && a.height ? `${a.width} × ${a.height}` : <span style={{ color: "var(--color-muted)" }}>—</span>}</td>
-                <td>{formatSize(a.fileSizeKb)}</td>
-                <td>{formatDate(a.createdAt)}</td>
-                <td>
-                  {a.useCount === 0 ? (
-                    <span style={{ color: "var(--color-muted)" }}>Unused</span>
-                  ) : (
-                    `${a.useCount}×`
-                  )}
-                </td>
-                <td>
-                  {a.source === "asset" && a.assetId !== null ? (
-                    <DeleteAssetButton id={a.assetId} />
-                  ) : a.owner ? (
-                    <Link href={a.owner.editHref} className={styles.editLink}>
-                      Edit →
-                    </Link>
-                  ) : null}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <AssetBrowser rows={rows} />
       )}
     </>
   );
