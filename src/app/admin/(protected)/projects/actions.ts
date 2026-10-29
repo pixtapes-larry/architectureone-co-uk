@@ -113,9 +113,18 @@ async function applyGalleryUploads(formData: FormData, projectId: number) {
     const url = await saveProjectImage(file, projectId, "gallery-before");
     await addProjectPhoto(projectId, { url, isBefore: true });
   }
+  const beforeLibraryUrls = formData.getAll("galleryBeforePhotosLibraryUrls").map(String).filter(Boolean);
+  for (const url of beforeLibraryUrls) {
+    await addProjectPhoto(projectId, { url, isBefore: true });
+  }
+
   const after = formData.getAll("galleryAfterPhotos").filter(isUploadableFile);
   for (const file of after) {
     const url = await saveProjectImage(file, projectId, "gallery-after");
+    await addProjectPhoto(projectId, { url, isBefore: false });
+  }
+  const afterLibraryUrls = formData.getAll("galleryAfterPhotosLibraryUrls").map(String).filter(Boolean);
+  for (const url of afterLibraryUrls) {
     await addProjectPhoto(projectId, { url, isBefore: false });
   }
 }
