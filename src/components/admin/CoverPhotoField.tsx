@@ -33,8 +33,12 @@ export default function CoverPhotoField({
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPercent, setCroppedAreaPercent] = useState<Area | null>(null);
 
-  async function handleFile(file: File) {
-    if (!file.type.startsWith("image/")) return;
+  // A new file/library pick replaces the current cover photo outright (the
+  // old file gets deleted once the new crop is confirmed) — so when one
+  // already exists, hold here and ask first instead of acting immediately.
+  const [pendingReplace, setPendingReplace] = useState<{ kind: "file"; file: File } | { kind: "library"; image: OriginalImage } | null>(null);
+
+  async function proceedWithFile(file: File) {
     setBusy(true);
     const original = await uploadOriginalAction(file);
     setBusy(false);
@@ -43,10 +47,40 @@ export default function CoverPhotoField({
     setCropTarget({ assetId: original.assetId, url: original.url });
   }
 
-  function handleLibrarySelect(image: OriginalImage) {
+  function proceedWithLibrary(image: OriginalImage) {
     setCrop({ x: 0, y: 0 });
     setZoom(1);
     setCropTarget({ assetId: image.id, url: image.url });
+  }
+
+  async function handleFile(file: File) {
+    if (!file.type.startsWith("image/")) return;
+    if (existingUrl) {
+      setPendingReplace({ kind: "file", file });
+      return;
+    }
+    await proceedWithFile(file);
+  }
+
+  function handleLibrarySelect(image: OriginalImage) {
+    if (existingUrl) {
+      setPendingReplace({ kind: "library", image });
+      return;
+    }
+    proceedWithLibrary(image);
+  }
+
+  async function confirmReplace() {
+    if (!pendingReplace) return;
+    const pending = pendingReplace;
+    setPendingReplace(null);
+    if (pending.kind === "file") await proceedWithFile(pending.file);
+    else proceedWithLibrary(pending.image);
+  }
+
+  function cancelReplace() {
+    setPendingReplace(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
   }
 
   async function confirmCrop() {
@@ -118,6 +152,25 @@ export default function CoverPhotoField({
       </div>
 
       <OriginalLibraryPicker open={pickerOpen} onClose={() => setPickerOpen(false)} onSelect={handleLibrarySelect} />
+
+      {pendingReplace && (
+        <div className={styles.cropOverlay}>
+          <div className={styles.cropPanel}>
+            <p className={formStyles.formNote} style={{ margin: 0 }}>
+              This replaces the current cover photo — the existing one will be deleted and can&apos;t be
+              recovered. Continue?
+            </p>
+            <div className={styles.cropActions}>
+              <button type="button" className={styles.cropCancel} onClick={cancelReplace}>
+                Cancel
+              </button>
+              <button type="button" className={styles.cropConfirm} onClick={confirmReplace}>
+                Replace cover photo
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {cropTarget && (
         <div className={styles.cropOverlay}>
