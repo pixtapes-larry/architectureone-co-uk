@@ -39,31 +39,37 @@ export default async function AwardsPage() {
       {awards.length === 0 ? (
         <p className={styles.lead}>No awards yet.</p>
       ) : (
-        <div className={styles.list}>
+        <div className={styles.grid}>
           {awards.map((award) => (
             <div key={award.id} className={styles.card}>
-              {award.imageUrl && (
+              {award.imageUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={award.imageUrl} alt="" className={styles.badge} />
+              ) : (
+                <div className={styles.badgePlaceholder}>{award.year}</div>
               )}
-              <div className={styles.year}>{award.year}</div>
-              <div className={styles.name}>{award.name}</div>
-              {award.sourceUrl && (
-                <a href={award.sourceUrl} target="_blank" rel="noreferrer" className={styles.projectLink}>
-                  View announcement →
-                </a>
-              )}
-              {award.project && (
-                award.project.slug ? (
-                  <Link href={`/work/${award.project.slug}`} className={styles.projectLink}>
-                    {award.project.address}, {award.project.place} →
-                  </Link>
-                ) : (
-                  <span className={styles.projectLabel}>
-                    {award.project.address}, {award.project.place}
-                  </span>
-                )
-              )}
+              <div className={styles.cardBody}>
+                {award.imageUrl && <div className={styles.year}>{award.year}</div>}
+                <div className={styles.name}>{award.name}</div>
+                <div className={styles.cardLinks}>
+                  {award.sourceUrl && (
+                    <a href={award.sourceUrl} target="_blank" rel="noreferrer" className={styles.projectLink}>
+                      View announcement →
+                    </a>
+                  )}
+                  {award.project && (
+                    award.project.slug ? (
+                      <Link href={`/work/${award.project.slug}`} className={styles.projectLink}>
+                        {award.project.address}, {award.project.place} →
+                      </Link>
+                    ) : (
+                      <span className={styles.projectLabel}>
+                        {award.project.address}, {award.project.place}
+                      </span>
+                    )
+                  )}
+                </div>
+              </div>
             </div>
           ))}
         </div>
