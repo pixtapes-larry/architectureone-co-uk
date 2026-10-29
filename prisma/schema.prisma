@@ -361,6 +361,10 @@ model Award {
   year      Int
   sortOrder Int     @default(0)
 
+  // Link to the official announcement/listing, when there is one — shown
+  // as a "View announcement" link on the public Awards page.
+  sourceUrl String?
+
   project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
   projectId Int?
 }

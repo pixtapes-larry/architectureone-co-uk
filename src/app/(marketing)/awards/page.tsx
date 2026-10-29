@@ -44,6 +44,11 @@ export default async function AwardsPage() {
             <div key={award.id} className={styles.card}>
               <div className={styles.year}>{award.year}</div>
               <div className={styles.name}>{award.name}</div>
+              {award.sourceUrl && (
+                <a href={award.sourceUrl} target="_blank" rel="noreferrer" className={styles.projectLink}>
+                  View announcement →
+                </a>
+              )}
               {award.project && (
                 award.project.slug ? (
                   <Link href={`/work/${award.project.slug}`} className={styles.projectLink}>

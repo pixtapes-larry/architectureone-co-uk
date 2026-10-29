@@ -55,6 +55,18 @@ export default function AwardForm({
             />
           </div>
         </div>
+        <div className={formStyles.field}>
+          <label className={formStyles.label} htmlFor="sourceUrl">
+            Link to the official announcement (optional)
+          </label>
+          <input
+            id="sourceUrl"
+            name="sourceUrl"
+            type="url"
+            defaultValue={award?.sourceUrl ?? ""}
+            className={formStyles.input}
+          />
+        </div>
         <ProjectPicker
           projects={projects}
           defaultProject={defaultProject}

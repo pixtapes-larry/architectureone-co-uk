@@ -29,6 +29,7 @@ export default async function AdminAwardsPage() {
             <tr>
               <th>Award</th>
               <th>Year</th>
+              <th>Link</th>
               <th>Project</th>
               <th></th>
             </tr>
@@ -38,6 +39,15 @@ export default async function AdminAwardsPage() {
               <tr key={award.id}>
                 <td>{award.name}</td>
                 <td>{award.year}</td>
+                <td>
+                  {award.sourceUrl ? (
+                    <a href={award.sourceUrl} target="_blank" rel="noreferrer" className={styles.editLink}>
+                      View ↗
+                    </a>
+                  ) : (
+                    <span style={{ color: "var(--color-muted)" }}>—</span>
+                  )}
+                </td>
                 <td>
                   {award.project ? (
                     <Link href={`/admin/projects/${award.project.id}/edit`} className={styles.editLink}>

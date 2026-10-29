@@ -20,6 +20,7 @@ function parseCoreFields(formData: FormData): AwardAdminInput {
   return {
     name: str(formData, "name"),
     year: Number(str(formData, "year") || new Date().getFullYear()),
+    sourceUrl: str(formData, "sourceUrl") || null,
     projectId: projectIdRaw ? Number(projectIdRaw) : null,
   };
 }

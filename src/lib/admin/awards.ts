@@ -14,6 +14,7 @@ export async function getAwardAdmin(id: number) {
 export type AwardAdminInput = {
   name: string;
   year: number;
+  sourceUrl: string | null;
   projectId: number | null;
 };
 
