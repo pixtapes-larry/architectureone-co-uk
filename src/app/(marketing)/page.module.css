@@ -166,6 +166,18 @@
   color: #c9c9cf;
 }
 
+.heroStatsLink {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color 0.15s;
+}
+
+.heroStatsLink:hover {
+  color: var(--color-white);
+  text-decoration-color: currentColor;
+}
+
 .floatingQuote {
   position: absolute;
   right: 48px;

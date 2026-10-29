@@ -8,7 +8,7 @@ import { getHomeCategoryTeasers } from "@/lib/category-pages";
 import { getFeaturedTestimonial, getReviewStats } from "@/lib/testimonials";
 import { getAwardCount } from "@/lib/awards";
 import { getProjectCount, withProjectCount } from "@/lib/project-count";
-import { EXPLORE_PROJECTS_HREF, ABOUT_HREF, BOOK_CONSULTATION_HREF, TESTIMONIALS_HREF } from "@/lib/nav";
+import { EXPLORE_PROJECTS_HREF, ABOUT_HREF, BOOK_CONSULTATION_HREF, TESTIMONIALS_HREF, AWARDS_HREF } from "@/lib/nav";
 import styles from "./page.module.css";
 
 // Dynamic DB read now powers the featured list — see the instant=false
@@ -66,9 +66,14 @@ export default async function Home() {
             </Link>
           </div>
           <div className={styles.heroStats}>
-            Est. {content.statsFoundedYear} &nbsp;·&nbsp; ★ {reviewStats.average.toFixed(1)} (
-            {reviewStats.count} review{reviewStats.count === 1 ? "" : "s"}) &nbsp;·&nbsp; {awardCount}{" "}
-            award{awardCount === 1 ? "" : "s"} won
+            Est. {content.statsFoundedYear} &nbsp;·&nbsp;{" "}
+            <Link href={TESTIMONIALS_HREF} className={styles.heroStatsLink}>
+              ★ {reviewStats.average.toFixed(1)} ({reviewStats.count} review{reviewStats.count === 1 ? "" : "s"})
+            </Link>{" "}
+            &nbsp;·&nbsp;{" "}
+            <Link href={AWARDS_HREF} className={styles.heroStatsLink}>
+              {awardCount} award{awardCount === 1 ? "" : "s"} won
+            </Link>
           </div>
         </div>
         {testimonial && (
