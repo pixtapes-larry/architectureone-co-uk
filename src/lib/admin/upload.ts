@@ -4,7 +4,7 @@
 // own uploads if the same hosting account ever serves anything else, and
 // organized by project → role so a given project's files are easy to find
 // by hand on disk, not just via the DB.
-import { writeFile, mkdir, unlink } from "node:fs/promises";
+import { writeFile, mkdir, unlink, stat } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 import { randomUUID } from "node:crypto";
@@ -23,6 +23,14 @@ const AWARDS_UPLOAD_ROOT = path.join(
   "uploads",
   "architectureone",
   "awards",
+);
+
+const ASSETS_UPLOAD_ROOT = path.join(
+  process.cwd(),
+  "public",
+  "uploads",
+  "architectureone",
+  "assets",
 );
 
 export type UploadRole =
@@ -108,6 +116,54 @@ export async function saveAwardImage(file: File, awardId: number): Promise<strin
 
 export async function deleteAwardImage(publicUrl: string): Promise<void> {
   if (!publicUrl.startsWith("/uploads/architectureone/awards/")) return;
+  const filePath = path.join(process.cwd(), "public", publicUrl);
+  try {
+    await unlink(filePath);
+  } catch {
+    // already gone, or never existed — fine either way
+  }
+}
+
+// General-purpose asset library (brochures, promo video, loose images not
+// tied to a project/award). Images still get re-encoded through sharp for
+// consistency; PDFs and video are stored byte-for-byte since they can't be
+// processed the same way — sharp only understands image formats.
+export async function saveAsset(
+  file: File,
+): Promise<{ url: string; fileSizeKb: number }> {
+  const id = randomUUID();
+  const dir = path.join(ASSETS_UPLOAD_ROOT, id);
+  await mkdir(dir, { recursive: true });
+
+  const isImage = file.type.startsWith("image/");
+  const buffer = Buffer.from(await file.arrayBuffer());
+
+  if (isImage) {
+    const filename = "file.jpg";
+    const destPath = path.join(dir, filename);
+    await sharp(buffer)
+      .rotate()
+      .resize({ width: MAX_DIMENSION, height: MAX_DIMENSION, fit: "inside", withoutEnlargement: true })
+      .jpeg({ quality: 85 })
+      .toFile(destPath);
+    const { size } = await stat(destPath);
+    return { url: `/uploads/architectureone/assets/${id}/${filename}`, fileSizeKb: Math.round(size / 1024) };
+  }
+
+  // Keep the original extension for non-image files so the browser/OS
+  // handles them correctly (e.g. a .pdf has to end in .pdf to preview inline).
+  const ext = file.name.includes(".") ? file.name.slice(file.name.lastIndexOf(".")) : "";
+  const filename = `file${ext}`;
+  const destPath = path.join(dir, filename);
+  await writeFile(destPath, buffer);
+  return {
+    url: `/uploads/architectureone/assets/${id}/${filename}`,
+    fileSizeKb: Math.round(buffer.byteLength / 1024),
+  };
+}
+
+export async function deleteAsset(publicUrl: string): Promise<void> {
+  if (!publicUrl.startsWith("/uploads/architectureone/assets/")) return;
   const filePath = path.join(process.cwd(), "public", publicUrl);
   try {
     await unlink(filePath);

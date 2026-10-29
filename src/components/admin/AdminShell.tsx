@@ -68,6 +68,7 @@ const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
       { label: "Testimonials", href: "/admin/testimonials" },
       { label: "Awards", href: "/admin/awards" },
       { label: "Local authorities", href: "/admin/local-authorities" },
+      { label: "Assets", href: "/admin/assets" },
     ],
   },
   {

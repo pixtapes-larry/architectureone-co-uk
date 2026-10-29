@@ -597,3 +597,18 @@ model ProjectServiceDelivered {
 
   @@unique([projectId, serviceId])
 }
+
+// A standalone uploaded file (brochure PDF, promo video, a loose image)
+// not tied to a project or award — the admin's general-purpose asset
+// library. Project photos, floorplans and award badges are NOT rows here;
+// those stay owned by their own record (Project/Award) as before. This is
+// only for files that don't belong to one specific thing.
+model Asset {
+  id           Int    @id @default(autoincrement())
+  filename     String // original filename, for display
+  url          String // public path under /uploads/architectureone/assets/<id>/
+  mimeType     String
+  fileSizeKb   Int
+  label        String? // optional admin-facing note, e.g. "2024 brochure — print version"
+  createdAt    DateTime @default(now())
+}
