@@ -12,6 +12,7 @@ export type DirectAssetReference = {
   roleLabel: string;
   ownerLabel: string;
   editHref: string;
+  ownerKind: "project" | "award";
 };
 
 export async function getDirectAssetReferences(): Promise<DirectAssetReference[]> {
@@ -35,15 +36,22 @@ export async function getDirectAssetReferences(): Promise<DirectAssetReference[]
   for (const p of projects) {
     const ownerLabel = `${p.address}, ${p.place}`;
     const editHref = `/admin/projects/${p.id}/edit`;
-    if (p.floorplanBeforeImage) refs.push({ url: p.floorplanBeforeImage, roleLabel: "Floor plan (before)", ownerLabel, editHref });
-    if (p.floorplanAfterImage) refs.push({ url: p.floorplanAfterImage, roleLabel: "Floor plan (after)", ownerLabel, editHref });
-    if (p.elevationBeforeImage) refs.push({ url: p.elevationBeforeImage, roleLabel: "Elevation (before)", ownerLabel, editHref });
-    if (p.elevationAfterImage) refs.push({ url: p.elevationAfterImage, roleLabel: "Elevation (after)", ownerLabel, editHref });
+    const ownerKind = "project" as const;
+    if (p.floorplanBeforeImage) refs.push({ url: p.floorplanBeforeImage, roleLabel: "Floor plan (before)", ownerLabel, editHref, ownerKind });
+    if (p.floorplanAfterImage) refs.push({ url: p.floorplanAfterImage, roleLabel: "Floor plan (after)", ownerLabel, editHref, ownerKind });
+    if (p.elevationBeforeImage) refs.push({ url: p.elevationBeforeImage, roleLabel: "Elevation (before)", ownerLabel, editHref, ownerKind });
+    if (p.elevationAfterImage) refs.push({ url: p.elevationAfterImage, roleLabel: "Elevation (after)", ownerLabel, editHref, ownerKind });
   }
 
   for (const a of awards) {
     if (a.imageUrl) {
-      refs.push({ url: a.imageUrl, roleLabel: "Award badge", ownerLabel: a.name, editHref: `/admin/awards/${a.id}/edit` });
+      refs.push({
+        url: a.imageUrl,
+        roleLabel: "Award badge",
+        ownerLabel: a.name,
+        editHref: `/admin/awards/${a.id}/edit`,
+        ownerKind: "award",
+      });
     }
   }
 

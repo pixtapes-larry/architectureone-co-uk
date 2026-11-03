@@ -12,6 +12,7 @@ export type DerivativeRow = {
   roleLabel: string;
   ownerLabel: string;
   editHref: string;
+  ownerKind: "project" | "award";
   dimensions: string | null;
   sizeLabel: string;
 };
@@ -30,8 +31,16 @@ export type AssetRow = {
   assetId: number | null;
   ownerLabel: string | null;
   ownerEditHref: string | null;
+  ownerKind: "project" | "award" | null;
   derivatives: DerivativeRow[];
 };
+
+// "Edit →" was misleading here — clicking it doesn't edit the image, it
+// navigates away to the project/award record that owns it, where the image
+// is just one of many fields. Name the link after what it actually does.
+function openOwnerLabel(kind: "project" | "award") {
+  return kind === "award" ? "Open award →" : "Open project →";
+}
 
 type View = "tiles" | "rows";
 
@@ -166,9 +175,9 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
                 <div className={styles.tileActions}>
                   {a.assetId !== null ? (
                     <DeleteAssetButton id={a.assetId} />
-                  ) : a.ownerEditHref ? (
+                  ) : a.ownerEditHref && a.ownerKind ? (
                     <Link href={a.ownerEditHref} className={tableStyles.editLink}>
-                      Edit →
+                      {openOwnerLabel(a.ownerKind)}
                     </Link>
                   ) : null}
                 </div>
@@ -231,9 +240,9 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
                     <td>
                       {a.assetId !== null ? (
                         <DeleteAssetButton id={a.assetId} />
-                      ) : a.ownerEditHref ? (
+                      ) : a.ownerEditHref && a.ownerKind ? (
                         <Link href={a.ownerEditHref} className={tableStyles.editLink}>
-                          Edit →
+                          {openOwnerLabel(a.ownerKind)}
                         </Link>
                       ) : null}
                     </td>
@@ -253,7 +262,7 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
                         </td>
                         <td>
                           <Link href={d.editHref} className={tableStyles.editLink}>
-                            Edit →
+                            {openOwnerLabel(d.ownerKind)}
                           </Link>
                         </td>
                       </tr>

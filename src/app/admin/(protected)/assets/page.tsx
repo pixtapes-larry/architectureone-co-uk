@@ -85,6 +85,7 @@ export default async function AdminAssetsPage({
     assetId: number | null;
     ownerLabel: string | null;
     ownerEditHref: string | null;
+    ownerKind: "project" | "award" | null;
     derivatives: DerivativeRow[];
   };
 
@@ -101,6 +102,7 @@ export default async function AdminAssetsPage({
         roleLabel: o.roleLabel,
         ownerLabel: o.owner.label,
         editHref: o.owner.editHref,
+        ownerKind: o.owner.kind,
         dimensions: o.width && o.height ? `${o.width} × ${o.height}` : null,
         sizeLabel: formatSize(o.fileSizeKb),
       }));
@@ -110,6 +112,7 @@ export default async function AdminAssetsPage({
         roleLabel: r.roleLabel,
         ownerLabel: r.ownerLabel,
         editHref: r.editHref,
+        ownerKind: r.ownerKind,
         dimensions: dims,
         sizeLabel,
       }));
@@ -127,6 +130,7 @@ export default async function AdminAssetsPage({
         assetId: a.id,
         ownerLabel: null,
         ownerEditHref: null,
+        ownerKind: null,
         derivatives: [...croppedDerivatives, ...directDerivatives],
       };
     }),
@@ -149,6 +153,7 @@ export default async function AdminAssetsPage({
         assetId: null,
         ownerLabel: `${o.owner.label} — ${o.roleLabel}`,
         ownerEditHref: o.owner.editHref,
+        ownerKind: o.owner.kind,
         derivatives: [],
       })),
   ].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
@@ -181,6 +186,7 @@ export default async function AdminAssetsPage({
     assetId: a.assetId,
     ownerLabel: a.ownerLabel,
     ownerEditHref: a.ownerEditHref,
+    ownerKind: a.ownerKind,
     derivatives: a.derivatives,
   }));
 
