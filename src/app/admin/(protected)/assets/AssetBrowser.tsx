@@ -212,12 +212,12 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
                   </span>
                   <span className={styles.tileMeta}>{a.dateLabel}</span>
                 </div>
-                {a.derivatives.length > 0 && (
+                {a.derivatives.length > 1 && (
                   <button type="button" className={styles.expandToggle} onClick={() => toggleExpanded(a.key)}>
-                    {isOpen ? "▾" : "▸"} Used in {a.derivatives.length} place{a.derivatives.length === 1 ? "" : "s"}
+                    {isOpen ? "▾" : "▸"} Used in {a.derivatives.length} places
                   </button>
                 )}
-                {isOpen && a.derivatives.length > 0 && (
+                {(a.derivatives.length === 1 || (isOpen && a.derivatives.length > 1)) && (
                   <ul className={styles.tileDerivativeList}>
                     {a.derivatives.map((d) => (
                       <li key={d.key} className={styles.tileDerivativeItem}>
@@ -296,11 +296,11 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
                     <td>{a.sizeLabel}</td>
                     <td>{a.dateLabel}</td>
                     <td>
-                      {a.derivatives.length > 0 ? (
+                      {a.derivatives.length > 1 ? (
                         <button type="button" className={styles.expandToggle} onClick={() => toggleExpanded(a.key)}>
-                          {isOpen ? "▾" : "▸"} {a.derivatives.length} place{a.derivatives.length === 1 ? "" : "s"}
+                          {isOpen ? "▾" : "▸"} {a.derivatives.length} places
                         </button>
-                      ) : a.ownerLabel ? (
+                      ) : a.derivatives.length === 1 || a.ownerLabel ? (
                         "1 place"
                       ) : (
                         <span style={{ color: "var(--color-muted)" }}>Unused</span>
@@ -321,7 +321,7 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
                       ) : null}
                     </td>
                   </tr>
-                  {isOpen &&
+                  {(a.derivatives.length === 1 || (isOpen && a.derivatives.length > 1)) &&
                     a.derivatives.map((d) => (
                       <tr key={d.key} className={styles.derivativeRow}>
                         <td></td>
