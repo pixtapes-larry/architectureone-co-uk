@@ -1,30 +1,13 @@
 import Link from "next/link";
 import { listAssetsAdmin, listAssetCategoriesAdmin } from "@/lib/admin/assets";
 import { scanOwnedImages } from "@/lib/admin/asset-scan";
-import { getAssetUsageCounts } from "@/lib/admin/asset-usage";
+import { getDirectAssetReferences } from "@/lib/admin/asset-usage";
 import AssetUploadForm from "@/components/admin/AssetUploadForm";
-import AssetBrowser, { type AssetRow } from "./AssetBrowser";
+import AssetBrowser, { type AssetRow, type DerivativeRow } from "./AssetBrowser";
 import styles from "../projects/projects.module.css";
 import filterStyles from "./filters.module.css";
 
 export const instant = false;
-
-type UnifiedAsset = {
-  key: string;
-  filename: string;
-  url: string;
-  mimeType: string;
-  fileSizeKb: number;
-  width: number | null;
-  height: number | null;
-  label: string | null;
-  category: string | null;
-  createdAt: Date;
-  source: "asset" | "project" | "award";
-  assetId: number | null;
-  owner: { kind: "project" | "award"; id: number; editHref: string } | null;
-  useCount: number;
-};
 
 function formatSize(kb: number) {
   if (kb < 1024) return `${kb} KB`;
@@ -47,10 +30,6 @@ function kindLabel(mimeType: string) {
   return kind === "other" ? "File" : kind === "pdf" ? "PDF" : kind === "video" ? "Video" : "Image";
 }
 
-function sourceLabel(source: UnifiedAsset["source"]) {
-  return source === "asset" ? "Standalone" : source === "project" ? "Project" : "Award";
-}
-
 const SYNTHETIC_CATEGORIES = ["Project photos", "Award badges"];
 
 export default async function AdminAssetsPage({
@@ -63,59 +42,128 @@ export default async function AdminAssetsPage({
   const category = params.category || undefined;
   const search = params.q?.trim().toLowerCase() || undefined;
 
-  const [assets, dbCategories, owned, usage] = await Promise.all([
+  const [assets, dbCategories, owned, directRefs] = await Promise.all([
     listAssetsAdmin({}),
     listAssetCategoriesAdmin(),
     scanOwnedImages(),
-    getAssetUsageCounts(),
+    getDirectAssetReferences(),
   ]);
 
-  const unified: UnifiedAsset[] = [
-    ...assets.map((a): UnifiedAsset => ({
-      key: a.url,
-      filename: a.filename,
-      url: a.url,
-      mimeType: a.mimeType,
-      fileSizeKb: a.fileSizeKb,
-      width: a.width,
-      height: a.height,
-      label: a.label,
-      category: a.category,
-      createdAt: a.createdAt,
-      source: "asset",
-      assetId: a.id,
-      owner: null,
-      useCount: (usage.byUrl.get(a.url) ?? 0) + (usage.byAssetId.get(a.id) ?? 0),
-    })),
-    ...owned.map((o): UnifiedAsset => ({
-      key: o.url,
-      filename: o.filename,
-      url: o.url,
-      mimeType: o.mimeType,
-      fileSizeKb: o.fileSizeKb,
-      width: o.width,
-      height: o.height,
-      label: o.owner.label,
-      category: o.category,
-      createdAt: o.createdAt,
-      source: o.owner.kind,
-      assetId: null,
-      owner: { kind: o.owner.kind, id: o.owner.id, editHref: o.owner.editHref },
-      useCount: usage.byUrl.get(o.url) ?? 0,
-    })),
+  // Owned files (cover/gallery derivatives) that were cropped from a
+  // retained original get grouped under it, keyed by that original's
+  // Asset id.
+  const ownedByAssetId = new Map<number, typeof owned>();
+  for (const o of owned) {
+    if (o.assetId === null) continue;
+    const list = ownedByAssetId.get(o.assetId) ?? [];
+    list.push(o);
+    ownedByAssetId.set(o.assetId, list);
+  }
+
+  // Floorplan/elevation/badge fields that reused an original's own file
+  // directly (no crop, so no separate derivative file exists) — keyed by
+  // the exact URL they copied, which only matches an Asset when that
+  // happened.
+  const directRefsByUrl = new Map<string, typeof directRefs>();
+  for (const ref of directRefs) {
+    const list = directRefsByUrl.get(ref.url) ?? [];
+    list.push(ref);
+    directRefsByUrl.set(ref.url, list);
+  }
+
+  type Original = {
+    key: string;
+    filename: string;
+    url: string;
+    mimeType: string;
+    fileSizeKb: number;
+    width: number | null;
+    height: number | null;
+    label: string | null;
+    category: string | null;
+    createdAt: Date;
+    assetId: number | null;
+    ownerLabel: string | null;
+    ownerEditHref: string | null;
+    derivatives: DerivativeRow[];
+  };
+
+  const originals: Original[] = [
+    // Every retained original and standalone upload (brochures, PDFs,
+    // video) — the primary list. Cover/gallery crops and any direct
+    // floorplan/elevation/badge reuse nest underneath as "iterations".
+    ...assets.map((a): Original => {
+      const dims = a.width && a.height ? `${a.width} × ${a.height}` : null;
+      const sizeLabel = formatSize(a.fileSizeKb);
+      const croppedDerivatives: DerivativeRow[] = (ownedByAssetId.get(a.id) ?? []).map((o) => ({
+        key: o.url,
+        url: o.url,
+        roleLabel: o.roleLabel,
+        ownerLabel: o.owner.label,
+        editHref: o.owner.editHref,
+        dimensions: o.width && o.height ? `${o.width} × ${o.height}` : null,
+        sizeLabel: formatSize(o.fileSizeKb),
+      }));
+      const directDerivatives: DerivativeRow[] = (directRefsByUrl.get(a.url) ?? []).map((r) => ({
+        key: `${r.editHref}-${r.roleLabel}`,
+        url: a.url,
+        roleLabel: r.roleLabel,
+        ownerLabel: r.ownerLabel,
+        editHref: r.editHref,
+        dimensions: dims,
+        sizeLabel,
+      }));
+      return {
+        key: `asset-${a.id}`,
+        filename: a.filename,
+        url: a.url,
+        mimeType: a.mimeType,
+        fileSizeKb: a.fileSizeKb,
+        width: a.width,
+        height: a.height,
+        label: a.label,
+        category: a.category,
+        createdAt: a.createdAt,
+        assetId: a.id,
+        ownerLabel: null,
+        ownerEditHref: null,
+        derivatives: [...croppedDerivatives, ...directDerivatives],
+      };
+    }),
+    // Owned files with no retained original behind them — floorplans,
+    // elevations, badges, and any cover/gallery photo uploaded before the
+    // crop model existed. Each is its own single-use file, not grouped.
+    ...owned
+      .filter((o) => o.assetId === null)
+      .map((o): Original => ({
+        key: `owned-${o.url}`,
+        filename: o.filename,
+        url: o.url,
+        mimeType: o.mimeType,
+        fileSizeKb: o.fileSizeKb,
+        width: o.width,
+        height: o.height,
+        label: null,
+        category: o.category,
+        createdAt: o.createdAt,
+        assetId: null,
+        ownerLabel: `${o.owner.label} — ${o.roleLabel}`,
+        ownerEditHref: o.owner.editHref,
+        derivatives: [],
+      })),
   ].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
-  const filtered = unified.filter((a) => {
+  const filtered = originals.filter((a) => {
     if (type && kindOf(a.mimeType) !== type) return false;
     if (category && a.category !== category) return false;
     if (search) {
-      const haystack = `${a.filename} ${a.label ?? ""}`.toLowerCase();
+      const haystack = `${a.filename} ${a.label ?? ""} ${a.ownerLabel ?? ""}`.toLowerCase();
       if (!haystack.includes(search)) return false;
     }
     return true;
   });
 
-  const categories = [...new Set([...dbCategories, ...SYNTHETIC_CATEGORIES.filter((c) => unified.some((a) => a.category === c))])];
+  const categories = [...new Set([...dbCategories, ...SYNTHETIC_CATEGORIES.filter((c) => originals.some((a) => a.category === c))])];
 
   const hasFilters = Boolean(type || category || search);
 
@@ -129,23 +177,23 @@ export default async function AdminAssetsPage({
     dimensions: a.width && a.height ? `${a.width} × ${a.height}` : null,
     sizeLabel: formatSize(a.fileSizeKb),
     dateLabel: formatDate(a.createdAt),
-    sourceLabel: sourceLabel(a.source),
     label: a.label,
-    useLabel: a.useCount === 0 ? "Unused" : `${a.useCount}×`,
-    assetId: a.source === "asset" ? a.assetId : null,
-    editHref: a.owner?.editHref ?? null,
+    assetId: a.assetId,
+    ownerLabel: a.ownerLabel,
+    ownerEditHref: a.ownerEditHref,
+    derivatives: a.derivatives,
   }));
 
   return (
     <>
       <h1 style={{ fontSize: 24, fontWeight: 800, marginBottom: 8 }}>Assets</h1>
       <p style={{ fontSize: 13, color: "var(--color-muted)", marginBottom: 24, maxWidth: 640 }}>
-        Everything that's actually on disk, in one place — standalone uploads
-        (brochures, promo video, loose images) alongside photos, floorplans
-        and badges that live on a project or award record. Any image here can
-        also be picked straight from the &quot;Choose from library&quot;
-        option on an image field elsewhere in the admin. Use count shows how
-        many places on the site currently point at that file.
+        Every original file — standalone uploads (brochures, promo video,
+        loose images) and the retained source behind any cover or gallery
+        photo. Expand a row to see where it's actually being used — a cover
+        photo, a gallery slot — each with its own independent crop. Any image
+        here can also be picked straight from the &quot;Choose from
+        library&quot; option on an image field elsewhere in the admin.
       </p>
 
       <div style={{ maxWidth: 480, marginBottom: 40 }}>
@@ -187,7 +235,7 @@ export default async function AdminAssetsPage({
       </div>
 
       <h2 style={{ fontSize: 18, fontWeight: 800, marginBottom: 12 }}>
-        {filtered.length} of {unified.length} files
+        {filtered.length} of {originals.length} files
       </h2>
       {filtered.length === 0 ? (
         <div className={styles.empty}>

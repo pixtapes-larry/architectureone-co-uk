@@ -2,10 +2,28 @@
 // photos, gallery shots, floorplans, elevations, badges) — these aren't
 // Asset rows, they're columns on their own record, but the asset manager
 // still wants to show "what's actually on disk" for a full picture.
+//
+// Some of these files are *derivatives* of a retained original (an Asset
+// row) — cover photos and gallery photos cropped via the asset-backed crop
+// flow carry an assetId here, cross-referenced from Project.coverPhotoAssetId
+// / ProjectPhoto.assetId, so the asset manager can nest them under their
+// source instead of listing them as if they were unrelated files. Floorplans,
+// elevations and award badges are never cropped, so they never have one.
 import fs from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 import { prisma } from "../prisma";
+
+const ROLE_LABELS: Record<string, string> = {
+  cover: "Cover photo",
+  "gallery-before": "Gallery (before)",
+  "gallery-after": "Gallery (after)",
+  "floorplan-before": "Floor plan (before)",
+  "floorplan-after": "Floor plan (after)",
+  "elevation-before": "Elevation (before)",
+  "elevation-after": "Elevation (after)",
+  badge: "Award badge",
+};
 
 export type ScannedAsset = {
   url: string;
@@ -16,6 +34,9 @@ export type ScannedAsset = {
   height: number | null;
   createdAt: Date;
   category: string;
+  role: string;
+  roleLabel: string;
+  assetId: number | null;
   owner: { kind: "project" | "award"; id: number; label: string; editHref: string };
 };
 
@@ -49,25 +70,36 @@ async function walk(dir: string): Promise<string[]> {
 
 export async function scanOwnedImages(): Promise<ScannedAsset[]> {
   const root = path.join(process.cwd(), "public", "uploads", "architectureone");
-  const [projectFiles, awardFiles, projects, awards] = await Promise.all([
+  const [projectFiles, awardFiles, projects, awards, galleryPhotos] = await Promise.all([
     walk(path.join(root, "projects")),
     walk(path.join(root, "awards")),
-    prisma.project.findMany({ select: { id: true, address: true, place: true } }),
+    prisma.project.findMany({
+      select: { id: true, address: true, place: true, coverPhotoUrl: true, coverPhotoAssetId: true },
+    }),
     prisma.award.findMany({ select: { id: true, name: true } }),
+    prisma.projectPhoto.findMany({ select: { url: true, assetId: true } }),
   ]);
 
   const projectById = new Map(projects.map((p) => [p.id, p]));
   const awardById = new Map(awards.map((a) => [a.id, a]));
+  const galleryAssetByUrl = new Map(galleryPhotos.map((p) => [p.url, p.assetId]));
   const results: ScannedAsset[] = [];
 
   for (const file of projectFiles) {
     const rel = path.relative(path.join(root, "projects"), file).split(path.sep);
     const projectId = Number(rel[0]);
+    const role = rel[1] ?? "";
+    const url = `/uploads/architectureone/projects/${rel.join("/")}`;
     const project = projectById.get(projectId);
     if (!project) continue; // orphaned on disk — the project was deleted
+
+    let assetId: number | null = null;
+    if (role === "cover" && project.coverPhotoUrl === url) assetId = project.coverPhotoAssetId;
+    else if (role.startsWith("gallery")) assetId = galleryAssetByUrl.get(url) ?? null;
+
     const [stat, dims] = await Promise.all([fs.stat(file), imageDimensions(file)]);
     results.push({
-      url: `/uploads/architectureone/projects/${rel.join("/")}`,
+      url,
       filename: path.basename(file),
       mimeType: "image/jpeg",
       fileSizeKb: Math.round(stat.size / 1024),
@@ -75,6 +107,9 @@ export async function scanOwnedImages(): Promise<ScannedAsset[]> {
       height: dims.height,
       createdAt: stat.mtime,
       category: "Project photos",
+      role,
+      roleLabel: ROLE_LABELS[role] ?? role,
+      assetId,
       owner: {
         kind: "project",
         id: projectId,
@@ -99,6 +134,9 @@ export async function scanOwnedImages(): Promise<ScannedAsset[]> {
       height: dims.height,
       createdAt: stat.mtime,
       category: "Award badges",
+      role: "badge",
+      roleLabel: ROLE_LABELS.badge,
+      assetId: null, // award badges never go through the crop flow
       owner: { kind: "award", id: awardId, label: award.name, editHref: `/admin/awards/${awardId}/edit` },
     });
   }

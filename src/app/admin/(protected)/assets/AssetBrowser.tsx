@@ -1,10 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import DeleteAssetButton from "./DeleteAssetButton";
 import tableStyles from "../projects/projects.module.css";
 import styles from "./browser.module.css";
+
+export type DerivativeRow = {
+  key: string;
+  url: string;
+  roleLabel: string;
+  ownerLabel: string;
+  editHref: string;
+  dimensions: string | null;
+  sizeLabel: string;
+};
 
 export type AssetRow = {
   key: string;
@@ -16,11 +26,11 @@ export type AssetRow = {
   dimensions: string | null;
   sizeLabel: string;
   dateLabel: string;
-  sourceLabel: string;
   label: string | null;
-  useLabel: string;
   assetId: number | null;
-  editHref: string | null;
+  ownerLabel: string | null;
+  ownerEditHref: string | null;
+  derivatives: DerivativeRow[];
 };
 
 type View = "tiles" | "rows";
@@ -37,6 +47,7 @@ function loadView(): View {
 export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
   const [view, setView] = useState<View>("tiles");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     setView(loadView());
@@ -49,6 +60,15 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
     } catch {
       // private browsing / blocked storage — just don't persist
     }
+  }
+
+  function toggleExpanded(key: string) {
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
   }
 
   const imageRows = rows.filter((r) => r.isImage);
@@ -95,100 +115,152 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
 
       {view === "tiles" ? (
         <div className={styles.tileGrid}>
-          {rows.map((a) => (
-            <div key={a.key} className={styles.tile}>
-              <button
-                type="button"
-                className={styles.tileThumbBtn}
-                onClick={() => (a.isImage ? openLightboxFor(a) : undefined)}
-                disabled={!a.isImage}
-              >
-                {a.isImage ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={a.url} alt="" className={styles.tileThumb} />
-                ) : (
-                  <span className={styles.tileThumbPlaceholder}>{a.typeLabel}</span>
+          {rows.map((a) => {
+            const isOpen = expanded.has(a.key);
+            return (
+              <div key={a.key} className={styles.tile}>
+                <button
+                  type="button"
+                  className={styles.tileThumbBtn}
+                  onClick={() => (a.isImage ? openLightboxFor(a) : undefined)}
+                  disabled={!a.isImage}
+                >
+                  {a.isImage ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={a.url} alt="" className={styles.tileThumb} />
+                  ) : (
+                    <span className={styles.tileThumbPlaceholder}>{a.typeLabel}</span>
+                  )}
+                </button>
+                <div className={styles.tileBody}>
+                  <a href={a.url} target="_blank" rel="noreferrer" className={styles.tileFilename} title={a.filename}>
+                    {a.filename}
+                  </a>
+                  {a.label && <span className={styles.tileLabel}>{a.label}</span>}
+                  <span className={styles.tileMeta}>
+                    {[a.category, a.dimensions ?? a.typeLabel, a.sizeLabel].filter(Boolean).join(" · ")}
+                  </span>
+                  <span className={styles.tileMeta}>{a.dateLabel}</span>
+                  {a.ownerLabel && <span className={styles.tileMeta}>Used by {a.ownerLabel}</span>}
+                </div>
+                {a.derivatives.length > 0 && (
+                  <button type="button" className={styles.expandToggle} onClick={() => toggleExpanded(a.key)}>
+                    {isOpen ? "▾" : "▸"} Used in {a.derivatives.length} place{a.derivatives.length === 1 ? "" : "s"}
+                  </button>
                 )}
-              </button>
-              <div className={styles.tileBody}>
-                <a href={a.url} target="_blank" rel="noreferrer" className={styles.tileFilename} title={a.filename}>
-                  {a.filename}
-                </a>
-                {a.label && <span className={styles.tileLabel}>{a.label}</span>}
-                <span className={styles.tileMeta}>
-                  {a.sourceLabel} · {a.dimensions ?? a.typeLabel} · {a.sizeLabel}
-                </span>
-                <span className={styles.tileMeta}>
-                  {a.dateLabel} · {a.useLabel}
-                </span>
+                {isOpen && a.derivatives.length > 0 && (
+                  <ul className={styles.tileDerivativeList}>
+                    {a.derivatives.map((d) => (
+                      <li key={d.key} className={styles.tileDerivativeItem}>
+                        <span className={styles.tileDerivativeRole}>{d.roleLabel}</span>
+                        <Link href={d.editHref} className={styles.tileDerivativeOwner}>
+                          {d.ownerLabel}
+                        </Link>
+                        <span className={styles.tileDerivativeMeta}>
+                          {[d.dimensions, d.sizeLabel].filter(Boolean).join(" · ")}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <div className={styles.tileActions}>
+                  {a.assetId !== null ? (
+                    <DeleteAssetButton id={a.assetId} />
+                  ) : a.ownerEditHref ? (
+                    <Link href={a.ownerEditHref} className={tableStyles.editLink}>
+                      Edit →
+                    </Link>
+                  ) : null}
+                </div>
               </div>
-              <div className={styles.tileActions}>
-                {a.assetId !== null ? (
-                  <DeleteAssetButton id={a.assetId} />
-                ) : a.editHref ? (
-                  <Link href={a.editHref} className={tableStyles.editLink}>
-                    Edit →
-                  </Link>
-                ) : null}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ) : (
-        <table className={tableStyles.table}>
+        <table className={`${tableStyles.table} ${styles.rowsTable}`}>
           <thead>
             <tr>
               <th></th>
               <th>Filename</th>
-              <th>Source</th>
-              <th>Type</th>
               <th>Category</th>
               <th>Dimensions</th>
               <th>Size</th>
               <th>Added</th>
-              <th>Used</th>
+              <th>Used in</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {rows.map((a) => (
-              <tr key={a.key}>
-                <td>
-                  {a.isImage ? (
-                    <button type="button" className={styles.rowThumbBtn} onClick={() => openLightboxFor(a)}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={a.url} alt="" className={tableStyles.thumb} />
-                    </button>
-                  ) : (
-                    <span style={{ color: "var(--color-muted)", fontSize: 11, fontWeight: 700 }}>{a.typeLabel}</span>
-                  )}
-                </td>
-                <td>
-                  <a href={a.url} target="_blank" rel="noreferrer" className={tableStyles.editLink}>
-                    {a.filename}
-                  </a>
-                  {a.label && (
-                    <span style={{ color: "var(--color-muted)", fontSize: 11, display: "block" }}>{a.label}</span>
-                  )}
-                </td>
-                <td>{a.sourceLabel}</td>
-                <td>{a.typeLabel}</td>
-                <td>{a.category ?? <span style={{ color: "var(--color-muted)" }}>—</span>}</td>
-                <td>{a.dimensions ?? <span style={{ color: "var(--color-muted)" }}>—</span>}</td>
-                <td>{a.sizeLabel}</td>
-                <td>{a.dateLabel}</td>
-                <td>{a.useLabel === "Unused" ? <span style={{ color: "var(--color-muted)" }}>Unused</span> : a.useLabel}</td>
-                <td>
-                  {a.assetId !== null ? (
-                    <DeleteAssetButton id={a.assetId} />
-                  ) : a.editHref ? (
-                    <Link href={a.editHref} className={tableStyles.editLink}>
-                      Edit →
-                    </Link>
-                  ) : null}
-                </td>
-              </tr>
-            ))}
+            {rows.map((a) => {
+              const isOpen = expanded.has(a.key);
+              return (
+                <Fragment key={a.key}>
+                  <tr className={styles.row}>
+                    <td>
+                      {a.isImage ? (
+                        <button type="button" className={styles.rowThumbBtn} onClick={() => openLightboxFor(a)}>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={a.url} alt="" className={styles.rowThumb} />
+                        </button>
+                      ) : (
+                        <span className={styles.rowThumbPlaceholder}>{a.typeLabel}</span>
+                      )}
+                    </td>
+                    <td>
+                      <a href={a.url} target="_blank" rel="noreferrer" className={styles.rowFilename}>
+                        {a.filename}
+                      </a>
+                      {a.label && <span className={styles.rowSubline}>{a.label}</span>}
+                      {a.ownerLabel && <span className={styles.rowSubline}>Used by {a.ownerLabel}</span>}
+                    </td>
+                    <td>{a.category ?? <span style={{ color: "var(--color-muted)" }}>—</span>}</td>
+                    <td>{a.dimensions ?? <span style={{ color: "var(--color-muted)" }}>—</span>}</td>
+                    <td>{a.sizeLabel}</td>
+                    <td>{a.dateLabel}</td>
+                    <td>
+                      {a.derivatives.length > 0 ? (
+                        <button type="button" className={styles.expandToggle} onClick={() => toggleExpanded(a.key)}>
+                          {isOpen ? "▾" : "▸"} {a.derivatives.length} place{a.derivatives.length === 1 ? "" : "s"}
+                        </button>
+                      ) : a.ownerLabel ? (
+                        "1 place"
+                      ) : (
+                        <span style={{ color: "var(--color-muted)" }}>Unused</span>
+                      )}
+                    </td>
+                    <td>
+                      {a.assetId !== null ? (
+                        <DeleteAssetButton id={a.assetId} />
+                      ) : a.ownerEditHref ? (
+                        <Link href={a.ownerEditHref} className={tableStyles.editLink}>
+                          Edit →
+                        </Link>
+                      ) : null}
+                    </td>
+                  </tr>
+                  {isOpen &&
+                    a.derivatives.map((d) => (
+                      <tr key={d.key} className={styles.derivativeRow}>
+                        <td></td>
+                        <td colSpan={6}>
+                          <span className={styles.rowDerivativeRole}>{d.roleLabel}</span>
+                          <Link href={d.editHref} className={styles.rowDerivativeOwner}>
+                            {d.ownerLabel}
+                          </Link>
+                          <span className={styles.rowDerivativeMeta}>
+                            {[d.dimensions, d.sizeLabel].filter(Boolean).join(" · ")}
+                          </span>
+                        </td>
+                        <td>
+                          <Link href={d.editHref} className={tableStyles.editLink}>
+                            Edit →
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                </Fragment>
+              );
+            })}
           </tbody>
         </table>
       )}

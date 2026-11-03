@@ -110,12 +110,147 @@
   border-top: 1px solid var(--color-line);
 }
 
+.expandToggle {
+  margin: 0 12px 10px;
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.expandToggle:hover {
+  color: var(--color-coral);
+}
+
+.tileDerivativeList {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tileDerivativeItem {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 10px;
+  background: var(--color-surface-alt);
+  border-radius: 6px;
+  gap: 1px;
+}
+
+.tileDerivativeRole {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.tileDerivativeOwner {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.tileDerivativeOwner:hover {
+  color: var(--color-coral);
+}
+
+.tileDerivativeMeta {
+  font-size: 11px;
+  color: var(--color-muted);
+}
+
+.rowsTable td {
+  padding: 16px;
+}
+
+.row td {
+  vertical-align: middle;
+}
+
 .rowThumbBtn {
   padding: 0;
   border: none;
   background: none;
   cursor: pointer;
   display: block;
+}
+
+.rowThumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+.rowThumbPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  background: var(--color-surface-alt);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-muted);
+}
+
+.rowFilename {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.rowFilename:hover {
+  color: var(--color-coral);
+}
+
+.rowSubline {
+  display: block;
+  font-size: 12px;
+  color: var(--color-muted);
+  margin-top: 3px;
+}
+
+.derivativeRow td {
+  padding: 10px 16px;
+  background: var(--color-surface-alt);
+  border-top: none;
+}
+
+.rowDerivativeRole {
+  display: inline-block;
+  min-width: 150px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.rowDerivativeOwner {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin-right: 14px;
+}
+
+.rowDerivativeOwner:hover {
+  color: var(--color-coral);
+}
+
+.rowDerivativeMeta {
+  font-size: 12px;
+  color: var(--color-muted);
 }
 
 .lightboxScrim {
