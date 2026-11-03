@@ -38,14 +38,14 @@ type View = "tiles" | "rows";
 function loadView(): View {
   try {
     const saved = window.localStorage.getItem("admin-assets-view");
-    return saved === "rows" ? "rows" : "tiles";
+    return saved === "tiles" ? "tiles" : "rows";
   } catch {
-    return "tiles";
+    return "rows";
   }
 }
 
 export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
-  const [view, setView] = useState<View>("tiles");
+  const [view, setView] = useState<View>("rows");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
