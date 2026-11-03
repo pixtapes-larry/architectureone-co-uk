@@ -86,6 +86,8 @@ export default async function AdminAssetsPage({
     ownerLabel: string | null;
     ownerEditHref: string | null;
     ownerKind: "project" | "award" | null;
+    ownerId: number | null;
+    role: string | null;
     derivatives: DerivativeRow[];
   };
 
@@ -99,20 +101,24 @@ export default async function AdminAssetsPage({
       const croppedDerivatives: DerivativeRow[] = (ownedByAssetId.get(a.id) ?? []).map((o) => ({
         key: o.url,
         url: o.url,
+        role: o.role,
         roleLabel: o.roleLabel,
         ownerLabel: o.owner.label,
         editHref: o.owner.editHref,
         ownerKind: o.owner.kind,
+        ownerId: o.owner.id,
         dimensions: o.width && o.height ? `${o.width} × ${o.height}` : null,
         sizeLabel: formatSize(o.fileSizeKb),
       }));
       const directDerivatives: DerivativeRow[] = (directRefsByUrl.get(a.url) ?? []).map((r) => ({
         key: `${r.editHref}-${r.roleLabel}`,
         url: a.url,
+        role: r.role,
         roleLabel: r.roleLabel,
         ownerLabel: r.ownerLabel,
         editHref: r.editHref,
         ownerKind: r.ownerKind,
+        ownerId: r.ownerId,
         dimensions: dims,
         sizeLabel,
       }));
@@ -131,6 +137,8 @@ export default async function AdminAssetsPage({
         ownerLabel: null,
         ownerEditHref: null,
         ownerKind: null,
+        ownerId: null,
+        role: null,
         derivatives: [...croppedDerivatives, ...directDerivatives],
       };
     }),
@@ -154,6 +162,8 @@ export default async function AdminAssetsPage({
         ownerLabel: `${o.owner.label} — ${o.roleLabel}`,
         ownerEditHref: o.owner.editHref,
         ownerKind: o.owner.kind,
+        ownerId: o.owner.id,
+        role: o.role,
         derivatives: [],
       })),
   ].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
@@ -187,6 +197,8 @@ export default async function AdminAssetsPage({
     ownerLabel: a.ownerLabel,
     ownerEditHref: a.ownerEditHref,
     ownerKind: a.ownerKind,
+    ownerId: a.ownerId,
+    role: a.role,
     derivatives: a.derivatives,
   }));
 

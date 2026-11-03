@@ -9,8 +9,10 @@ import { prisma } from "../prisma";
 
 export type DirectAssetReference = {
   url: string;
+  role: string;
   roleLabel: string;
   ownerLabel: string;
+  ownerId: number;
   editHref: string;
   ownerKind: "project" | "award";
 };
@@ -37,18 +39,21 @@ export async function getDirectAssetReferences(): Promise<DirectAssetReference[]
     const ownerLabel = `${p.address}, ${p.place}`;
     const editHref = `/admin/projects/${p.id}/edit`;
     const ownerKind = "project" as const;
-    if (p.floorplanBeforeImage) refs.push({ url: p.floorplanBeforeImage, roleLabel: "Floor plan (before)", ownerLabel, editHref, ownerKind });
-    if (p.floorplanAfterImage) refs.push({ url: p.floorplanAfterImage, roleLabel: "Floor plan (after)", ownerLabel, editHref, ownerKind });
-    if (p.elevationBeforeImage) refs.push({ url: p.elevationBeforeImage, roleLabel: "Elevation (before)", ownerLabel, editHref, ownerKind });
-    if (p.elevationAfterImage) refs.push({ url: p.elevationAfterImage, roleLabel: "Elevation (after)", ownerLabel, editHref, ownerKind });
+    const ownerId = p.id;
+    if (p.floorplanBeforeImage) refs.push({ url: p.floorplanBeforeImage, role: "floorplan-before", roleLabel: "Floor plan (before)", ownerLabel, ownerId, editHref, ownerKind });
+    if (p.floorplanAfterImage) refs.push({ url: p.floorplanAfterImage, role: "floorplan-after", roleLabel: "Floor plan (after)", ownerLabel, ownerId, editHref, ownerKind });
+    if (p.elevationBeforeImage) refs.push({ url: p.elevationBeforeImage, role: "elevation-before", roleLabel: "Elevation (before)", ownerLabel, ownerId, editHref, ownerKind });
+    if (p.elevationAfterImage) refs.push({ url: p.elevationAfterImage, role: "elevation-after", roleLabel: "Elevation (after)", ownerLabel, ownerId, editHref, ownerKind });
   }
 
   for (const a of awards) {
     if (a.imageUrl) {
       refs.push({
         url: a.imageUrl,
+        role: "badge",
         roleLabel: "Award badge",
         ownerLabel: a.name,
+        ownerId: a.id,
         editHref: `/admin/awards/${a.id}/edit`,
         ownerKind: "award",
       });

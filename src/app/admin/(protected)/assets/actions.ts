@@ -3,7 +3,9 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createAssetAdmin, deleteAssetAdmin, getAssetAdmin } from "@/lib/admin/assets";
-import { saveAsset, deleteAsset, isUploadableFile } from "@/lib/admin/upload";
+import { saveAsset, deleteAsset, deleteAwardImage, isUploadableFile } from "@/lib/admin/upload";
+import { deleteProjectPhotoByUrl, clearProjectImageField, type ClearableImageField } from "@/lib/admin/projects";
+import { clearAwardImage } from "@/lib/admin/awards";
 
 export type AssetUploadState = { error?: string };
 
@@ -35,6 +37,35 @@ export async function uploadAssetsAction(
 
   revalidatePath("/admin/assets");
   redirect("/admin/assets");
+}
+
+const ROLE_TO_FIELD: Record<string, ClearableImageField> = {
+  "floorplan-before": "floorplanBeforeImage",
+  "floorplan-after": "floorplanAfterImage",
+  "elevation-before": "elevationBeforeImage",
+  "elevation-after": "elevationAfterImage",
+};
+
+// Deletes an image that's *owned* by a Project or Award directly (not a
+// standalone Asset row) — a gallery photo, a floorplan/elevation, or an
+// award badge. Called straight from the asset manager, same as the other
+// instant actions elsewhere in admin, so there's no "go find it on the
+// project page" detour just to remove a file. A cover photo can't be
+// deleted this way — it's a required field, only replaceable.
+export async function deleteOwnedImageAction(ownerKind: "project" | "award", ownerId: number, role: string, url: string) {
+  if (ownerKind === "award") {
+    await clearAwardImage(ownerId);
+    await deleteAwardImage(url);
+  } else if (role.startsWith("gallery")) {
+    await deleteProjectPhotoByUrl(ownerId, url);
+  } else if (role in ROLE_TO_FIELD) {
+    await clearProjectImageField(ownerId, ROLE_TO_FIELD[role]);
+  } else {
+    throw new Error(`Can't delete an image with role "${role}" from here.`);
+  }
+
+  revalidatePath("/admin/assets");
+  revalidatePath(ownerKind === "project" ? `/admin/projects/${ownerId}/edit` : `/admin/awards/${ownerId}/edit`);
 }
 
 export async function deleteAssetFormAction(formData: FormData) {

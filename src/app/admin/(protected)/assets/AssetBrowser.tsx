@@ -1,18 +1,22 @@
 "use client";
 
 import { Fragment, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import DeleteAssetButton from "./DeleteAssetButton";
+import { deleteOwnedImageAction } from "./actions";
 import tableStyles from "../projects/projects.module.css";
 import styles from "./browser.module.css";
 
 export type DerivativeRow = {
   key: string;
   url: string;
+  role: string;
   roleLabel: string;
   ownerLabel: string;
   editHref: string;
   ownerKind: "project" | "award";
+  ownerId: number;
   dimensions: string | null;
   sizeLabel: string;
 };
@@ -32,6 +36,8 @@ export type AssetRow = {
   ownerLabel: string | null;
   ownerEditHref: string | null;
   ownerKind: "project" | "award" | null;
+  ownerId: number | null;
+  role: string | null;
   derivatives: DerivativeRow[];
 };
 
@@ -40,6 +46,59 @@ export type AssetRow = {
 // is just one of many fields. Name the link after what it actually does.
 function openOwnerLabel(kind: "project" | "award") {
   return kind === "award" ? "Open award →" : "Open project →";
+}
+
+// Cover photos can't be cleared here — Project.coverPhotoUrl is required,
+// so there's nothing a delete could leave it as other than broken. Every
+// other owned-image role (gallery, floorplan, elevation, badge) is a
+// genuinely optional field and can be removed directly.
+function isDeletable(role: string | null) {
+  return role !== null && role !== "cover";
+}
+
+function DeleteOwnedButton({
+  ownerKind,
+  ownerId,
+  role,
+  url,
+}: {
+  ownerKind: "project" | "award";
+  ownerId: number;
+  role: string;
+  url: string;
+}) {
+  const router = useRouter();
+  const [confirming, setConfirming] = useState(false);
+  const [pending, setPending] = useState(false);
+
+  if (!confirming) {
+    return (
+      <button type="button" className={tableStyles.deleteBtn} onClick={() => setConfirming(true)}>
+        Delete
+      </button>
+    );
+  }
+
+  return (
+    <div className={tableStyles.rowActions}>
+      <span style={{ fontSize: 12, color: "var(--color-muted)" }}>Delete this image?</span>
+      <button
+        type="button"
+        className={tableStyles.deleteBtn}
+        disabled={pending}
+        onClick={async () => {
+          setPending(true);
+          await deleteOwnedImageAction(ownerKind, ownerId, role, url);
+          router.refresh();
+        }}
+      >
+        {pending ? "Deleting…" : "Confirm"}
+      </button>
+      <button type="button" className={tableStyles.deleteBtn} onClick={() => setConfirming(false)}>
+        Cancel
+      </button>
+    </div>
+  );
 }
 
 type View = "tiles" | "rows";
@@ -146,11 +205,12 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
                     {a.filename}
                   </a>
                   {a.label && <span className={styles.tileLabel}>{a.label}</span>}
+                  {a.ownerLabel && <span className={styles.tileLabel}>Used by {a.ownerLabel}</span>}
+                  {a.category && <span className={styles.tileLabel}>{a.category}</span>}
                   <span className={styles.tileMeta}>
-                    {[a.category, a.dimensions ?? a.typeLabel, a.sizeLabel].filter(Boolean).join(" · ")}
+                    {[a.dimensions ?? a.typeLabel, a.sizeLabel].filter(Boolean).join(" · ")}
                   </span>
                   <span className={styles.tileMeta}>{a.dateLabel}</span>
-                  {a.ownerLabel && <span className={styles.tileMeta}>Used by {a.ownerLabel}</span>}
                 </div>
                 {a.derivatives.length > 0 && (
                   <button type="button" className={styles.expandToggle} onClick={() => toggleExpanded(a.key)}>
@@ -168,6 +228,11 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
                         <span className={styles.tileDerivativeMeta}>
                           {[d.dimensions, d.sizeLabel].filter(Boolean).join(" · ")}
                         </span>
+                        {isDeletable(d.role) && (
+                          <div className={styles.tileActionsRow}>
+                            <DeleteOwnedButton ownerKind={d.ownerKind} ownerId={d.ownerId} role={d.role} url={d.url} />
+                          </div>
+                        )}
                       </li>
                     ))}
                   </ul>
@@ -175,10 +240,15 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
                 <div className={styles.tileActions}>
                   {a.assetId !== null ? (
                     <DeleteAssetButton id={a.assetId} />
-                  ) : a.ownerEditHref && a.ownerKind ? (
-                    <Link href={a.ownerEditHref} className={tableStyles.editLink}>
-                      {openOwnerLabel(a.ownerKind)}
-                    </Link>
+                  ) : a.ownerEditHref && a.ownerKind && a.ownerId !== null ? (
+                    <div className={styles.tileActionsRow}>
+                      <Link href={a.ownerEditHref} className={tableStyles.editLink}>
+                        {openOwnerLabel(a.ownerKind)}
+                      </Link>
+                      {isDeletable(a.role) && (
+                        <DeleteOwnedButton ownerKind={a.ownerKind} ownerId={a.ownerId} role={a.role!} url={a.url} />
+                      )}
+                    </div>
                   ) : null}
                 </div>
               </div>
@@ -191,7 +261,6 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
             <tr>
               <th></th>
               <th>Filename</th>
-              <th>Category</th>
               <th>Dimensions</th>
               <th>Size</th>
               <th>Added</th>
@@ -221,8 +290,8 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
                       </a>
                       {a.label && <span className={styles.rowSubline}>{a.label}</span>}
                       {a.ownerLabel && <span className={styles.rowSubline}>Used by {a.ownerLabel}</span>}
+                      {a.category && <span className={styles.rowSubline}>{a.category}</span>}
                     </td>
-                    <td>{a.category ?? <span style={{ color: "var(--color-muted)" }}>—</span>}</td>
                     <td>{a.dimensions ?? <span style={{ color: "var(--color-muted)" }}>—</span>}</td>
                     <td>{a.sizeLabel}</td>
                     <td>{a.dateLabel}</td>
@@ -240,10 +309,15 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
                     <td>
                       {a.assetId !== null ? (
                         <DeleteAssetButton id={a.assetId} />
-                      ) : a.ownerEditHref && a.ownerKind ? (
-                        <Link href={a.ownerEditHref} className={tableStyles.editLink}>
-                          {openOwnerLabel(a.ownerKind)}
-                        </Link>
+                      ) : a.ownerEditHref && a.ownerKind && a.ownerId !== null ? (
+                        <div className={styles.rowActionsStack}>
+                          <Link href={a.ownerEditHref} className={tableStyles.editLink}>
+                            {openOwnerLabel(a.ownerKind)}
+                          </Link>
+                          {isDeletable(a.role) && (
+                            <DeleteOwnedButton ownerKind={a.ownerKind} ownerId={a.ownerId} role={a.role!} url={a.url} />
+                          )}
+                        </div>
                       ) : null}
                     </td>
                   </tr>
@@ -251,7 +325,7 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
                     a.derivatives.map((d) => (
                       <tr key={d.key} className={styles.derivativeRow}>
                         <td></td>
-                        <td colSpan={6}>
+                        <td colSpan={5}>
                           <span className={styles.rowDerivativeRole}>{d.roleLabel}</span>
                           <Link href={d.editHref} className={styles.rowDerivativeOwner}>
                             {d.ownerLabel}
@@ -261,9 +335,14 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
                           </span>
                         </td>
                         <td>
-                          <Link href={d.editHref} className={tableStyles.editLink}>
-                            {openOwnerLabel(d.ownerKind)}
-                          </Link>
+                          <div className={styles.rowActionsStack}>
+                            <Link href={d.editHref} className={tableStyles.editLink}>
+                              {openOwnerLabel(d.ownerKind)}
+                            </Link>
+                            {isDeletable(d.role) && (
+                              <DeleteOwnedButton ownerKind={d.ownerKind} ownerId={d.ownerId} role={d.role} url={d.url} />
+                            )}
+                          </div>
                         </td>
                       </tr>
                     ))}

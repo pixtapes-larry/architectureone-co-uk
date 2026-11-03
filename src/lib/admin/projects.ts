@@ -207,3 +207,29 @@ export async function deleteProjectPhoto(photoId: number) {
   await deleteProjectImage(photo.url);
   await prisma.projectPhoto.delete({ where: { id: photoId } });
 }
+
+// Same, but looked up by URL rather than id — the asset manager only knows
+// the file's URL, not its ProjectPhoto id.
+export async function deleteProjectPhotoByUrl(projectId: number, url: string) {
+  const photo = await prisma.projectPhoto.findFirst({ where: { projectId, url } });
+  if (!photo) return;
+  await deleteProjectPhoto(photo.id);
+}
+
+const CLEARABLE_IMAGE_FIELDS = [
+  "floorplanBeforeImage",
+  "floorplanAfterImage",
+  "elevationBeforeImage",
+  "elevationAfterImage",
+] as const;
+export type ClearableImageField = (typeof CLEARABLE_IMAGE_FIELDS)[number];
+
+// Clears one floorplan/elevation field and deletes its file — these are the
+// only single-image Project fields that are genuinely optional; coverPhoto
+// is required, so there's no equivalent "clear" for it, only "replace".
+export async function clearProjectImageField(projectId: number, field: ClearableImageField) {
+  const project = await prisma.project.findUnique({ where: { id: projectId }, select: { [field]: true } });
+  const url = project?.[field] as string | null | undefined;
+  if (url) await deleteProjectImage(url);
+  await prisma.project.update({ where: { id: projectId }, data: { [field]: null } });
+}
