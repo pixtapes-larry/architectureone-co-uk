@@ -32,12 +32,11 @@ export type AssetRow = {
   sizeLabel: string;
   dateLabel: string;
   label: string | null;
+  // Set only for a retained original (a real Asset table row) — its "Delete"
+  // removes the original itself, separate from any of its derivatives
+  // below. A legacy owned file (no original) has nothing to delete at this
+  // level; its one usage, with its own delete, lives in `derivatives`.
   assetId: number | null;
-  ownerLabel: string | null;
-  ownerEditHref: string | null;
-  ownerKind: "project" | "award" | null;
-  ownerId: number | null;
-  role: string | null;
   derivatives: DerivativeRow[];
 };
 
@@ -54,6 +53,33 @@ function openOwnerLabel(kind: "project" | "award") {
 // genuinely optional field and can be removed directly.
 function isDeletable(role: string | null) {
   return role !== null && role !== "cover";
+}
+
+function Chevron({ open }: { open: boolean }) {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      className={styles.chevron}
+      style={{ transform: open ? "rotate(90deg)" : "rotate(0deg)" }}
+    >
+      <path d="M4 2l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+// Every row — a retained original with 0, 1 or many derivatives, or a
+// legacy owned file that's always exactly one usage — expands the same
+// way, so there's one consistent place to find "where is this used".
+function ExpandToggle({ open, count, onClick }: { open: boolean; count: number; onClick: () => void }) {
+  return (
+    <button type="button" className={open ? styles.expandToggleOpen : styles.expandToggle} onClick={onClick}>
+      <Chevron open={open} />
+      {count} place{count === 1 ? "" : "s"}
+    </button>
+  );
 }
 
 function DeleteOwnedButton({
@@ -115,7 +141,9 @@ function loadView(): View {
 export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
   const [view, setView] = useState<View>("rows");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  // Only one row expanded at a time — picking a different one closes
+  // whichever was open, shared between both views.
+  const [expandedKey, setExpandedKey] = useState<string | null>(null);
 
   useEffect(() => {
     setView(loadView());
@@ -131,12 +159,7 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
   }
 
   function toggleExpanded(key: string) {
-    setExpanded((prev) => {
-      const next = new Set(prev);
-      if (next.has(key)) next.delete(key);
-      else next.add(key);
-      return next;
-    });
+    setExpandedKey((prev) => (prev === key ? null : key));
   }
 
   const imageRows = rows.filter((r) => r.isImage);
@@ -184,7 +207,7 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
       {view === "tiles" ? (
         <div className={styles.tileGrid}>
           {rows.map((a) => {
-            const isOpen = expanded.has(a.key);
+            const isOpen = expandedKey === a.key;
             return (
               <div key={a.key} className={styles.tile}>
                 <button
@@ -205,19 +228,17 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
                     {a.filename}
                   </a>
                   {a.label && <span className={styles.tileLabel}>{a.label}</span>}
-                  {a.ownerLabel && <span className={styles.tileLabel}>Used by {a.ownerLabel}</span>}
                   {a.category && <span className={styles.tileLabel}>{a.category}</span>}
                   <span className={styles.tileMeta}>
                     {[a.dimensions ?? a.typeLabel, a.sizeLabel].filter(Boolean).join(" · ")}
                   </span>
                   <span className={styles.tileMeta}>{a.dateLabel}</span>
                 </div>
-                {a.derivatives.length > 1 && (
-                  <button type="button" className={styles.expandToggle} onClick={() => toggleExpanded(a.key)}>
-                    {isOpen ? "▾" : "▸"} Used in {a.derivatives.length} places
-                  </button>
+                <ExpandToggle open={isOpen} count={a.derivatives.length} onClick={() => toggleExpanded(a.key)} />
+                {isOpen && a.derivatives.length === 0 && (
+                  <p className={styles.tileEmptyState}>Not used anywhere yet.</p>
                 )}
-                {(a.derivatives.length === 1 || (isOpen && a.derivatives.length > 1)) && (
+                {isOpen && a.derivatives.length > 0 && (
                   <ul className={styles.tileDerivativeList}>
                     {a.derivatives.map((d) => (
                       <li key={d.key} className={styles.tileDerivativeItem}>
@@ -237,20 +258,11 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
                     ))}
                   </ul>
                 )}
-                <div className={styles.tileActions}>
-                  {a.assetId !== null ? (
+                {a.assetId !== null && (
+                  <div className={styles.tileActions}>
                     <DeleteAssetButton id={a.assetId} />
-                  ) : a.ownerEditHref && a.ownerKind && a.ownerId !== null ? (
-                    <div className={styles.tileActionsRow}>
-                      <Link href={a.ownerEditHref} className={tableStyles.editLink}>
-                        {openOwnerLabel(a.ownerKind)}
-                      </Link>
-                      {isDeletable(a.role) && (
-                        <DeleteOwnedButton ownerKind={a.ownerKind} ownerId={a.ownerId} role={a.role!} url={a.url} />
-                      )}
-                    </div>
-                  ) : null}
-                </div>
+                  </div>
+                )}
               </div>
             );
           })}
@@ -261,8 +273,8 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
             <tr>
               <th></th>
               <th>Filename</th>
-              <th>Dimensions</th>
-              <th>Size</th>
+              <th className={styles.numCol}>Dimensions</th>
+              <th className={styles.numCol}>Size</th>
               <th>Added</th>
               <th>Used in</th>
               <th></th>
@@ -270,10 +282,10 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
           </thead>
           <tbody>
             {rows.map((a) => {
-              const isOpen = expanded.has(a.key);
+              const isOpen = expandedKey === a.key;
               return (
                 <Fragment key={a.key}>
-                  <tr className={styles.row}>
+                  <tr className={isOpen ? styles.rowOpen : styles.row}>
                     <td>
                       {a.isImage ? (
                         <button type="button" className={styles.rowThumbBtn} onClick={() => openLightboxFor(a)}>
@@ -289,39 +301,26 @@ export default function AssetBrowser({ rows }: { rows: AssetRow[] }) {
                         {a.filename}
                       </a>
                       {a.label && <span className={styles.rowSubline}>{a.label}</span>}
-                      {a.ownerLabel && <span className={styles.rowSubline}>Used by {a.ownerLabel}</span>}
                       {a.category && <span className={styles.rowSubline}>{a.category}</span>}
                     </td>
-                    <td>{a.dimensions ?? <span style={{ color: "var(--color-muted)" }}>—</span>}</td>
-                    <td>{a.sizeLabel}</td>
+                    <td className={styles.numCol}>{a.dimensions ?? <span style={{ color: "var(--color-muted)" }}>—</span>}</td>
+                    <td className={styles.numCol}>{a.sizeLabel}</td>
                     <td>{a.dateLabel}</td>
                     <td>
-                      {a.derivatives.length > 1 ? (
-                        <button type="button" className={styles.expandToggle} onClick={() => toggleExpanded(a.key)}>
-                          {isOpen ? "▾" : "▸"} {a.derivatives.length} places
-                        </button>
-                      ) : a.derivatives.length === 1 || a.ownerLabel ? (
-                        "1 place"
-                      ) : (
-                        <span style={{ color: "var(--color-muted)" }}>Unused</span>
-                      )}
+                      <ExpandToggle open={isOpen} count={a.derivatives.length} onClick={() => toggleExpanded(a.key)} />
                     </td>
-                    <td>
-                      {a.assetId !== null ? (
-                        <DeleteAssetButton id={a.assetId} />
-                      ) : a.ownerEditHref && a.ownerKind && a.ownerId !== null ? (
-                        <div className={styles.rowActionsStack}>
-                          <Link href={a.ownerEditHref} className={tableStyles.editLink}>
-                            {openOwnerLabel(a.ownerKind)}
-                          </Link>
-                          {isDeletable(a.role) && (
-                            <DeleteOwnedButton ownerKind={a.ownerKind} ownerId={a.ownerId} role={a.role!} url={a.url} />
-                          )}
-                        </div>
-                      ) : null}
-                    </td>
+                    <td>{a.assetId !== null && <DeleteAssetButton id={a.assetId} />}</td>
                   </tr>
-                  {(a.derivatives.length === 1 || (isOpen && a.derivatives.length > 1)) &&
+                  {isOpen && a.derivatives.length === 0 && (
+                    <tr className={styles.derivativeRow}>
+                      <td></td>
+                      <td colSpan={5} style={{ color: "var(--color-muted)", fontSize: 13 }}>
+                        Not used anywhere yet.
+                      </td>
+                      <td></td>
+                    </tr>
+                  )}
+                  {isOpen &&
                     a.derivatives.map((d) => (
                       <tr key={d.key} className={styles.derivativeRow}>
                         <td></td>

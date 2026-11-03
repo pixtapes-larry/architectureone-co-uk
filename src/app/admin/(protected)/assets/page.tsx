@@ -83,11 +83,7 @@ export default async function AdminAssetsPage({
     category: string | null;
     createdAt: Date;
     assetId: number | null;
-    ownerLabel: string | null;
-    ownerEditHref: string | null;
-    ownerKind: "project" | "award" | null;
-    ownerId: number | null;
-    role: string | null;
+    ownerLabel: string | null; // search only — the rest of the usage detail lives in `derivatives`
     derivatives: DerivativeRow[];
   };
 
@@ -135,37 +131,49 @@ export default async function AdminAssetsPage({
         createdAt: a.createdAt,
         assetId: a.id,
         ownerLabel: null,
-        ownerEditHref: null,
-        ownerKind: null,
-        ownerId: null,
-        role: null,
         derivatives: [...croppedDerivatives, ...directDerivatives],
       };
     }),
     // Owned files with no retained original behind them — floorplans,
     // elevations, badges, and any cover/gallery photo uploaded before the
-    // crop model existed. Each is its own single-use file, not grouped.
+    // crop model existed. Each is its own single-use file, not grouped —
+    // but still gets a one-item `derivatives` list, so expanding works the
+    // same way here as it does for a retained original with real
+    // derivatives, instead of needing a separate always-visible treatment.
     ...owned
       .filter((o) => o.assetId === null)
-      .map((o): Original => ({
-        key: `owned-${o.url}`,
-        filename: o.filename,
-        url: o.url,
-        mimeType: o.mimeType,
-        fileSizeKb: o.fileSizeKb,
-        width: o.width,
-        height: o.height,
-        label: null,
-        category: o.category,
-        createdAt: o.createdAt,
-        assetId: null,
-        ownerLabel: `${o.owner.label} — ${o.roleLabel}`,
-        ownerEditHref: o.owner.editHref,
-        ownerKind: o.owner.kind,
-        ownerId: o.owner.id,
-        role: o.role,
-        derivatives: [],
-      })),
+      .map((o): Original => {
+        const dims = o.width && o.height ? `${o.width} × ${o.height}` : null;
+        const sizeLabel = formatSize(o.fileSizeKb);
+        return {
+          key: `owned-${o.url}`,
+          filename: o.filename,
+          url: o.url,
+          mimeType: o.mimeType,
+          fileSizeKb: o.fileSizeKb,
+          width: o.width,
+          height: o.height,
+          label: null,
+          category: o.category,
+          createdAt: o.createdAt,
+          assetId: null,
+          ownerLabel: o.owner.label,
+          derivatives: [
+            {
+              key: `self-${o.url}`,
+              url: o.url,
+              role: o.role,
+              roleLabel: o.roleLabel,
+              ownerLabel: o.owner.label,
+              editHref: o.owner.editHref,
+              ownerKind: o.owner.kind,
+              ownerId: o.owner.id,
+              dimensions: dims,
+              sizeLabel,
+            },
+          ],
+        };
+      }),
   ].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
   const filtered = originals.filter((a) => {
@@ -194,11 +202,6 @@ export default async function AdminAssetsPage({
     dateLabel: formatDate(a.createdAt),
     label: a.label,
     assetId: a.assetId,
-    ownerLabel: a.ownerLabel,
-    ownerEditHref: a.ownerEditHref,
-    ownerKind: a.ownerKind,
-    ownerId: a.ownerId,
-    role: a.role,
     derivatives: a.derivatives,
   }));
 

@@ -124,20 +124,43 @@
   gap: 6px;
 }
 
-.expandToggle {
-  margin: 0 12px 10px;
+.expandToggle,
+.expandToggleOpen {
+  display: inline-flex;
   align-self: flex-start;
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: 11.5px;
+  align-items: center;
+  gap: 6px;
+  margin: 0 12px 10px;
+  border: 1.5px solid var(--color-line-strong);
+  border-radius: var(--radius-pill);
+  padding: 5px 12px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--color-ink);
+  background: var(--color-white);
   cursor: pointer;
 }
 
 .expandToggle:hover {
+  border-color: var(--color-coral);
   color: var(--color-coral);
+}
+
+.expandToggleOpen {
+  border-color: var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-white);
+}
+
+.chevron {
+  flex: none;
+  transition: transform 0.12s ease;
+}
+
+.tileEmptyState {
+  margin: 0 12px 10px;
+  font-size: 12px;
+  color: var(--color-muted);
 }
 
 .tileDerivativeList {
@@ -185,8 +208,19 @@
   padding: 16px;
 }
 
-.row td {
+.row td,
+.rowOpen td {
   vertical-align: middle;
+}
+
+.rowOpen {
+  background: var(--color-surface-alt);
+}
+
+.numCol {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .rowThumbBtn {
