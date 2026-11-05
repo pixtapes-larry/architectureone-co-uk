@@ -11,6 +11,7 @@ import ProjectMiniMapLoader from "./ProjectMiniMapLoader";
 import { LightboxProvider } from "./Lightbox";
 import PhotoGallery from "./PhotoGallery";
 import PlanCarousel from "./PlanCarousel";
+import CroppedImage from "@/components/CroppedImage";
 import styles from "./FeaturedProjectTemplate.module.css";
 
 function yearFromCompleted(completed: string): string {
@@ -42,12 +43,11 @@ export default function FeaturedProjectTemplate({
         </div>
 
         <div className={styles.hero}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <CroppedImage
             className={styles.heroImage}
-            src={project.photoUrl}
+            src={project.photoOriginalUrl ?? project.photoUrl}
+            crop={project.photoOriginalUrl ? project.photoCrop : undefined}
             alt={project.address}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
           <div className={styles.heroTags}>
             <span className={styles.heroTagDark}>{typeLabel}</span>
@@ -240,10 +240,10 @@ export default function FeaturedProjectTemplate({
                   href={`/work/${p.slug}`}
                   className={styles.relatedCard}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <CroppedImage
                     className={styles.relatedImage}
-                    src={p.photoUrl}
+                    src={p.photoOriginalUrl ?? p.photoUrl}
+                    crop={p.photoOriginalUrl ? p.photoCrop : undefined}
                     alt={p.address}
                   />
                   <div className={styles.relatedMeta}>

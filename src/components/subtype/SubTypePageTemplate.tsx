@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
+import CroppedImage from "@/components/CroppedImage";
 import {
   SUB_TYPE_CLOSING,
   subTypeCategoryHref,
@@ -75,12 +76,11 @@ export default function SubTypePageTemplate({
                   href={p.featured && p.slug ? `/work/${p.slug}` : categoryHref}
                   className={styles.exampleCard}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <CroppedImage
                     className={styles.exampleImage}
-                    src={p.photoUrl}
+                    src={p.photoOriginalUrl ?? p.photoUrl}
+                    crop={p.photoOriginalUrl ? p.photoCrop : undefined}
                     alt={p.address}
-                    style={{ width: "100%", objectFit: "cover" }}
                   />
                   <div className={styles.exampleMeta}>
                     <div className={styles.exampleTag}>{p.place}</div>

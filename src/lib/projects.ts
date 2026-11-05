@@ -10,21 +10,39 @@ import type { ProjectPhotoModel } from "@/generated/prisma/models/ProjectPhoto";
 import type { ProjectServiceDeliveredModel } from "@/generated/prisma/models/ProjectServiceDelivered";
 import type { ServiceModel } from "@/generated/prisma/models/Service";
 import type { AwardModel } from "@/generated/prisma/models/Award";
+import type { AssetModel } from "@/generated/prisma/models/Asset";
+import type { CropRect } from "./mock-projects";
 
 type ProjectWithRelations = ProjectModel & {
-  photos: ProjectPhotoModel[];
+  photos: (ProjectPhotoModel & { asset: AssetModel | null })[];
   services: (ProjectServiceDeliveredModel & { service: ServiceModel })[];
   awards: AwardModel[];
+  coverPhotoAsset: AssetModel | null;
 };
 
 const WITH_RELATIONS = {
-  photos: { orderBy: { sortOrder: "asc" as const } },
+  photos: { orderBy: { sortOrder: "asc" as const }, include: { asset: true } },
   services: { include: { service: true } },
   awards: { orderBy: [{ sortOrder: "asc" as const }, { year: "desc" as const }] },
+  coverPhotoAsset: true,
 };
 
 function formatInstructionDate(date: Date): string {
   return date.toLocaleDateString("en-GB", { month: "short", year: "numeric" });
+}
+
+function toCropRect(value: unknown): CropRect | undefined {
+  if (!value || typeof value !== "object") return undefined;
+  const v = value as Record<string, unknown>;
+  if (
+    typeof v.x === "number" &&
+    typeof v.y === "number" &&
+    typeof v.width === "number" &&
+    typeof v.height === "number"
+  ) {
+    return { x: v.x, y: v.y, width: v.width, height: v.height };
+  }
+  return undefined;
 }
 
 function toSummary(p: ProjectWithRelations): ProjectMapSummary {
@@ -43,6 +61,8 @@ function toSummary(p: ProjectWithRelations): ProjectMapSummary {
     // completion date exists on the schema — see projects.ts scoping note.
     completed: formatInstructionDate(p.instructionDate),
     photoUrl: p.coverPhotoUrl,
+    photoOriginalUrl: p.coverPhotoAsset?.url,
+    photoCrop: toCropRect(p.coverPhotoCrop),
     // Not geocoded yet for brand-new entries — falls back to (0, 0) rather
     // than crashing map rendering; real geocoding fills these in later.
     latitude: p.latitude ?? 0,
@@ -55,6 +75,8 @@ function toSummary(p: ProjectWithRelations): ProjectMapSummary {
       url: photo.url,
       isBefore: photo.isBefore,
       caption: photo.caption ?? undefined,
+      originalUrl: photo.asset?.url,
+      crop: toCropRect(photo.crop),
     })),
     floorplanBeforeImage: p.floorplanBeforeImage ?? undefined,
     floorplanAfterImage: p.floorplanAfterImage ?? undefined,

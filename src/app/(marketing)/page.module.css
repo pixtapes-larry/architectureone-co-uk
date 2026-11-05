@@ -236,9 +236,6 @@
 
 .cardImage {
   height: 200px;
-}
-
-img.cardImage {
   width: 100%;
   object-fit: cover;
   display: block;

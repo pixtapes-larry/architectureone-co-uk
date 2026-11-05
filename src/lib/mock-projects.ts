@@ -10,6 +10,12 @@
 
 import { ProjectType, PlanningType } from "@/generated/prisma/enums";
 
+// Fractional crop rect (0–1), relative to the original image's own pixel
+// dimensions — see src/components/CroppedImage.tsx. Present only when a
+// photo was positioned via the asset-backed crop tool; absent for mock data
+// and for photos uploaded before that existed.
+export type CropRect = { x: number; y: number; width: number; height: number };
+
 export type ProjectMapSummary = {
   id?: number; // only populated where a caller needs the real DB id (e.g. to look up a linked Testimonial) — mock data has none
   slug: string | null; // null for non-featured pins — nothing to link to
@@ -23,6 +29,12 @@ export type ProjectMapSummary = {
   description: string;
   completed: string; // "—" where not yet known
   photoUrl: string; // always set — "default.jpg" stands in where no real photo exists yet
+  // Set together, only for a real DB project whose cover photo went through
+  // the crop tool — the untouched original plus the rect to crop it to, so
+  // CroppedImage can render it live instead of using photoUrl (which, when
+  // these are set, points at that same original, not a baked file).
+  photoOriginalUrl?: string;
+  photoCrop?: CropRect;
   latitude: number;
   longitude: number;
 
@@ -36,7 +48,7 @@ export type ProjectMapSummary = {
   // additional gallery photos beyond photoUrl — isBefore matches the real
   // ProjectPhoto.isBefore column, so grouping into Before/After at render
   // time works the same way a real query result would.
-  photos?: { url: string; isBefore: boolean; caption?: string }[];
+  photos?: { url: string; isBefore: boolean; caption?: string; originalUrl?: string; crop?: CropRect }[];
   floorplanBeforeImage?: string;
   floorplanAfterImage?: string;
   elevationBeforeImage?: string;

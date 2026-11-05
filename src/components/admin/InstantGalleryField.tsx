@@ -8,6 +8,7 @@ import "react-easy-crop/react-easy-crop.css";
 import OriginalLibraryPicker from "./OriginalLibraryPicker";
 import type { OriginalImage } from "@/lib/admin/original-images";
 import { uploadOriginalAction, applyGalleryCropAction } from "@/app/admin/(protected)/projects/actions";
+import { CROP_TARGETS } from "@/lib/admin/crop-targets";
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ImageUploadField.module.css";
 
@@ -15,6 +16,7 @@ import styles from "./ImageUploadField.module.css";
 // page, same as the cover photo — crop to that ratio here so what's picked
 // is what shows, instead of an arbitrary auto-crop at render time.
 const GALLERY_ASPECT = 4 / 3;
+const TARGET = CROP_TARGETS.gallery;
 
 type CropTarget = { assetId: number; url: string };
 
@@ -38,6 +40,14 @@ export default function InstantGalleryField({
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPercent, setCroppedAreaPercent] = useState<Area | null>(null);
+  const [naturalSize, setNaturalSize] = useState<{ w: number; h: number } | null>(null);
+
+  function loadNaturalSize(url: string) {
+    setNaturalSize(null);
+    const img = new window.Image();
+    img.onload = () => setNaturalSize({ w: img.naturalWidth, h: img.naturalHeight });
+    img.src = url;
+  }
 
   async function openCropFor(file: File) {
     setBusy(true);
@@ -45,6 +55,7 @@ export default function InstantGalleryField({
     setBusy(false);
     setCrop({ x: 0, y: 0 });
     setZoom(1);
+    loadNaturalSize(original.url);
     setCropTarget({ assetId: original.assetId, url: original.url });
   }
 
@@ -84,6 +95,7 @@ export default function InstantGalleryField({
   function handleLibrarySelect(image: OriginalImage) {
     setCrop({ x: 0, y: 0 });
     setZoom(1);
+    loadNaturalSize(image.url);
     setCropTarget({ assetId: image.id, url: image.url });
   }
 
@@ -151,6 +163,18 @@ export default function InstantGalleryField({
                 onChange={(e) => setZoom(Number(e.target.value))}
                 className={styles.zoomSlider}
               />
+              {naturalSize && croppedAreaPercent && (() => {
+                const gotW = Math.round((naturalSize.w * croppedAreaPercent.width) / 100);
+                const gotH = Math.round((naturalSize.h * croppedAreaPercent.height) / 100);
+                const low = gotW < TARGET.width * 0.98 || gotH < TARGET.height * 0.98;
+                return (
+                  <p className={low ? styles.qualityLow : styles.qualityGood}>
+                    {low
+                      ? `Low resolution for the gallery — this crop gives ${gotW}×${gotH}px, ideally ${TARGET.width}×${TARGET.height}px.`
+                      : `Good quality — ${gotW}×${gotH}px.`}
+                  </p>
+                );
+              })()}
               <div className={styles.cropActions}>
                 <button type="button" className={styles.cropCancel} onClick={cancelCrop}>
                   Cancel

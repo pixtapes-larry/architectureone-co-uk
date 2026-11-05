@@ -1,10 +1,12 @@
 // Finds every place a retained original (Asset row) is referenced *directly*
-// by its own URL — the floorplan/elevation/award-badge fields never go
-// through the crop flow, so a "choose from library" pick on one of those
-// just copies the original's URL verbatim rather than generating its own
-// derivative. Cover photo and gallery derivatives are tracked separately,
-// via Project.coverPhotoAssetId / ProjectPhoto.assetId (see asset-scan.ts) —
-// this only covers the fields that have no such column.
+// by its own URL. That's every usage now: cover photo and gallery crops are
+// rendered live via CSS (CroppedImage) straight from the original's own
+// file, never a generated derivative, so Project.coverPhotoUrl /
+// ProjectPhoto.url already equal the asset's url. Floorplan/elevation/badge
+// fields work the same way when a "choose from library" pick reuses an
+// original verbatim. (A handful of cover/gallery photos cropped before this
+// model existed still point at their own baked file instead — those are
+// matched separately, by assetId, in asset-scan.ts.)
 import { prisma } from "../prisma";
 
 export type DirectAssetReference = {
@@ -24,10 +26,13 @@ export async function getDirectAssetReferences(): Promise<DirectAssetReference[]
         id: true,
         address: true,
         place: true,
+        coverPhotoUrl: true,
+        coverPhotoAssetId: true,
         floorplanBeforeImage: true,
         floorplanAfterImage: true,
         elevationBeforeImage: true,
         elevationAfterImage: true,
+        photos: { where: { assetId: { not: null } }, select: { url: true, isBefore: true } },
       },
     }),
     prisma.award.findMany({ select: { id: true, name: true, imageUrl: true } }),
@@ -40,6 +45,20 @@ export async function getDirectAssetReferences(): Promise<DirectAssetReference[]
     const editHref = `/admin/projects/${p.id}/edit`;
     const ownerKind = "project" as const;
     const ownerId = p.id;
+    if (p.coverPhotoAssetId) {
+      refs.push({ url: p.coverPhotoUrl, role: "cover", roleLabel: "Cover photo", ownerLabel, ownerId, editHref, ownerKind });
+    }
+    for (const photo of p.photos) {
+      refs.push({
+        url: photo.url,
+        role: photo.isBefore ? "gallery-before" : "gallery-after",
+        roleLabel: photo.isBefore ? "Gallery (before)" : "Gallery (after)",
+        ownerLabel,
+        ownerId,
+        editHref,
+        ownerKind,
+      });
+    }
     if (p.floorplanBeforeImage) refs.push({ url: p.floorplanBeforeImage, role: "floorplan-before", roleLabel: "Floor plan (before)", ownerLabel, ownerId, editHref, ownerKind });
     if (p.floorplanAfterImage) refs.push({ url: p.floorplanAfterImage, role: "floorplan-after", roleLabel: "Floor plan (after)", ownerLabel, ownerId, editHref, ownerKind });
     if (p.elevationBeforeImage) refs.push({ url: p.elevationBeforeImage, role: "elevation-before", roleLabel: "Elevation (before)", ownerLabel, ownerId, editHref, ownerKind });

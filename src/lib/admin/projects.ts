@@ -142,13 +142,16 @@ export async function deleteProjectAdmin(id: number) {
   });
   if (!project) return;
 
+  // Asset-backed photos share their file with a retained original (and
+  // potentially other usages of it) — only a legacy, non-asset-backed
+  // image owns its file outright, safe to delete alongside the project.
   const imageUrls = [
-    project.coverPhotoUrl,
+    project.coverPhotoAssetId ? null : project.coverPhotoUrl,
     project.floorplanBeforeImage,
     project.floorplanAfterImage,
     project.elevationBeforeImage,
     project.elevationAfterImage,
-    ...project.photos.map((p) => p.url),
+    ...project.photos.filter((p) => !p.assetId).map((p) => p.url),
   ].filter((url): url is string => Boolean(url));
 
   await Promise.all(imageUrls.map(deleteProjectImage));
@@ -204,7 +207,11 @@ export async function setCoverPhotoAdmin(
 export async function deleteProjectPhoto(photoId: number) {
   const photo = await prisma.projectPhoto.findUnique({ where: { id: photoId } });
   if (!photo) return;
-  await deleteProjectImage(photo.url);
+  // An asset-backed photo's `url` is the shared retained original (the same
+  // file a cover photo or another gallery entry may also point at) — never
+  // delete that file here. Only a legacy photo (no assetId) owns its file
+  // outright, baked just for this one row.
+  if (!photo.assetId) await deleteProjectImage(photo.url);
   await prisma.projectPhoto.delete({ where: { id: photoId } });
 }
 

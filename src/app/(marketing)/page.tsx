@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ImagePlaceholder from "@/components/ui/ImagePlaceholder";
+import CroppedImage from "@/components/CroppedImage";
 import { getFeaturedProjects } from "@/lib/projects";
 import { PROJECT_TYPE_LABELS } from "@/lib/project-labels";
 import { getHomePageContent } from "@/lib/home-content";
@@ -160,10 +161,10 @@ export default async function Home() {
               href={`/work/${project.slug}`}
               className={styles.card}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <CroppedImage
                 className={styles.cardImage}
-                src={project.photoUrl}
+                src={project.photoOriginalUrl ?? project.photoUrl}
+                crop={project.photoOriginalUrl ? project.photoCrop : undefined}
                 alt={project.address}
               />
               <div className={styles.cardBody}>

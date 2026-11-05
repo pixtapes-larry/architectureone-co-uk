@@ -7,6 +7,7 @@ import {
   EXPLORE_PROJECTS_HREF,
 } from "@/lib/nav";
 import LocalAuthorityMapLoader from "./LocalAuthorityMapLoader";
+import CroppedImage from "@/components/CroppedImage";
 import styles from "./LocalAuthorityTemplate.module.css";
 
 export default function LocalAuthorityTemplate({
@@ -93,10 +94,10 @@ export default function LocalAuthorityTemplate({
                   href={`/work/${p.slug}`}
                   className={styles.exampleCard}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <CroppedImage
                     className={styles.exampleImage}
-                    src={p.photoUrl}
+                    src={p.photoOriginalUrl ?? p.photoUrl}
+                    crop={p.photoOriginalUrl ? p.photoCrop : undefined}
                     alt={p.address}
                   />
                   <div className={styles.exampleMeta}>

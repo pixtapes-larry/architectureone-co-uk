@@ -17,10 +17,7 @@ import {
   saveProjectImage,
   deleteProjectImage,
   saveAsset,
-  saveCroppedDerivative,
   isUploadableFile,
-  COVER_TARGET,
-  GALLERY_TARGET,
   type UploadRole,
   type CropRect,
 } from "@/lib/admin/upload";
@@ -163,18 +160,26 @@ export async function uploadOriginalAction(
   return { assetId: asset.id, url: asset.url };
 }
 
-// Step 2 — crops a retained original (freshly uploaded or picked from the
-// library) for the cover photo, and applies it immediately, no save needed.
+// Step 2 — records a crop rect against a retained original for the cover
+// photo and applies it immediately, no save needed. No file is generated:
+// coverPhotoUrl points straight at the original, and coverPhotoCrop is what
+// CroppedImage (src/components/CroppedImage.tsx) uses to crop it live,
+// wherever it's displayed. A second usage of the same original (another
+// field, another crop) never touches this one.
 export async function applyCoverCropAction(projectId: number, assetId: number, crop: CropRect) {
   const asset = await getAssetAdmin(assetId);
   if (!asset) throw new Error("Original image not found.");
 
   const existing = await getProjectAdmin(projectId);
-  const derivative = await saveCroppedDerivative(asset.url, crop, projectId, "cover", COVER_TARGET);
-
-  if (existing?.coverPhotoUrl) await deleteProjectImage(existing.coverPhotoUrl);
+  // Only a pre-existing *legacy* cover photo (baked before this model
+  // existed, no retained original) owns its own file — clean that up when
+  // replacing it. A cover that's already asset-backed shares its file with
+  // the original; never delete that here.
+  if (existing && !existing.coverPhotoAssetId && existing.coverPhotoUrl) {
+    await deleteProjectImage(existing.coverPhotoUrl);
+  }
   await setCoverPhotoAdmin(projectId, {
-    coverPhotoUrl: derivative.url,
+    coverPhotoUrl: asset.url,
     coverPhotoAssetId: assetId,
     coverPhotoCrop: crop,
   });
@@ -183,8 +188,8 @@ export async function applyCoverCropAction(projectId: number, assetId: number, c
   revalidatePath("/admin/projects");
 }
 
-// Same idea for a gallery photo — crops a retained original and adds it
-// immediately, independent of the main form submit.
+// Same idea for a gallery photo — records a crop against a retained
+// original and adds it immediately, independent of the main form submit.
 export async function applyGalleryCropAction(
   projectId: number,
   isBefore: boolean,
@@ -193,16 +198,7 @@ export async function applyGalleryCropAction(
 ) {
   const asset = await getAssetAdmin(assetId);
   if (!asset) throw new Error("Original image not found.");
-
-  const derivative = await saveCroppedDerivative(
-    asset.url,
-    crop,
-    projectId,
-    isBefore ? "gallery-before" : "gallery-after",
-    GALLERY_TARGET,
-  );
-  await addProjectPhoto(projectId, { url: derivative.url, isBefore, assetId, crop });
-
+  await addProjectPhoto(projectId, { url: asset.url, isBefore, assetId, crop });
   revalidatePath(`/admin/projects/${projectId}/edit`);
 }
 

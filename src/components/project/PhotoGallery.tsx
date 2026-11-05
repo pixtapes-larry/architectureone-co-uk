@@ -2,16 +2,22 @@
 
 import { useRef } from "react";
 import { useLightbox } from "./Lightbox";
+import CroppedImage from "@/components/CroppedImage";
+import type { CropRect } from "@/lib/mock-projects";
 import styles from "./PhotoGallery.module.css";
 
 const DRAG_THRESHOLD = 5;
 
-export default function PhotoGallery({
-  images,
-}: {
-  images: { url: string; caption?: string }[];
-}) {
+type GalleryImage = { url: string; caption?: string; originalUrl?: string; crop?: CropRect };
+
+export default function PhotoGallery({ images }: { images: GalleryImage[] }) {
   const { open } = useLightbox();
+  // The strip shows each photo cropped for this spot; the lightbox opens
+  // the full, uncropped original — different jobs for the same photo.
+  const lightboxImages = images.map((img) => ({
+    url: img.originalUrl ?? img.url,
+    caption: img.caption,
+  }));
   const stripRef = useRef<HTMLDivElement>(null);
   // "down" tracks a press in progress; "dragging" only becomes true once
   // the pointer has actually moved past the threshold — pointer capture
@@ -70,7 +76,7 @@ export default function PhotoGallery({
       e.preventDefault();
       return;
     }
-    open(images, index);
+    open(lightboxImages, index);
   }
 
   return (
@@ -88,10 +94,10 @@ export default function PhotoGallery({
           className={styles.thumb}
           onClick={(e) => onImageClick(e, i)}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <CroppedImage
             className={styles.thumbImage}
-            src={img.url}
+            src={img.originalUrl ?? img.url}
+            crop={img.originalUrl ? img.crop : undefined}
             alt={img.caption ?? ""}
             draggable={false}
           />

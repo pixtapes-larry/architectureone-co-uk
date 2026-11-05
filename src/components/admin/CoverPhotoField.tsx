@@ -8,12 +8,14 @@ import "react-easy-crop/react-easy-crop.css";
 import OriginalLibraryPicker from "./OriginalLibraryPicker";
 import type { OriginalImage } from "@/lib/admin/original-images";
 import { uploadOriginalAction, applyCoverCropAction } from "@/app/admin/(protected)/projects/actions";
+import { CROP_TARGETS } from "@/lib/admin/crop-targets";
 import formStyles from "@/components/forms/forms.module.css";
 import styles from "./ImageUploadField.module.css";
 
 // Matches the public card/pin aspect ratio — see InstantGalleryField for
 // why gallery photos share this same ratio.
 const COVER_ASPECT = 4 / 3;
+const TARGET = CROP_TARGETS.cover;
 
 export default function CoverPhotoField({
   projectId,
@@ -32,11 +34,19 @@ export default function CoverPhotoField({
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPercent, setCroppedAreaPercent] = useState<Area | null>(null);
+  const [naturalSize, setNaturalSize] = useState<{ w: number; h: number } | null>(null);
 
   // A new file/library pick replaces the current cover photo outright (the
   // old file gets deleted once the new crop is confirmed) — so when one
   // already exists, hold here and ask first instead of acting immediately.
   const [pendingReplace, setPendingReplace] = useState<{ kind: "file"; file: File } | { kind: "library"; image: OriginalImage } | null>(null);
+
+  function loadNaturalSize(url: string) {
+    setNaturalSize(null);
+    const img = new window.Image();
+    img.onload = () => setNaturalSize({ w: img.naturalWidth, h: img.naturalHeight });
+    img.src = url;
+  }
 
   async function proceedWithFile(file: File) {
     setBusy(true);
@@ -44,12 +54,14 @@ export default function CoverPhotoField({
     setBusy(false);
     setCrop({ x: 0, y: 0 });
     setZoom(1);
+    loadNaturalSize(original.url);
     setCropTarget({ assetId: original.assetId, url: original.url });
   }
 
   function proceedWithLibrary(image: OriginalImage) {
     setCrop({ x: 0, y: 0 });
     setZoom(1);
+    loadNaturalSize(image.url);
     setCropTarget({ assetId: image.id, url: image.url });
   }
 
@@ -196,6 +208,18 @@ export default function CoverPhotoField({
                 onChange={(e) => setZoom(Number(e.target.value))}
                 className={styles.zoomSlider}
               />
+              {naturalSize && croppedAreaPercent && (() => {
+                const gotW = Math.round((naturalSize.w * croppedAreaPercent.width) / 100);
+                const gotH = Math.round((naturalSize.h * croppedAreaPercent.height) / 100);
+                const low = gotW < TARGET.width * 0.98 || gotH < TARGET.height * 0.98;
+                return (
+                  <p className={low ? styles.qualityLow : styles.qualityGood}>
+                    {low
+                      ? `Low resolution for a cover photo — this crop gives ${gotW}×${gotH}px, ideally ${TARGET.width}×${TARGET.height}px.`
+                      : `Good quality — ${gotW}×${gotH}px.`}
+                  </p>
+                );
+              })()}
               <div className={styles.cropActions}>
                 <button type="button" className={styles.cropCancel} onClick={cancelCrop}>
                   Cancel
