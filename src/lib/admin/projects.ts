@@ -135,26 +135,95 @@ export async function updateProjectAdmin(
   ]);
 }
 
-export async function deleteProjectAdmin(id: number) {
-  const project = await prisma.project.findUnique({
-    where: { id },
-    include: { photos: true },
-  });
-  if (!project) return;
+// A legacy (non-asset-backed) image this project owns outright, named for
+// display in the delete-confirmation prompt.
+type OwnedImage = { label: string; url: string };
 
-  // Asset-backed photos share their file with a retained original (and
-  // potentially other usages of it) — only a legacy, non-asset-backed
-  // image owns its file outright, safe to delete alongside the project.
-  const imageUrls = [
-    project.coverPhotoAssetId ? null : project.coverPhotoUrl,
-    project.floorplanBeforeImage,
-    project.floorplanAfterImage,
-    project.elevationBeforeImage,
-    project.elevationAfterImage,
-    ...project.photos.filter((p) => !p.assetId).map((p) => p.url),
-  ].filter((url): url is string => Boolean(url));
+export type ProjectDeletionImpact = {
+  // Files only this project uses — safe to delete, offered as a choice.
+  deletable: OwnedImage[];
+  // Files this project's own fields point at, but which another project or
+  // award ALSO points at directly (an old-style "choose from library" URL
+  // copy, not an asset-tracked reuse) — never deleted, listed so the
+  // warning is concrete rather than "some files might be shared".
+  protectedItems: { label: string; usedElsewhere: string[] }[];
+};
 
-  await Promise.all(imageUrls.map(deleteProjectImage));
+// Scans this project's own legacy image fields (asset-backed ones are
+// already excluded — they share a library file, never "this project's
+// own") against every OTHER project's and award's image fields, by exact
+// URL match, to tell deletable files apart from ones still in use
+// elsewhere. Called before a project delete is confirmed.
+export async function getProjectDeletionImpact(id: number): Promise<ProjectDeletionImpact> {
+  const project = await prisma.project.findUnique({ where: { id }, include: { photos: true } });
+  if (!project) return { deletable: [], protectedItems: [] };
+
+  const candidates: OwnedImage[] = [];
+  if (!project.coverPhotoAssetId && project.coverPhotoUrl) {
+    candidates.push({ label: "Cover photo", url: project.coverPhotoUrl });
+  }
+  if (project.floorplanBeforeImage) candidates.push({ label: "Floor plan (before)", url: project.floorplanBeforeImage });
+  if (project.floorplanAfterImage) candidates.push({ label: "Floor plan (after)", url: project.floorplanAfterImage });
+  if (project.elevationBeforeImage) candidates.push({ label: "Elevation (before)", url: project.elevationBeforeImage });
+  if (project.elevationAfterImage) candidates.push({ label: "Elevation (after)", url: project.elevationAfterImage });
+  for (const photo of project.photos) {
+    if (!photo.assetId) {
+      candidates.push({ label: photo.isBefore ? "Gallery (before)" : "Gallery (after)", url: photo.url });
+    }
+  }
+  if (candidates.length === 0) return { deletable: [], protectedItems: [] };
+
+  const [otherProjects, otherAwards] = await Promise.all([
+    prisma.project.findMany({
+      where: { id: { not: id } },
+      select: {
+        address: true,
+        place: true,
+        coverPhotoUrl: true,
+        floorplanBeforeImage: true,
+        floorplanAfterImage: true,
+        elevationBeforeImage: true,
+        elevationAfterImage: true,
+        photos: { select: { url: true, isBefore: true } },
+      },
+    }),
+    prisma.award.findMany({ select: { name: true, imageUrl: true } }),
+  ]);
+
+  function elsewhereLabelsForUrl(url: string): string[] {
+    const hits: string[] = [];
+    for (const p of otherProjects) {
+      const owner = `${p.address}, ${p.place}`;
+      if (p.coverPhotoUrl === url) hits.push(`${owner} — Cover photo`);
+      if (p.floorplanBeforeImage === url) hits.push(`${owner} — Floor plan (before)`);
+      if (p.floorplanAfterImage === url) hits.push(`${owner} — Floor plan (after)`);
+      if (p.elevationBeforeImage === url) hits.push(`${owner} — Elevation (before)`);
+      if (p.elevationAfterImage === url) hits.push(`${owner} — Elevation (after)`);
+      for (const photo of p.photos) {
+        if (photo.url === url) hits.push(`${owner} — Gallery (${photo.isBefore ? "before" : "after"})`);
+      }
+    }
+    for (const a of otherAwards) {
+      if (a.imageUrl === url) hits.push(`${a.name} — Award badge`);
+    }
+    return hits;
+  }
+
+  const deletable: OwnedImage[] = [];
+  const protectedItems: { label: string; usedElsewhere: string[] }[] = [];
+  for (const c of candidates) {
+    const elsewhere = elsewhereLabelsForUrl(c.url);
+    if (elsewhere.length > 0) protectedItems.push({ label: c.label, usedElsewhere: elsewhere });
+    else deletable.push(c);
+  }
+  return { deletable, protectedItems };
+}
+
+export async function deleteProjectAdmin(id: number, deleteFiles: boolean) {
+  // Recomputed here rather than trusting a client-supplied list — the
+  // impact can only be trusted as of the moment of deletion.
+  const impact = deleteFiles ? await getProjectDeletionImpact(id) : null;
+  if (impact) await Promise.all(impact.deletable.map((f) => deleteProjectImage(f.url)));
   // ProjectPhoto and ProjectServiceDelivered both cascade on delete.
   await prisma.project.delete({ where: { id } });
 }

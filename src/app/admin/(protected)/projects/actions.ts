@@ -8,10 +8,12 @@ import {
   updateProjectAdmin,
   deleteProjectAdmin,
   getProjectAdmin,
+  getProjectDeletionImpact,
   addProjectPhoto,
   deleteProjectPhoto,
   setCoverPhotoAdmin,
   type ProjectAdminInput,
+  type ProjectDeletionImpact,
 } from "@/lib/admin/projects";
 import {
   saveProjectImage,
@@ -282,10 +284,18 @@ export async function saveProjectAction(
   }
 }
 
+// Called directly from the delete-confirmation UI before it shows the
+// checkbox, so the prompt can name exactly which files would go and warn
+// about any that are also used elsewhere instead of speaking in generalities.
+export async function getProjectDeletionImpactAction(id: number): Promise<ProjectDeletionImpact> {
+  return getProjectDeletionImpact(id);
+}
+
 export async function deleteProjectFormAction(formData: FormData) {
   const id = Number(formData.get("id"));
+  const deleteFiles = formData.get("deleteFiles") === "on";
   if (!Number.isNaN(id)) {
-    await deleteProjectAdmin(id);
+    await deleteProjectAdmin(id, deleteFiles);
   }
   revalidatePath("/admin/projects");
   redirect("/admin/projects");
