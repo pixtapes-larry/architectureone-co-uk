@@ -16,15 +16,12 @@
 
 .hero {
   position: relative;
-  /* Locked to the same 4:3 ratio the cover photo is actually cropped to
-     (CoverPhotoField's COVER_ASPECT) — a fixed pixel height here let the
-     box's own aspect ratio drift away from the crop's as the fluid width
-     changed, which is what made the image visibly distort while resizing.
-     A max-height alone would reintroduce that drift once width keeps
-     growing past it, so cap width instead — height then follows the same
-     locked ratio all the way up, never just the one dimension. */
-  aspect-ratio: 4 / 3;
-  max-width: 820px;
+  /* Full-bleed banner, fixed height — safe again now that heroImage uses
+     native object-fit: cover on the untouched original (below) instead of
+     the custom crop-rect renderer. object-fit: cover never distorts
+     regardless of the box's own aspect ratio, unlike the background-size
+     percentage math that caused the original resize-stretching bug. */
+  height: 420px;
   overflow: hidden;
   border-radius: var(--radius-signature);
   margin-bottom: 40px;
@@ -276,6 +273,9 @@
 }
 
 @media (max-width: 900px) {
+  .hero {
+    height: 280px;
+  }
   .layout {
     flex-direction: column;
   }

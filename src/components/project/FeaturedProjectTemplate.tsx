@@ -43,11 +43,16 @@ export default function FeaturedProjectTemplate({
         </div>
 
         <div className={styles.hero}>
-          <CroppedImage
+          {/* A wide banner doesn't want the card's precise 4:3 crop rect —
+              it just wants the full original, auto-centred and covered,
+              same as any ordinary hero image. Native object-fit: cover
+              never distorts regardless of the box's own aspect ratio. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             className={styles.heroImage}
             src={project.photoOriginalUrl ?? project.photoUrl}
-            crop={project.photoOriginalUrl ? project.photoCrop : undefined}
             alt={project.address}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
           <div className={styles.heroTags}>
             <span className={styles.heroTagDark}>{typeLabel}</span>
